@@ -1,0 +1,30 @@
+// leewei 02.13 首页样式
+
+// 全局颜色变量
+
+$imgBorderColor: #e0e0e0;
+$timeFontColor: #999;
+$commonFontColor: #555;
+
+// 全局字体尺寸
+
+// $timefontSize
+
+@media screen and (min-width: 1000px) {
+  .mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  
+  }
+}

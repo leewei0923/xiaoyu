@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+@media screen and (max-width: 1000px) {
+  * {
+    font-size: 12px;
+  }
+}
+
+/* 这是针对缺省样式 (必须的) */
+::-webkit-scrollbar {
+  width: 5px;
+}
+/* 滑块颜色 */
+
+::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0);
+}
+
+
+/* 
+// 适配大屏
+@media screen and (min-width: 1000px) {
+  
+  
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px){
+
+} */

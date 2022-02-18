@@ -1,0 +1,104 @@
+// 全局颜色变量
+
+$imgBorderColor: #e0e0e0;
+$timeFontColor: #999;
+$commonFontColor: #555;
+
+// 全局字体尺寸
+
+// $timefontSize
+
+@media screen and (min-width: 1000px) {
+  .articles {
+    display: flex;
+    align-items: center;
+    width: 85%;
+    margin: 40px;
+
+    .postImage {
+      width: 50%;
+      .postRevealImg {
+        border-radius: 10px;
+      }
+    }
+
+    .toRight {
+      transform: translateX(100%);
+    }
+
+    .toLeft {
+      transform: translateX(-100%);
+      border-Left: 1px solid $imgBorderColor;
+    }
+
+    // 右边文字
+    .postText {
+      padding: 40px;
+      width: 50%;
+      border-top: 1px solid $imgBorderColor;
+      border-right: 1px solid $imgBorderColor;
+      border-bottom: 1px solid $imgBorderColor;
+      border-radius: 10px;
+
+      .postTime {
+        margin: 10px 0;
+        color: $timeFontColor;
+        a {
+          display: block;
+        }
+      }
+
+      .postTitle {
+        margin: 10px 0;
+
+        a {
+          text-decoration: none;
+          color: $commonFontColor;
+        }
+      }
+
+      .postsummary {
+        margin: 10px 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .articles {
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    width: 90%;
+    margin: 20px;
+
+    .postImage {
+      width: 100%;
+      .postRevealImg {
+        border-radius: 5px;
+      }
+    }
+
+    // 右边文字
+    .postText {
+      .postTime {
+        margin: 15px 0;
+        color: $timeFontColor;
+      }
+
+      .postTitle {
+        margin: 15px 0;
+        font-size: 1.5em;
+
+        a {
+          text-decoration: none;
+          color: $commonFontColor;
+        }
+      }
+
+      .postsummary {
+        margin: 15px 0;
+      }
+    }
+  }
+}

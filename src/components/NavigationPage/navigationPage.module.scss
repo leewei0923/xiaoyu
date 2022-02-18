@@ -1,0 +1,227 @@
+// leewei 用于导航页
+$bgColor: #fff;
+$navFontColor: #555;
+$linkHoverColor: #1e93be;
+// 大屏
+@media screen and (min-width: 1000px) {
+  .navContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    background: $bgColor;
+    width: 100vw;
+    height: 100vh;
+    transition: all 0.5s ease-in;
+    .header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      .logo {
+        width: 400px;
+        height: 200px;
+      }
+      .closeBtn {
+        position: relative;
+        right: 60px;
+        top: 50px;
+        display: block;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 30%;
+          height: 3px;
+          width: 32px;
+          background-color: #5c4b51;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          transform: rotate(45deg);
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 30%;
+          height: 3px;
+          width: 32px;
+          background-color: #5c4b51;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+    .mainContent {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .basePage {
+        display: flex;
+        flex-direction: row;
+        margin: 10px;
+
+        p {
+          margin: 10px;
+          font-size: 18px;
+          a {
+            color: $navFontColor;
+            text-decoration: none;
+            &:hover {
+              color: #1e93be;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+
+      .extensionPage {
+        display: flex;
+        flex-direction: row;
+        margin: 10px;
+        p {
+          margin: 15px;
+          a {
+            color: $navFontColor;
+            text-decoration: none;
+            &:hover {
+              color: #1e93be;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+
+    .footer {
+      margin: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      a {
+        margin: 20px;
+      }
+    }
+  }
+}
+
+// 小屏
+
+@media screen and (max-width: 1000px) {
+  .navContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    background: $bgColor;
+    width: 100vw;
+    height: 100vh;
+    transition: all 0.5s ease-in;
+    .header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      .logo {
+        width: 400px;
+        height: 200px;
+      }
+      .closeBtn {
+        position: relative;
+        right: 60px;
+        top: 50px;
+        display: block;
+        width: 32px;
+        height: 32px;
+        &::before {
+          content: "";
+          position: absolute;
+          top: 30%;
+          height: 3px;
+          width: 32px;
+          background-color: #5c4b51;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          transform: rotate(45deg);
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 30%;
+          height: 3px;
+          width: 32px;
+          background-color: #5c4b51;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+    .mainContent {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .basePage {
+        display: flex;
+        flex-direction: row;
+        margin: 10px;
+
+        p {
+          margin: 10px;
+          font-size: 18px;
+          a {
+            color: $navFontColor;
+            text-decoration: none;
+            &:hover {
+              color: #1e93be;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+
+      .extensionPage {
+        display: flex;
+        flex-direction: row;
+        margin: 10px;
+        p {
+          margin: 15px;
+          a {
+            color: $navFontColor;
+            text-decoration: none;
+            &:hover {
+              color: #1e93be;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+
+    .footer {
+      margin: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      a {
+        margin: 20px;
+      }
+    }
+  }
+}
+
+.InVisible {
+  transform: translateX(100%);
+}
+.Visible {
+  transform: translateX(0px);
+}

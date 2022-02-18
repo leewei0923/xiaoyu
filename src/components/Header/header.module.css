@@ -1,0 +1,70 @@
+/* leewei 0211 layout样式 */
+
+.headerBg {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  position: relative;
+  background: url("../../../public/images/header-bg.jpg");
+  background-position: 100% 100%;
+  background-attachment: fixed;  /* 技能*/
+}
+
+.mask {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.mottoContainer {
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 85%;
+  letter-spacing: 2px;
+}
+
+.content {
+  color: #fff;
+  text-align: center;
+}
+
+.space {
+  color: #fff;
+}
+.author {
+  color: #fff;
+}
+
+@media (min-width: 1000px) {
+  .mottoContainer .content {
+    font-size: 2rem;
+  }
+
+  .space {
+    font-size: 2rem;
+  }
+  .author {
+    font-size: 2rem;
+  }
+
+
+}
+
+@media (max-width: 1000px) {
+  .mottoContainer .content {
+    font-size: 1.5rem;
+  }
+  .space {
+    font-size: 1.5rem;
+  }
+  .author {
+    font-size: 1.5rem;
+  }
+}

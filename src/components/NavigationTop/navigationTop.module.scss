@@ -1,0 +1,142 @@
+// leewei 02.14 navigationTop 样式
+// 颜色
+
+$progressBarBgColor: #000;
+$navContainerBg: #fff;
+
+// 适配大屏
+@media screen and (min-width: 1000px) {
+  .navTopContainer {
+    position: fixed;
+    top: 0;
+    height: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    background-color: $navContainerBg;
+    z-index: 99;
+    transition: all 1s ease-in;
+    .progressBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      background-color: $progressBarBgColor;
+    }
+
+    .features {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      .percent {
+        position: fixed;
+        top: 0;
+        left: 10px;
+        text-align: center;
+        line-height: 50px;
+      }
+
+      .catalogSwitch {
+        .catalogBtn {
+          position: fixed;
+          top: 0;
+          left: 60px;
+          text-align: center;
+          line-height: 50px;
+        }
+      }
+
+      .articleTitle {
+        text-align: center;
+        line-height: 50px;
+        font-size: 1rem;
+        width: 100%;
+      }
+
+      .menuBtn {
+      position: fixed;
+      top: 0;
+      right: 10px;
+        .menuIcon {
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
+  }
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px) {
+
+  .navTopContainer {
+    position: fixed;
+    top: 0;
+    height: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    background-color: $navContainerBg;
+    z-index: 99;
+    transition: all .5s ease-in;
+    .progressBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      background-color: $progressBarBgColor;
+    }
+
+    .features {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      .percent {
+        position: fixed;
+        top: 0;
+        left: 10px;
+        text-align: center;
+        line-height: 50px;
+      }
+
+      .catalogSwitch {
+        .catalogBtn {
+          position: fixed;
+          top: 0;
+          left: 60px;
+          text-align: center;
+          line-height: 50px;
+          display: none;
+        }
+      }
+
+      .articleTitle {
+        text-align: center;
+        line-height: 50px;
+        font-size: 1rem;
+        width: 100%;
+      }
+
+      .menuBtn {
+      position: fixed;
+      top: 0;
+      right: 10px;
+        .menuIcon {
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
+  }
+}
+
+ .navContainerHide {
+   display: none;
+   width: 0;
+   height: 0;
+   transition: all .5s ease-in-out;
+ }
