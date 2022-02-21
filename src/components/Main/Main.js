@@ -9,13 +9,13 @@ export default function Mains(props) {
 
   return (
     <div className={styles.mainContainer}>
-    {console.log(props.posts)}
+    {/* {console.log(props)} */}
       {/* 内容主体部分 */}
 
       {props.posts.map((item, index) => {
         {/* const {frontmatter:{date, description, tags, title, img}, slug}  = item; */}
         return (
-          <PostCard post={item} index = {index} key={item.slug}/>
+          <PostCard post={item} index = {index} key={item.slug} />
         );
       })}
       

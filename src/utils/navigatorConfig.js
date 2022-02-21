@@ -10,7 +10,7 @@ import email from "../../public/images/icons/email.png"
 const baseNav = [
   {
     id: 0,
-    text: "生活感悟",
+    text: "主页",
     url: "/",
   },
   {

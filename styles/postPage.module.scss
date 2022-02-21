@@ -1,0 +1,97 @@
+// 适配大屏
+
+// 全局颜色
+$fontCommonColor: #333;
+
+@media screen and (min-width: 1000px) {
+  .postPage {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin: 5% 0;
+    .articlesPost {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 60%;
+
+      .articleTitle {
+        > p {
+          font-size: 2rem;
+          color: $fontCommonColor;
+          font-weight: 700;
+        }
+      }
+      .articleContent {
+        p,
+        a,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        span {
+          margin-bottom: 1rem;
+          text-align: justify;
+          letter-spacing: 1px;
+          margin-block-start: 1rem;
+          margin-block-end: 1rem;
+          line-height: 2;
+        }
+
+        ul,
+        ol {
+          list-style: none;
+        }
+      }
+    }
+  }
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px) {
+  .postPage {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin: 5% 0;
+    .articlesPost {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 90%;
+
+      .articleTitle {
+        > p {
+          font-size: 2rem;
+          color: $fontCommonColor;
+          font-weight: 700;
+        }
+      }
+      .articleContent {
+        p,
+        a,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        span {
+          margin-bottom: 1rem;
+          text-align: justify;
+          letter-spacing: 1px;
+          margin-block-start: 1rem;
+          margin-block-end: 1rem;
+          line-height: 2;
+        }
+
+        ul,
+      ol {
+        list-style: none;
+      }
+      }
+    }
+  }
+}

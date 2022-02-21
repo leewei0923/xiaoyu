@@ -1,32 +1,46 @@
-import styles from './navigationTop.module.scss'
-import {  useEffect, useState } from 'react';
-import Navpage from '../NavigationPage/NavPage';
+import styles from "./navigationTop.module.scss";
+import { useEffect, useState } from "react";
+import Navpage from "../NavigationPage/NavPage";
 import classnames from "classnames";
+import { Debounce, Throttle } from "../../utils/utils";
+import { useSelector } from "react-redux";
 
 export default function Navigationtop() {
+  const [isNavTopHide, setIsNavTopHide] = useState(true);
+  const [isNavPageHide, setIsNavPage] = useState(true);
 
-const [isNavTopHide, setIsNavTopHide] = useState(true);
-const [isNavPageHide, setIsNavPage] = useState(true);
+  // 接收 从[slug].js(page)页获取标题
+  const pageTitle = useSelector((state) => {
+    return state.pageTitleChange.navTopTitle;
+  });
+
   useEffect(() => {
-    window.addEventListener('scroll', () => {
-// ToDO 节流
-      let offsetY = window.pageYOffset;
-      let clientY = document.body.clientHeight;
-      if (offsetY / clientY >= 0.35) {
-        setIsNavTopHide(false);
-      } else {
-        setIsNavTopHide(true);
-      }
+    // 用于控制 navTop 
+    let isMounted = false;
+    let navTopToggle = async () => {
+      window.addEventListener("scroll", () => {
+        // ToDO 节流
+        let offsetY = window.pageYOffset;
+        let clientY = document.body.clientHeight;
+        if (offsetY / clientY >= 0.15) {
+          if (!isMounted) setIsNavTopHide(false);
+        } else {
+          if (!isMounted) setIsNavTopHide(true);
+        }
+        // console.log("移动", window.pageYOffset, "页面高度", document.body.clientHeight)
+      });
+    };
+    navTopToggle();
 
-        
-      // console.log("移动", window.pageYOffset, "页面高度", document.body.clientHeight)
-    })
-  })
+    return () => {
+      isMounted = true;
+    };
+  }, []);
 
   // 导航的开关
-  const navPageToggle = function() {
+  const navPageToggle = function () {
     setIsNavPage(!isNavPageHide);
-  }
+  };
 
   // 用于
 
@@ -34,7 +48,6 @@ const [isNavPageHide, setIsNavPage] = useState(true);
     [styles.navContainerHide]: isNavTopHide,
     [styles.navTopContainer]: !isNavTopHide,
   });
-
 
   return (
     <div>
@@ -51,7 +64,7 @@ const [isNavPageHide, setIsNavPage] = useState(true);
             <span className={styles.catalogBtn}>目录</span>
           </div>
 
-          <p className={styles.articleTitle}> 主页 </p>
+          <p className={styles.articleTitle}> {pageTitle ? `『${pageTitle}』` : `『 主页 』`} </p>
 
           <div className={styles.menuBtn} onClick={navPageToggle}>
             <svg

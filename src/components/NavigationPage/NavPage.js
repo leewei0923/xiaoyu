@@ -42,7 +42,7 @@ export default function Navpage(props) {
                 </Link>
               </p>
             );
-          })}
+          })}    
         </div>
 
         <div className={styles.extensionPage}>

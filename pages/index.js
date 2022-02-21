@@ -4,8 +4,21 @@ import matter from "gray-matter";
 import Layout from "../src/components/Layout/Layout";
 import Mains from "../src/components/Main/Main";
 import Head from "next/head";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import bg from "../public/images/header-bg.jpg";
+import { changeBgImg, pageTitleChange } from "../src/store/action";
 
 export default function Home({ posts }) {
+  const dispatch = useDispatch();
+  // 改变 主页背景的 背景图片
+  dispatch(changeBgImg(bg.src));
+  // 改变主页背景的 标题
+  dispatch(pageTitleChange("主页"))
+
+
+   
+
   return (
     <>
       <Head>
@@ -19,7 +32,6 @@ export default function Home({ posts }) {
         {/* 文章概要 */}
         <Mains posts={posts}></Mains>
       </Layout>
-      ;
     </>
   );
 }
@@ -42,7 +54,6 @@ export async function getStaticProps() {
     );
 
     const { data: frontmatter } = matter(markdownWhiteMeta);
-
     return {
       slug,
       frontmatter,

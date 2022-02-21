@@ -2,12 +2,17 @@ import Link from "next/link";
 import Image from "next/image";
 import classnames from "classnames";
 import styles from "./postCard.module.scss";
+import { useEffect } from "react";
+import bg from "../../../../public/images/header-bg.jpg"
+import { timeFormatte } from "~/src/utils/timeFormatte";
 
-export default function PostCard({ post, index }) {
+export default function PostCard({ post, index}) {
   const {
     frontmatter: { date, description, tags, title, img },
     slug,
   } = post;
+
+  
 
   const postImage = classnames({
     [styles.postImage]: true,
@@ -27,7 +32,7 @@ export default function PostCard({ post, index }) {
           <Link href={`/articles/${slug}`}>
             <a>
               <Image
-                src={img}
+                src={img ? img : bg.src}
                 alt={title}
                 width={860}
                 height={580}
@@ -42,7 +47,7 @@ export default function PostCard({ post, index }) {
         {/* 文字展示部分 */}
 
         <div className={postText}>
-          <p className={styles.postTime}>一月 4日, 2022</p>
+          <p className={styles.postTime}>{timeFormatte(date, 'mixTime')}</p>
           <h3 className={styles.postTitle}>
             <Link href={`/articles/${slug}`}>
               <a>{title}</a>

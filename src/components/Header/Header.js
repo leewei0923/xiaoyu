@@ -1,8 +1,20 @@
-import styles from './header.module.css';
+import styles from "./header.module.css";
+import { useSelector } from "react-redux";
+import bg from "~/public/images/header-bg.jpg";
 
 export default function Headers() {
+  const imgUrl = useSelector((state) => {
+    return state.changeBgImg.imgUrl;
+  });
   return (
-    <header className={styles.headerBg}>
+    <header
+      className={styles.headerBg}
+      style={{
+        backgroundImage: `url(${imgUrl ? imgUrl : bg.src})`,
+        backgroundAttachment: "fixed",
+        backgroundSize: `cover`,
+      }}
+    >
       <div className={styles.mask}>
         {/* 名人名言  */}
 

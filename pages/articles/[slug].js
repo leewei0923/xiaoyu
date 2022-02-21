@@ -3,17 +3,57 @@ import path from "path";
 import matter from "gray-matter";
 import { marked } from "marked";
 import Layout from "../../src/components/Layout/Layout";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { changeBgImg, pageTitleChange } from "../../src/store/action";
+import styles from "../../styles/postPage.module.scss";
+import { handleMarkdown } from "../../src/utils/handleMarkdown";
+import hljs from "highlight.js";
+import "highlight.js/styles/Vs2015.css";
 
 export default function PostPage({
-  frontmatter: { title, date, img},
+  frontmatter: { title, date, img },
   slug,
   content,
 }) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    // 改变 header 图片背景
+    dispatch(changeBgImg(img));
+
+    // 改变 navTop 的标题
+    dispatch(pageTitleChange(title));
+    // 代码高亮
+
+    // document.querySelectorAll("pre code").forEach((block) => {
+    //   try {
+    //     hljs.highlightElement(block);
+    //   } catch (error) {
+    //     consoel.log("NavPage 有错误", error);
+    //   }
+    // });
+
+
+  }, [dispatch, img, content, title]);
+
+
+  
+  // console.log(handleMarkdown(marked(content)));
   return (
     <Layout>
-      <p>{title}</p>
-      <div>
-        <div dangerouslySetInnerHTML={{ __html: marked(content) }}></div>
+      <div className={styles.postPage}>
+        <div className={styles.articlesPost}>
+          <div className={styles.articleTitle}>
+            <p>{title}</p>
+          </div>
+          <div className={styles.meta}></div>
+          <div
+            className={styles.articleContent}
+            dangerouslySetInnerHTML={{ __html: marked(content) }}
+          ></div>
+        </div>
       </div>
     </Layout>
   );
