@@ -2,6 +2,9 @@
 
 // 全局颜色
 $fontCommonColor: #333;
+$pageBg: #f6f7f7;
+$selectCatalogColor: #25c2a0;
+$borderCommon: #9ce3d3;
 
 @media screen and (min-width: 1000px) {
   .postPage {
@@ -13,8 +16,10 @@ $fontCommonColor: #333;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 60%;
-
+      background-color: $pageBg;
+      width: 70%;
+      padding: 10px;
+      margin-right: 20px;
       .articleTitle {
         > p {
           font-size: 2rem;
@@ -43,6 +48,50 @@ $fontCommonColor: #333;
         ul,
         ol {
           list-style: none;
+        }
+      }
+// 锚点跳转的时候 避免有些内容被遮挡
+      h1[id]:before,
+      h2[id]:before,
+      h3[id]:before,
+      h4[id]:before,
+      h5[id]:before,
+      h6[id]:before {
+        content: "";
+        display: block;
+        margin-top: -60px !important;
+        height: 60px;
+        pointer-events: none;
+      }
+    }
+    .catalogLinkContainer {
+      width: 20%;
+      .catalogLinks {
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        top: 50px;
+        background-color: $pageBg;
+        .catalogLink {
+          text-decoration: none;
+          color: $fontCommonColor;
+          border-left: 2px solid $borderCommon;
+          padding: 0px 5px 0px 10px;
+          font-size: 0.7rem;
+          cursor: pointer;
+          &:hover {
+            color: $selectCatalogColor;
+          }
+        }
+        [data-type="h3"] {
+          text-indent: 1rem;
+        }
+
+        [data-type="h4"] {
+          text-indent: 20px;
+        }
+        .articleCatalogActive {
+          color: $selectCatalogColor;
         }
       }
     }
@@ -88,10 +137,16 @@ $fontCommonColor: #333;
         }
 
         ul,
-      ol {
-        list-style: none;
+        ol {
+          list-style: none;
+        }
       }
-      }
+    }
+
+    // 移动目录
+
+    .catalogLinks {
+      display: none;
     }
   }
 }

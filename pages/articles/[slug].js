@@ -9,7 +9,9 @@ import { changeBgImg, pageTitleChange } from "../../src/store/action";
 import styles from "../../styles/postPage.module.scss";
 import { handleMarkdown } from "../../src/utils/handleMarkdown";
 import hljs from "highlight.js";
-import "highlight.js/styles/Vs2015.css";
+// import "highlight.js/styles/Vs2015.css";
+import classnames from "classnames";
+import Navigationtop from "~/src/components/NavigationTop/NavTop";
 
 export default function PostPage({
   frontmatter: { title, date, img },
@@ -18,7 +20,27 @@ export default function PostPage({
 }) {
   const dispatch = useDispatch();
 
+  // ----
+  // 目录生成
+  // 处理和生成目录树
+  const catatlogList = handleMarkdown(marked(content));
+
+  // 跳转锚点
+
+  const scrollToAnchor = (anchorId) => {
+    if (anchorId) {
+      let anchorElemnt = document.getElementById(anchorId);
+      if (anchorElemnt) {
+        anchorElemnt.scrollIntoView({ block: "start", behavior: "smooth" });
+      }
+    }
+  };
+  //---
+
   useEffect(() => {
+    // 用于处理异步操作取消绑定
+
+    let isMounted = false;
 
     // 改变 header 图片背景
     dispatch(changeBgImg(img));
@@ -36,13 +58,14 @@ export default function PostPage({
     // });
 
 
+    return () => {
+      isMounted = true;
+    };
   }, [dispatch, img, content, title]);
 
-
-  
-  // console.log(handleMarkdown(marked(content)));
   return (
     <Layout>
+      <Navigationtop></Navigationtop>
       <div className={styles.postPage}>
         <div className={styles.articlesPost}>
           <div className={styles.articleTitle}>
@@ -53,6 +76,25 @@ export default function PostPage({
             className={styles.articleContent}
             dangerouslySetInnerHTML={{ __html: marked(content) }}
           ></div>
+        </div>
+
+        {/* 目录 */}
+
+        <div className={styles.catalogLinkContainer}>
+          <div className={styles.catalogLinks}>
+            {catatlogList.map((item) => {
+              return (
+                <span
+                  className={styles.catalogLink}
+                  key={item.text}
+                  onClick={() => scrollToAnchor(item.link)}
+                  data-type={item.type}
+                >
+                  {item.text}
+                </span>
+              );
+            })}
+          </div>
         </div>
       </div>
     </Layout>

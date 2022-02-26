@@ -14,12 +14,14 @@
 
 ## 功能进度日志 🎞
 
-- 2.14
 - [x] component --- header 
 - [x] component --- main 
 - [x] component --- footer
 - [ ] 美化滚动条
+- [x] 根据不同的页面切换不同的标题 利用redux
 - [ ] 
+
+
 
 ## 安装依赖 ✨
 
@@ -323,5 +325,208 @@ pageXOffset 和 pageYOffset 属性相等于 scrollX 和 scrollY 属性。
 ```js
 import  marked  from 'marked'; // 会报错
 import { marked } from 'marked'; // 正确
+```
+
+
+
+- 在react中使用行内样式时候发出警告
+
+```
+ Updating a style property during rerender (background) when a conflicting property is set (backgroundAttachment) can lead to styling bugs. To avoid this, don't mix shorthand and non-shorthand properties for the same value; instead, replace the shorthand with separate values.
+```
+
+It's just telling you to replace the `border` style property with the complete set of property to style borders, that is `borderWidth`, `borderStyle`, `borderColor`
+
+翻译过来就是避免使用比较宽泛的属性,比如设置背景图片 , 不使用background 需要使用backgroundImage
+
+
+
+- 在useEffect中使用异步操作，出现问题
+
+```
+ Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+```
+
+处理办法
+
+```js
+// 1
+useEffect(() => {
+    let change = () => {
+      dispatch(changeBgImg(bg.src));
+    };
+    change();
+
+    return () => {
+      change = null;
+    };
+  }, [dispatch]);
+
+
+// 2useEffect(() => {
+    let isMounted = false;
+    let navTopToggle = async () => {
+      window.addEventListener("scroll", () => {
+        // ToDO 节流
+        let offsetY = window.pageYOffset;
+        let clientY = document.body.clientHeight;
+        if (offsetY / clientY >= 0.35) {
+          if (!isMounted) setIsNavTopHide(false);
+        } else {
+          if (!isMounted) setIsNavTopHide(true);
+        }
+        // console.log("移动", window.pageYOffset, "页面高度", document.body.clientHeight)
+      });
+    };
+
+    navTopToggle();
+
+    return () => {
+        isMounted = true;
+    };
+  }, []);
+```
+
+- 如何在next中配置路径别名
+
+**next.config.js**
+
+```js
+const path = require('path');
+
+module.exports = {
+  webpack: config => {
+    config.resolve.alias['~'] = path.resolve(__dirname);
+    return config;
+  }
+};
+```
+
+可以使用~/ 的方法
+
+**jsconfig.json**
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"]
+    }
+  }
+}
+```
+
+
+
+- react获取dom hook                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+
+
+
+
+
+- react 锚点定位
+
+
+
+
+
+- 提示错误
+
+```
+Cannot update a component (`Headers`) while rendering a different component (`Home`). To locate the bad setState() call inside `Home`, follow the stack trace as described
+```
+
+解决方案:
+
+```
+This warning was introduced since React V16.3.0.
+
+If you are using functional components you could wrap the setState call into useEffect.
+
+Code that does not work:
+```
+
+https://stackoverflow.com/questions/62336340/cannot-update-a-component-while-rendering-a-different-component-warning
+
+
+
+- 使用sticky 实现fixed效果
+
+要小于父元素的高度.
+
+```html
+document.write(`<!DOCTYPE html>
+<html>
+<head>
+<style>
+.title {
+    position: sticky;
+    top: 0;
+    padding: 5px;
+    background-color: #ccc;
+}
+.item {
+    height: 50px;
+    line-height: 50px;
+}
+</style>
+</head>
+<body>
+    <h1>Contacts</h1>
+    <div class="title">A</div>
+    <div class="item">啊三</div>
+    <div class="item">啊五</div>
+    <div class="item">apple</div>
+    <div class="item">Alph</div>
+    <div class="item">ABC</div>
+    <div class="item">apple</div>
+    <div class="item">Alph</div>
+    <div class="item">ABC</div>
+    <div class="item">apple</div>
+    <div class="item">Alph</div>
+    <div class="item">ABC</div>
+    <div class="title">B</div>
+    <div class="item">Banana</div>
+    <div class="item">Back</div>
+    <div class="item">Banana</div>
+    <div class="item">Back</div>
+    <div class="item">Banana</div>
+    <div class="item">Back</div>
+    <div class="item">Banana</div>
+    <div class="item">Back</div>
+    <div class="item">Banana</div>
+    <div class="item">Back</div>
+    <div class="title">C</div>
+    <div class="item">China</div>
+    <div class="item">Cat</div>
+    <div class="item">Cookie</div>
+    <div class="item">Cake</div>
+    <div class="item">Color</div>
+    <div class="item">China</div>
+    <div class="item">Cat</div>
+    <div class="item">Cookie</div>
+    <div class="item">Cake</div>
+    <div class="item">Color</div>
+</body>
+</html>`)
+```
+
+
+
+- 固定定位造成内容被遮挡
+
+- 使用CSS3解决因“固定定位”造成页面内锚点跳转内容被遮盖的问题
+
+
+
+```css
+h1[id]:before, h2[id]:before, h3[id]:before, h4[id]:before, h5[id]:before, h6[id]:before {
+    content: "";
+    display: block;
+    margin-top: -60px !important;
+    height: 60px;
+    pointer-events: none;
+}
 ```
 

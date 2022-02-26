@@ -7,7 +7,7 @@ export default function Layout({children}) {
     <div>
       <Headers></Headers>
       {/* topBar */}
-      <NavTop></NavTop>
+      {/* <NavTop></NavTop> */}
       {/* <Mains></Mains> */}
       {children}
       <Footer></Footer>

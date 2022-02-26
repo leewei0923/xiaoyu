@@ -1,13 +1,12 @@
 import styles from "./navigationTop.module.scss";
 import { useEffect, useState } from "react";
 import Navpage from "../NavigationPage/NavPage";
-import classnames from "classnames";
-import { Debounce, Throttle } from "../../utils/utils";
 import { useSelector } from "react-redux";
 
 export default function Navigationtop() {
-  const [isNavTopHide, setIsNavTopHide] = useState(true);
   const [isNavPageHide, setIsNavPage] = useState(true);
+  // navtopBar 进度条长度
+  const [topBarLen, setTopBarLen] = useState(0);
 
   // 接收 从[slug].js(page)页获取标题
   const pageTitle = useSelector((state) => {
@@ -19,13 +18,18 @@ export default function Navigationtop() {
     let isMounted = false;
     let navTopToggle = async () => {
       window.addEventListener("scroll", () => {
-        // ToDO 节流
+        // 用来计算进度条百分比
         let offsetY = window.pageYOffset;
         let clientY = document.body.clientHeight;
+        let barLen = ((offsetY / clientY)*100).toFixed(0);
         if (offsetY / clientY >= 0.15) {
-          if (!isMounted) setIsNavTopHide(false);
+          if (!isMounted){
+            setTopBarLen(barLen);
+          } 
         } else {
-          if (!isMounted) setIsNavTopHide(true);
+          if (!isMounted){
+            setTopBarLen(barLen);
+          } 
         }
         // console.log("移动", window.pageYOffset, "页面高度", document.body.clientHeight)
       });
@@ -42,29 +46,25 @@ export default function Navigationtop() {
     setIsNavPage(!isNavPageHide);
   };
 
-  // 用于
 
-  let navContainer = classnames({
-    [styles.navContainerHide]: isNavTopHide,
-    [styles.navTopContainer]: !isNavTopHide,
-  });
+ 
 
   return (
-    <div>
-      <div className={navContainer}>
+    <>
+      <div className={styles.navTopContainer}>
         {/* progress bar | 进度条 */}
         <div className={styles.progressBar}></div>
 
         {/* 百分比 | 目录 | 标题 | 按钮 */}
         <div className={styles.features}>
           <div className={styles.percent}>
-            <span>70%</span>
-          </div>
-          <div className={styles.catalogSwitch}>
-            <span className={styles.catalogBtn}>目录</span>
+            <span>{topBarLen}%</span>
           </div>
 
-          <p className={styles.articleTitle}> {pageTitle ? `『${pageTitle}』` : `『 主页 』`} </p>
+          <p className={styles.articleTitle}>
+            {" "}
+            {pageTitle ? `『${pageTitle}』` : `『 主页 』`}{" "}
+          </p>
 
           <div className={styles.menuBtn} onClick={navPageToggle}>
             <svg
@@ -86,6 +86,6 @@ export default function Navigationtop() {
         </div>
       </div>
       <Navpage isNavPageHide={isNavPageHide} navPageToggle={navPageToggle} />
-    </div>
+    </>
   );
 }
