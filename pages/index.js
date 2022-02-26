@@ -8,16 +8,17 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import bg from "../public/images/header-bg.jpg";
 import { changeBgImg, pageTitleChange } from "../src/store/action";
+import Navigationtop from "~/src/components/NavigationTop/NavTop";
 
 export default function Home({ posts }) {
   const dispatch = useDispatch();
-  // 改变 主页背景的 背景图片
-  dispatch(changeBgImg(bg.src));
-  // 改变主页背景的 标题
-  dispatch(pageTitleChange("主页"))
 
-
-   
+  useEffect(() => {
+    // 改变 主页背景的 背景图片
+    dispatch(changeBgImg(bg.src));
+    // 改变主页背景的 标题
+    dispatch(pageTitleChange(`主页`));
+  });
 
   return (
     <>
@@ -29,6 +30,8 @@ export default function Home({ posts }) {
         <meta name="apple-mobile-web-app-capable" content="no" />
       </Head>
       <Layout>
+      {/*  */}
+      <Navigationtop></Navigationtop>
         {/* 文章概要 */}
         <Mains posts={posts}></Mains>
       </Layout>
@@ -36,7 +39,7 @@ export default function Home({ posts }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps() { 
   // 获取articles 目录
   const files = fs.readdirSync(path.join("articles"));
 
