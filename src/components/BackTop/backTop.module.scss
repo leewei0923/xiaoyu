@@ -1,0 +1,52 @@
+$iconColor: #7f7f7f;
+$bgcolor: #ebedf0;
+
+.backTopContainer {
+  width: 40px;
+  height: 40px;
+  background-color: $bgcolor;
+  position: fixed;
+  right: 30px;
+  bottom: 50px;
+  
+  .icon {
+    display: block;
+   
+  }
+  .icon::before {
+    content: "";
+    display: block;
+    position: relative;
+    top: 20px;
+    width: 20px;
+    height: 7px;
+    background-color: $iconColor;
+    transform: rotate(-45deg);
+    line-height: 40px;
+    text-align: center;
+  }
+  .icon::after {
+    content: "";
+    position: relative;
+    left: 20px;
+    display: block;
+    width: 20px;
+    height: 7px;
+    background-color: $iconColor;
+    transform: rotate(45deg);
+    line-height: 40px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .backTopContainer {
+    right: 30px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .backTopContainer {
+    right: 60px;
+  }
+}

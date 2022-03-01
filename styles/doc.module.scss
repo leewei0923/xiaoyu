@@ -1,0 +1,144 @@
+// 全局颜色
+$bgLeftSideColor: #e1e1e1;
+$pageBg: #f6f7f7;
+$selectCatalogColor: #25c2a0;
+$fontCommonColor: #333;
+$borderCommon: #9ce3d3;
+$tabelBorderColor: #dadde1;
+$aColor: #0fc1ee;
+
+
+
+// 适配大屏
+@media screen and (min-width: 1000px) {
+  .docContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  // 左边导航栏
+  .leftNav {
+    width: 20%;
+    height: 100vh;
+    position: sticky;
+    top: 60px;
+    max-height: calc(100vh - 50px - 2rem);
+    overflow-y: auto;
+  }
+
+  // 中间文章内容
+  .articleContent {
+    width: 58%;
+    margin: 0 10px;
+    padding: 10px;
+
+    li {
+      list-style: none;
+    }
+
+    // 锚点跳转的时候 避免有些内容被遮挡
+    h1[id]:before,
+    h2[id]:before,
+    h3[id]:before,
+    h4[id]:before,
+    h5[id]:before,
+    h6[id]:before {
+      content: "";
+      display: block;
+      margin-top: -60px !important;
+      height: 60px;
+      pointer-events: none;
+    }
+
+    table {
+      border-collapse: collapse;
+      display: block;
+      margin-bottom: 1rem;
+
+      thead {
+        display: table-header-group;
+        vertical-align: middle;
+        border-color: inherit;
+        tr {
+          th {
+            background-color: inherit;
+            color: inherit;
+            font-weight: 700;
+            line-height: 50px;
+            border: 1px solid $tabelBorderColor;
+            text-align: center;
+          }
+        }
+      }
+
+      tr {
+        border-bottom: 1px solid $tabelBorderColor;
+        background-color: transparent;
+        border-top: 1px solid $tabelBorderColor;
+
+        td {
+          background-color: inherit;
+          color: inherit;
+          font-weight: 700;
+
+          border: 1px solid $tabelBorderColor;
+          padding: 0.75rem;
+        }
+      }
+    }
+
+    a {
+      color: $aColor;
+      text-decoration: none;
+      transition: color 200ms cubic-bezier(0.08, 0.52, 0.52, 1);
+      font-weight: 800;
+      font-size: medium;
+    }
+  }
+
+  // 右边目录
+  .rightContainer {
+    width: 25%;
+
+    .catalogLinks {
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 60px;
+      max-height: calc(100vh - 50px - 2rem);
+      overflow-y: auto;
+
+      .catalogLink {
+        text-decoration: none;
+        color: $fontCommonColor;
+        border-left: 2px solid $borderCommon;
+        padding: 0px 5px 0px 10px;
+        font-size: 0.7rem;
+        cursor: pointer;
+        &:hover {
+          color: $selectCatalogColor;
+        }
+      }
+
+      [data-type="h3"] {
+        text-indent: 1rem;
+      }
+
+      [data-type="h4"] {
+        text-indent: 20px;
+      }
+      .articleCatalogActive {
+        color: $selectCatalogColor;
+      }
+    }
+  }
+}
+  
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px){
+
+} 
+
+

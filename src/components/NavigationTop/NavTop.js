@@ -53,7 +53,10 @@ export default function Navigationtop() {
     <>
       <div className={styles.navTopContainer}>
         {/* progress bar | 进度条 */}
-        <div className={styles.progressBar}></div>
+        <div
+          className={styles.progressBar}
+          style={{ width: `${topBarLen}%` }}
+        ></div>
 
         {/* 百分比 | 目录 | 标题 | 按钮 */}
         <div className={styles.features}>

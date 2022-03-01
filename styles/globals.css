@@ -1,8 +1,11 @@
+
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
+
 
 html,
 body {
@@ -114,6 +117,9 @@ video {
   vertical-align: baseline;
 }
 
+pre {
+  border-radius: 5px;
+}
 /* 
 // 适配大屏
 @media screen and (min-width: 1000px) {
