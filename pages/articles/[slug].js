@@ -12,6 +12,7 @@ import hljs from "highlight.js";
 // import "highlight.js/styles/Vs2015.css";
 import classnames from "classnames";
 import Navigationtop from "~/src/components/NavigationTop/NavTop";
+import BackTop from "~/src/components/BackTop/BackTop";
 
 export default function PostPage({
   frontmatter: { title, date, img },
@@ -97,6 +98,7 @@ export default function PostPage({
           </div>
         </div>
       </div>
+      <BackTop />
     </Layout>
   );
 }

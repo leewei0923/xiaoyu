@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import bg from "../public/images/header-bg.jpg";
 import { changeBgImg, pageTitleChange } from "../src/store/action";
 import Navigationtop from "~/src/components/NavigationTop/NavTop";
+import BackTop from "~/src/components/BackTop/BackTop";
 
 export default function Home({ posts }) {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ export default function Home({ posts }) {
       <Navigationtop></Navigationtop>
         {/* 文章概要 */}
         <Mains posts={posts}></Mains>
+        <BackTop />
       </Layout>
     </>
   );

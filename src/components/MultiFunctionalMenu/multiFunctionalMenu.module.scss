@@ -1,0 +1,136 @@
+
+$menuColor: rgba(255, 255, 255, 0.7);
+$menuBgColor: rgba(0, 0, 0, 0.2);
+$menuColor: #7f7f7f;
+$menuHover: cornflowerblue;
+$fontCommon: #ffffff;
+$menuColor: #000000;
+
+// 大屏
+@media screen and(min-width:1000px) {
+  .menu {
+    display: none;
+  }
+}
+
+
+// 大屏幕
+@media screen and(max-width:1000px) {
+  .menu {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    right: 30px;
+    bottom: 60px;
+    cursor: pointer;
+
+    .menuToggle {
+      position: relative;
+      width: 40px;
+      height: 5px;
+      background: $menuColor;
+      top: 15px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 2.5px;
+      transition: transform 0.5s, top 0.5s;
+    }
+
+    .menuToggle::before,
+    .menuToggle::after {
+      content: "";
+      display: block;
+      width: 40px;
+      height: 5px;
+      background: $menuColor;
+      position: absolute;
+      border-radius: 2.5px;
+      transition: transform 0.5s, top 0.5s;
+    }
+    .menuToggle::before {
+      top: -10px;
+    }
+
+    .menuToggle::after {
+      top: 10px;
+    }
+
+    .inVisible {
+      visibility: hidden;
+    }
+  }
+
+  .show {
+    background-color: transparent;
+
+    .menuToggle {
+      background-color: transparent;
+      transition: transform 0.5s, top 0.5s;
+    }
+    .menuToggle::before,
+    .menuToggle::after {
+      top: 0;
+      transform-origin: 50% 50%;
+      transition: transform 0.5s, top 0.5s;
+    }
+    .menuToggle::before {
+      transform: rotate(-45deg);
+    }
+
+    .menuToggle::after {
+      transform: rotate(45deg);
+    }
+    // 具体菜单功能
+
+    ul {
+      transition: all 0.5s ease-in;
+      .menuItem:nth-child(1) {
+        transform: rotate(-50deg) translateX(-60px);
+      }
+      .menuItem:nth-child(2) {
+        transform: rotate(0deg) translateX(-60px);
+      }
+      .menuItem:nth-child(3) {
+        transform: rotate(50deg) translateX(-60px);
+      }
+    }
+
+    ul {
+      .menuItem {
+        position: absolute;
+        display: block;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: 0.5s;
+        background-color: $menuBgColor;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span {
+          display: block;
+          font-size: 10px;
+          font-weight: 700;
+          color: $menuColor;
+        }
+      }
+    }
+
+    ul {
+      .menuItem:nth-child(1) span {
+        transform: rotate(50deg);
+      }
+      .menuItem:nth-child(3) span {
+        transform: rotate(-50deg);
+      }
+    }
+  }
+}
+

@@ -13,6 +13,9 @@ import { handleMarkdown } from "~/src/utils/handleMarkdown";
 import BackTop from "~/src/components/BackTop/BackTop";
 import hljs from "highlight.js";
 import "highlight.js/styles/Vs2015.css";
+import MultiFunctionalMenu from "~/src/components/MultiFunctionalMenu/MultiFunctionalMenu";
+import classnames from 'classnames';
+
 
 export default function Doc(props) {
   const dispatch = useDispatch();
@@ -46,7 +49,36 @@ export default function Doc(props) {
       }
     }
   };
+  
   //---
+
+  // 改变移动端导航栏状态
+
+  const [isLeftHide, setLeftHide] = useState(true);
+
+  const leftNav = classnames({
+    [styles.leftNav]: true,
+    [styles.ZeroWidth]: isLeftHide,
+  });
+
+  const changeLeftNav = () => {
+    setLeftHide(!isLeftHide);
+  }
+
+
+  // 改变文章目录状态
+
+  const [isRightHide, setRightHide] = useState(true);
+
+  const changeRightNav = () => {
+    setRightHide(!isRightHide);
+  }
+
+  const rightContainer = classnames({
+    [styles.rightContainer]: true,
+    [styles.ZeroWidth]: isRightHide,
+  });
+  
 
   useEffect(() => {
     // 改变标题
@@ -70,7 +102,7 @@ export default function Doc(props) {
 
       {/* 左边文章导航 */}
       <main className={styles.docContainer}>
-        <aside className={styles.leftNav}>
+        <aside className={leftNav}>
           <nav className={styles.menu}>
             {floderList.map((item, preIndex) => {
               return (
@@ -114,7 +146,7 @@ export default function Doc(props) {
         </article>
 
         {/* 右边目录 */}
-        <div className={styles.rightContainer}>
+        <div className={rightContainer}>
           <div className={styles.catalogLinks}>
             {catatlogList.map((item) => {
               return (
@@ -134,6 +166,7 @@ export default function Doc(props) {
 
       {/* 返回顶部 */}
       <BackTop />
+      <MultiFunctionalMenu click={[changeLeftNav,changeRightNav]} title={["导航", "目录"]} barState={[isLeftHide, isRightHide]}/>
       {/* 底部 */}
       <Footer></Footer>
     </>
