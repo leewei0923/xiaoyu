@@ -1,0 +1,9 @@
+import React from 'react'
+import AdminFrame from '~/src/components/admin/adminFrame'
+export default function AdminIndex() {
+  return (
+    <AdminFrame>
+      <div>首页</div>
+    </AdminFrame>
+  )
+}

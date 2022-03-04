@@ -9,6 +9,14 @@ const initlPageTitle = {
   navTopTitle: ``,
 };
 
+const initTheKey = {
+  theKey: [''],
+}
+
+const initSubKey = {
+  subKey: [''],
+}
+
 const imgUrlReducer = (state = initialImgUrl, { type, changeBg }) => {
   switch (type) {
     case types.IMGURL:
@@ -28,9 +36,29 @@ const pageReducer = (state = initlPageTitle, { type, title }) => {
   }
 };
 
+const theKeyReducer = (state = initTheKey, {type, key}) => {
+  switch (type) {
+    case types.THEKEY:
+      return { theKey: key };
+    default:
+      return state;
+  }
+}
+
+const SubKeyReducer = (state = initSubKey, { type, key }) => {
+  switch (type) {
+    case types.SUBKEY:
+      return { subKey: key };
+    default:
+      return state;
+  }
+};
+
 const reducers = {
   changeBgImg: imgUrlReducer,
   pageTitleChange: pageReducer,
+  changeTheKey: theKeyReducer,
+  changeSubKey: SubKeyReducer,
 };
 
 export default combineReducers(reducers);

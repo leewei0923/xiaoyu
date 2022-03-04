@@ -3,7 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { marked } from "marked";
 import Layout from "../../src/components/Layout/Layout";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { changeBgImg, pageTitleChange } from "../../src/store/action";
 import styles from "../../styles/postPage.module.scss";
@@ -13,6 +13,7 @@ import hljs from "highlight.js";
 import classnames from "classnames";
 import Navigationtop from "~/src/components/NavigationTop/NavTop";
 import BackTop from "~/src/components/BackTop/BackTop";
+import MultiFunctionalMenu from "~/src/components/MultiFunctionalMenu/MultiFunctionalMenu";
 
 export default function PostPage({
   frontmatter: { title, date, img },
@@ -37,6 +38,19 @@ export default function PostPage({
     }
   };
   //---
+
+  // 隐藏目录
+
+  const [isCatalogHIde, setCatalogHide] = useState(true);
+
+  const changeCatalogState = () => {
+    setCatalogHide(!isCatalogHIde);
+  }
+
+  const catalogLinkContainer = classnames({
+    [styles.catalogLinkContainer]: true,
+    [styles.ZeroWidth]: isCatalogHIde,
+  });
 
   useEffect(() => {
     // 用于处理异步操作取消绑定
@@ -81,7 +95,7 @@ export default function PostPage({
 
         {/* 目录 */}
 
-        <div className={styles.catalogLinkContainer}>
+        <div className={catalogLinkContainer}>
           <div className={styles.catalogLinks}>
             {catatlogList.map((item) => {
               return (
@@ -99,6 +113,11 @@ export default function PostPage({
         </div>
       </div>
       <BackTop />
+      <MultiFunctionalMenu
+        click={[changeCatalogState]}
+        title={["目录"]}
+        barState={[isCatalogHIde]}
+      />
     </Layout>
   );
 }

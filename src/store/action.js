@@ -14,3 +14,17 @@ export const pageTitleChange = (title) => (dispatch) => {
     title: title
   })
 }
+
+export const changeTheKey = (key) => (dispatch) => {
+  dispatch({
+    type: types.THEKEY,
+    key: key,
+  });
+};
+
+export const changeSubKey = (key) => (dispatch) => {
+  dispatch({
+    type: types.SUBKEY,
+    key: key,
+  });
+};
