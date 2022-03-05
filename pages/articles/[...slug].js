@@ -123,14 +123,21 @@ export default function PostPage({
 }
 
 export async function getStaticPaths() {
-  const files = fs.readdirSync(path.join("articles"));
+  const files = [];
+  const slugs = [];
+  fs.readdirSync(path.join("articles")).map((dir) => {
+    return fs.readdirSync(path.join(`articles/${dir}`)).map((file) => {
+      files.push([dir, file]);
+    });
+  });
+
+  console.log(files)
   const paths = files.map((filename) => ({
     params: {
-      slug: filename.replace(".md", ""),
+      slug: [filename[0], filename[1].replace(".md", "")],
     },
   }));
 
-  console.log("paths",paths)
 
   return {
     paths,
@@ -140,7 +147,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { slug } }) {
   const markdownWithMeta = fs.readFileSync(
-    path.join("articles", slug + ".md"),
+    path.join("articles", slug.join('/') + ".md"),
     "utf-8"
   );
 

@@ -16,9 +16,9 @@ export default function BackTop(props) {
   const backTopShow = () => {
     let backTop = document.documentElement.scrollTop || document.body.scrollTop;
 
-    if (backTop > (visibilityHeight ?? 400) && !isVisible) {
+    if (backTop > (visibilityHeight ?? 450) && !isVisible) {
       setIsVisible(true);
-    } else if (backTop <= (visibilityHeight ?? 400) && isVisible) {
+    } else if (backTop <= (visibilityHeight ?? 450) && isVisible) {
       setIsVisible(false);
     }
   };

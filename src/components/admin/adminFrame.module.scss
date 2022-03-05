@@ -1,0 +1,20 @@
+
+// 适配大屏
+@media screen and (min-width: 1000px) {
+  .layout {
+    width: 100%;
+    max-height: 100vh;
+    min-height: 100vh;
+
+    .onCollapsed {
+      width: 100%;
+      
+    }
+  }
+  
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px){
+
+} 

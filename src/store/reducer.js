@@ -10,12 +10,16 @@ const initlPageTitle = {
 };
 
 const initTheKey = {
-  theKey: [''],
-}
+  theKey: [""],
+};
 
 const initSubKey = {
-  subKey: [''],
-}
+  subKey: [""],
+};
+
+const initPageMode = {
+  modeState: false,
+};
 
 const imgUrlReducer = (state = initialImgUrl, { type, changeBg }) => {
   switch (type) {
@@ -36,14 +40,14 @@ const pageReducer = (state = initlPageTitle, { type, title }) => {
   }
 };
 
-const theKeyReducer = (state = initTheKey, {type, key}) => {
+const theKeyReducer = (state = initTheKey, { type, key }) => {
   switch (type) {
     case types.THEKEY:
       return { theKey: key };
     default:
       return state;
   }
-}
+};
 
 const SubKeyReducer = (state = initSubKey, { type, key }) => {
   switch (type) {
@@ -54,11 +58,21 @@ const SubKeyReducer = (state = initSubKey, { type, key }) => {
   }
 };
 
+const pageModeReducer = (state = initPageMode, { type, pState }) => {
+  switch (type) {
+    case types.PAGEMODE:
+      return { modeState: pState };
+    default:
+      return state;
+  }
+};
+
 const reducers = {
   changeBgImg: imgUrlReducer,
   pageTitleChange: pageReducer,
   changeTheKey: theKeyReducer,
   changeSubKey: SubKeyReducer,
+  changePageState: pageModeReducer,
 };
 
 export default combineReducers(reducers);

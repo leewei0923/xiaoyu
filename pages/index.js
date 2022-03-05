@@ -10,7 +10,6 @@ import bg from "../public/images/header-bg.jpg";
 import { changeBgImg, pageTitleChange } from "../src/store/action";
 import Navigationtop from "~/src/components/NavigationTop/NavTop";
 import BackTop from "~/src/components/BackTop/BackTop";
-
 export default function Home({ posts }) {
   const dispatch = useDispatch();
 
@@ -31,25 +30,35 @@ export default function Home({ posts }) {
         <meta name="apple-mobile-web-app-capable" content="no" />
       </Head>
       <Layout>
-      {/*  */}
-      <Navigationtop></Navigationtop>
+        {/*  */}
+        <Navigationtop></Navigationtop>
         {/* 文章概要 */}
         <Mains posts={posts}></Mains>
-        <BackTop />
+        <BackTop  />
       </Layout>
     </>
   );
 }
 
-export async function getStaticProps() { 
+export async function getStaticProps() {
   // 获取articles 目录
-  const files = fs.readdirSync(path.join("articles"));
+  const files = [];
+  const types = [];
+  fs.readdirSync(path.join("articles")).map((dir) => {
+    return fs.readdirSync(path.join(`articles/${dir}`)).map((file) => {
+      files.push(`${dir}/${file}`);
+      types.push(dir);
+    });
+  });
+
 
   // 获取 slug
 
-  const posts = files.map((filename) => {
+  const posts = files.map((filename, index) => {
     // 创建slug
     const slug = filename.replace(".md", "");
+    // 文章类型
+    const type = types[index];
 
     // 获取 格式化内容
 
@@ -58,10 +67,12 @@ export async function getStaticProps() {
       "utf-8"
     );
 
-    const { data: frontmatter } = matter(markdownWhiteMeta);
+    const { data: frontmatter ,content} = matter(markdownWhiteMeta);
     return {
       slug,
+      type,
       frontmatter,
+      content,
     };
   });
 

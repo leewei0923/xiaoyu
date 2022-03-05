@@ -1,0 +1,67 @@
+// 全局颜色
+
+$imgBorderColor: #4cb6ff;
+
+// 适配大屏
+@media screen and (min-width: 1000px) {
+  .container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: auto;
+    margin: 30px 0;
+    .desc {
+      margin: 10px 0;
+      p {
+      }
+    }
+
+    .photoContainer {
+      width: 90%;
+      text-align: center;
+      .img {
+        margin: 5px;
+        border-radius: 10px;
+        width: 90%;
+        height: 100%;
+      }
+
+      .mask{
+        width: 90%;
+        height: 100%;
+        border-radius: 10px;
+      }
+    }
+  }
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px) {
+  .container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: auto;
+    margin: 30px 0;
+    .desc {
+      margin: 10px 0;
+      p {
+      }
+    }
+
+    .photoContainer {
+      width: 90%;
+      text-align: center;
+      .img {
+        margin: 5px;
+        border-radius: 10px;
+        width: 90%;
+        height: 100%;
+      }
+    }
+  }
+}

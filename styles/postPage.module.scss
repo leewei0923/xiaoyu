@@ -221,6 +221,7 @@ $aColor: #0fc1ee;
         background-color: $pageBg;
         display: flex;
         flex-direction: column;
+        min-height: 100vh;
 
         .catalogLink {
           text-decoration: none;

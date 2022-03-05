@@ -1,0 +1,154 @@
+$bgColorDark: #23232c;
+$fontCommonColor: #ffffff;
+$aColor: #0fc1ee;
+$tagBg: #13131a;
+
+// 大屏
+@media screen and(min-width:1000px) {
+  .techCard {
+    width: 85%;
+    height: 200px;
+    background-color: $bgColorDark;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    .title {
+      line-height: 40px;
+      text-align: center;
+      font-size: 28px;
+      margin: 10px;
+      color: $fontCommonColor;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .summary {
+      width: 90%;
+      height: 80px;
+      color: $fontCommonColor;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 1.1rem;
+      text-indent: 2rem;
+      text-align: justify;
+      margin: auto;
+      cursor: pointer;
+      a {
+        font-size: 25px;
+        font-weight: 700;
+        color: $aColor;
+
+        &:hover {
+          border-bottom: 3px solid $aColor;
+        }
+      }
+    }
+
+    .mixBox {
+      display: flex;
+      flex-direction: row;
+      font-size: 20px;
+      margin: 10px;
+      width: 95%;
+      position: relative;
+      justify-content: space-between;
+      .date {
+        color: $fontCommonColor;
+        position: relative;
+        left: 10px;
+        background-color: $tagBg;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 1rem;
+      }
+
+      .tags {
+        color: $fontCommonColor;
+        position: relative;
+        right: 10px;
+        margin: 3px 0;
+
+        span {
+          background-color: $tagBg;
+          margin: 0 5px;
+          padding: 10px;
+          font-size: 1rem;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+}
+
+// 小屏
+@media screen and(max-width:1000px) {
+  .techCard {
+    width: 90%;
+    height: 200px;
+    background-color: $bgColorDark;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    .title {
+      text-align: center;
+      font-size: 20px;
+      margin: 10px;
+      color: $fontCommonColor;
+      font-weight: 800;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 80%;
+    }
+
+    .summary {
+      width: 90%;
+      color: $fontCommonColor;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.9rem;
+      text-indent: 2rem;
+      text-align: justify;
+      flex: 0 1 auto;
+      margin: auto;
+      a {
+        font-size: 1rem;
+        font-weight: 700;
+        color: $aColor;
+
+        &:hover {
+          border-bottom: 3px solid $aColor;
+        }
+      }
+    }
+
+    .mixBox {
+      display: flex;
+      flex-direction: row;
+      font-size: 1rem;
+      margin: 10px;
+      width: 95%;
+      position: relative;
+      justify-content: space-between;
+      .date {
+        color: $fontCommonColor;
+        position: relative;
+        background-color: $tagBg;
+        padding: 5px;
+        border-radius: 10px;
+        font-size: 0.8rem;
+      }
+
+      .tags {
+        color: $fontCommonColor;
+        position: relative;
+        margin: 3px 0;
+        span {
+          background-color: $tagBg;
+          margin: 0 1px;
+          padding: 5px;
+          font-size: 0.8rem;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+}

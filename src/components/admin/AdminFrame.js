@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTheKey, changeSubKey } from "~/src/store/action";
+import styles from "./adminFrame.module.scss";
 
 export default function AdminFrame(props) {
   const { children } = props;
@@ -24,7 +25,7 @@ export default function AdminFrame(props) {
   const [collapsed, setCollapsed] = useState(false);
   
   
-  const onCollapse = (e) => {
+  const onTrigger = (e) => {
     setCollapsed(!collapsed);
   };
 
@@ -51,8 +52,8 @@ export default function AdminFrame(props) {
     <>
       <Navigationtop></Navigationtop>
 
-      <Layout hasSider>
-        <Sider>
+      <Layout hasSider className={styles.layout}>
+        <Sider trigger={null} collapsible collapsed={collapsed}>
           <Menu
             theme="dark"
             defaultSelectedKeys={theKey}
@@ -61,6 +62,13 @@ export default function AdminFrame(props) {
             onOpenChange={(e) => onSubMenu(e)}
             defaultOpenKeys={subKey}
           >
+            <Menu.Item key="myArticles">
+              <Button
+                onClick={() => onTrigger()}
+                icon={<LeftOutlined />}
+                className={styles.onCollapsed}
+              >点击</Button>
+            </Menu.Item>
             <Menu.Item key="siteData" icon={<PieChartOutlined />}>
               <Link href="/admin/options/siteData">数据一览</Link>
             </Menu.Item>
@@ -98,10 +106,6 @@ export default function AdminFrame(props) {
 
         <Layout className="site-layout">
           <Content style={{ margin: "0 16px" }}>
-            <Breadcrumb style={{ margin: "16px 0" }}>
-              <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Bill</Breadcrumb.Item>
-            </Breadcrumb>
             <div
               className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}

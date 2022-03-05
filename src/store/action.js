@@ -15,6 +15,7 @@ export const pageTitleChange = (title) => (dispatch) => {
   })
 }
 
+// 记住 admin 导航菜单展开
 export const changeTheKey = (key) => (dispatch) => {
   dispatch({
     type: types.THEKEY,
@@ -26,5 +27,14 @@ export const changeSubKey = (key) => (dispatch) => {
   dispatch({
     type: types.SUBKEY,
     key: key,
+  });
+};
+
+// 首页文章展现形式, 默认 混合
+
+export const changePageMode = (state) => (dispatch) => {
+  dispatch({
+    type: types.SUBKEY,
+    modeState: state,
   });
 };
