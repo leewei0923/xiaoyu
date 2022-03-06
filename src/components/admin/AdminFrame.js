@@ -62,12 +62,12 @@ export default function AdminFrame(props) {
             onOpenChange={(e) => onSubMenu(e)}
             defaultOpenKeys={subKey}
           >
-            <Menu.Item key="myArticles">
+            <Menu.Item key="triBtn">
               <Button
                 onClick={() => onTrigger()}
                 icon={<LeftOutlined />}
                 className={styles.onCollapsed}
-              >点击</Button>
+              ></Button>
             </Menu.Item>
             <Menu.Item key="siteData" icon={<PieChartOutlined />}>
               <Link href="/admin/options/siteData">数据一览</Link>
@@ -82,7 +82,9 @@ export default function AdminFrame(props) {
               title="内容管理"
             >
               <Menu.Item key="myArticles">
-                <Link href="/admin/options/siteData">我的文章</Link>
+                <Link href="/admin/contentManagement/myArticles">
+                  我的文章
+                </Link>
               </Menu.Item>
               <Menu.Item key="gallery">图库</Menu.Item>
               <Menu.Item key="tags">标签</Menu.Item>

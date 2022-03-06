@@ -1,0 +1,29 @@
+// 适配大屏
+@media screen and (min-width: 1000px) {
+  .topBtnBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px 0;
+
+    .titleInput {
+      outline: none;
+      border: none;
+      padding: 10px;
+      font-size: 1.2rem;
+      background: none;
+    }
+    .options {
+      .draft {
+      }
+
+      .save {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px) {
+}
