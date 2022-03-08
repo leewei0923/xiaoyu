@@ -82,21 +82,30 @@ export default function AdminFrame(props) {
               title="内容管理"
             >
               <Menu.Item key="myArticles">
-                <Link href="/admin/contentManagement/myArticles">
-                  我的文章
-                </Link>
+                <Link href="/admin/contentManagement/myArticles">我的文章</Link>
               </Menu.Item>
-              <Menu.Item key="gallery">图库</Menu.Item>
-              <Menu.Item key="tags">标签</Menu.Item>
-              <Menu.Item key="notions">公告</Menu.Item>
+
+              <Menu.Item key="drafts">
+                <Link href="/admin/contentManagement/drafts">草稿箱</Link>
+              </Menu.Item>
+              <Menu.Item key="gallery">
+                <Link href="/admin/contentManagement/gallery">我的图库</Link>
+              </Menu.Item>
+              <Menu.Item key="tags">
+                <Link href="/admin/contentManagement/tags">标签</Link>
+              </Menu.Item>
+              <Menu.Item key="notions">
+                <Link href="/admin/contentManagement/drafts">公告</Link>
+              </Menu.Item>
             </SubMenu>
             <SubMenu key="sub2" icon={<TeamOutlined />} title="游览">
-              <Menu.Item key="message">留言板</Menu.Item>
+              <Menu.Item key="message">
+                <Link href="/admin/others/message">留言板</Link>
+              </Menu.Item>
               <Menu.Item key="friendLink">友链</Menu.Item>
             </SubMenu>
             <SubMenu key="sub3" icon={<TeamOutlined />} title="内容">
               <Menu.Item key="projrect">我的作品</Menu.Item>
-              <Menu.Item key="drafts">草稿箱</Menu.Item>
             </SubMenu>
             <Menu.Item key="aboutMe" icon={<FileOutlined />}>
               关于作者

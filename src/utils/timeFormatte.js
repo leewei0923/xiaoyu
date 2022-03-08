@@ -4,12 +4,14 @@
  * 时间格式化
  */
 
-const timeFormatte = (date, type="yy-mm-dd") => {
+const timeFormatte = (date, type="common") => {
   switch (type) {
     case "yy-mm-dd":
       return handleShortDelimiter(date);
     case "mixTime":
       return handleMixTime(date);
+    case "common":
+      return handleCommonTime(date);
     default:
       return;
   }
@@ -41,5 +43,16 @@ const handleMixTime = (date) => {
   ];
   return `${numberCN[Number(month) - 1]}月 ${day}日, ${year}`;
 };
+
+// 生成2022-10-01 12:00 格式的时间
+
+const handleCommonTime = (date) => {
+ return new Date(date)
+          .toISOString()
+          .replace(/T/g, " ")
+          .replace(/\.[\d]{3}Z/, "")
+          .replace(/:/g, ":")
+          .split(" ");
+}
 
 export { timeFormatte };

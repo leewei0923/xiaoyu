@@ -1,15 +1,19 @@
 import AdminFrame from "~/src/components/admin/adminFrame";
-import { Table, Tag, Radio, Divider, Checkbox, Button } from "antd";
-import { useState, useEffect } from "react";
-import { generateID } from "~/src/utils/utils";
-import axios from "axios";
-import Link from "next/link";
+import {
+  Table,
+  Radio,
+  Divider,
+  Button,
+  Checkbox,
+  Modal,
+  Form,
+  Input,
+  Upload,
+} from "antd";
+import { useState } from "react";
 
-const count = 3;
-const articleListUrl = `http://localhost:3000/api/articles/list/1`;
-
-export default function MyArticles() {
-  const [listData, setListData] = useState("");
+export default function drafts() {
+  // 按钮设置
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -20,8 +24,6 @@ export default function MyArticles() {
       // );
     },
   };
-
-  // 操作区
 
   const onEdit = () => {
     console.log("修改");
@@ -48,39 +50,28 @@ export default function MyArticles() {
 
   const columns = [
     {
-      title: "ID",
-      dataIndex: "key",
+      title: "id",
+      dataIndex: "id",
     },
     {
       title: "名称",
-      dataIndex: "slug",
-      render: (text) => {
-        return (
-          <Link href={`/articles/${text}`}>
-            <a>{text.split("/")[1]}</a>
-          </Link>
-        );
-      },
+      dataIndex: "names",
+    },
+    {
+      title: "日期",
+      dataIndex: "date",
     },
     {
       title: "类型",
       dataIndex: "type",
-      render: (text) => {
-        if (text == "life") {
-          return <Tag color={"geekblue"}>生活日常</Tag>;
-        } else {
-          return <Tag color={"geekblue"}>技术</Tag>;
-        }
-      },
     },
     {
-      title: "创建日期",
-      dataIndex: "date",
-      render: text => text.join(' ')
+      title: "标签",
+      dataIndex: "tags",
     },
     {
       title: "操作",
-      dataIndex: "options",
+      dataIndex: "action",
       render: () =>
         artOption.map((item) => (
           <Button
@@ -96,18 +87,6 @@ export default function MyArticles() {
     },
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(articleListUrl);
-
-      const { articlesInfoList } = result.data;
-
-      setListData(articlesInfoList);
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <AdminFrame>
       <Table
@@ -116,7 +95,7 @@ export default function MyArticles() {
           ...rowSelection,
         }}
         columns={columns}
-        dataSource={listData}
+        // dataSource={listData}
       />
     </AdminFrame>
   );
