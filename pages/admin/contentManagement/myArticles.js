@@ -5,7 +5,6 @@ import { generateID } from "~/src/utils/utils";
 import axios from "axios";
 import Link from "next/link";
 
-const count = 3;
 const articleListUrl = `http://localhost:3000/api/articles/list/1`;
 
 export default function MyArticles() {

@@ -1,0 +1,153 @@
+$shadowBackground: #eaeaea;
+$grayFontColor: #999;
+$fontDeepBlack: #000;
+$hoveColor: orange;
+
+// 适配大屏
+@media screen and (min-width: 1000px) {
+  .container {
+    width: 100%;
+    position: relative;
+    ul {
+      width: 80%;
+      margin: auto;
+      .title {
+        font-size: 25px;
+        font-weight: 700;
+      }
+
+      li {
+        position: relative;
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        line-height: 50px;
+        border-bottom: 1px dashed $grayFontColor;
+        &:hover {
+          color: $hoveColor;
+        }
+        a {
+          em {
+            padding: 5px;
+            background-color: $shadowBackground;
+            color: $grayFontColor;
+          }
+
+          span {
+            color: $fontDeepBlack;
+            margin: 0 10px;
+            font-weight: 700;
+          }
+        }
+
+        .tags {
+          position: absolute;
+          right: 5px;
+          display: flex;
+          flex-direction: row;
+          height: 50px;
+          .tag {
+            text-align: center;
+            line-height: 50px;
+            text-align: center;
+            color: $grayFontColor;
+            transform: translateX(-10px);
+            margin: 0 5px;
+            border-radius: 5px;
+          }
+
+          .type {
+            line-height: 40px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 800;
+            background-color: $shadowBackground;
+            color: $grayFontColor;
+            margin: auto;
+            border-radius: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px) {
+  .container {
+    width: 100%;
+    position: relative;
+    ul {
+      width: 90%;
+      margin: auto;
+      .title {
+        font-size: 25px;
+        font-weight: 700;
+      }
+
+      li {
+        position: relative;
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        line-height: 50px;
+        border-bottom: 1px dashed $grayFontColor;
+        &:hover {
+          color: $hoveColor;
+        }
+        a {
+          em {
+            padding: 5px;
+            background-color: $shadowBackground;
+            color: $grayFontColor;
+          }
+
+          span {
+            color: $fontDeepBlack;
+            margin: 0 10px;
+            width: 100px;
+            font-weight: 700;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+        }
+
+        .tags {
+          position: absolute;
+          right: 5px;
+          display: flex;
+          flex-direction: row;
+          height: 50px;
+          .tag {
+            text-align: center;
+            line-height: 50px;
+            text-align: center;
+            color: $grayFontColor;
+            transform: translateX(-10px);
+            margin: 0 5px;
+            border-radius: 5px;
+          }
+
+          .type {
+            line-height: 40px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 800;
+            background-color: $shadowBackground;
+            color: $grayFontColor;
+            margin: auto;
+            border-radius: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  
+  .tag {
+    display: none;
+  }
+}

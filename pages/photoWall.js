@@ -7,6 +7,7 @@ import { pageTitleChange } from "~/src/store/action";
 import styles from "~/styles/photoWall.module.scss";
 import imgLinks from "~/src/utils/imgUrl";
 import { Image } from "antd";
+import BackTop from "~/src/components/BackTop/BackTop";
 
 export default function Photowall() {
   const dispatch = useDispatch();
@@ -35,13 +36,12 @@ export default function Photowall() {
                 src={item.url}
                 alt={item.desc}
                 className={styles.img}
-                maskClassName={styles.mask}
               />
             );
           })}
         </div>
       </main>
-
+      <BackTop />
       <Footer></Footer>
     </>
   );

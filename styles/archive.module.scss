@@ -1,0 +1,39 @@
+$numberColor: #1e80ff;
+
+// 适配大屏
+@media screen and (min-width: 1000px) {
+  .container {
+    min-height: 100vh;
+    position: relative;
+
+    .articleCount {
+      line-height: 30px;
+      text-align: center;
+      margin: 50px 0 0 0;
+      span {
+        font-size: 20px;
+        color: $numberColor;
+        padding: 10px;
+      }
+    }
+  }
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px) {
+  .container {
+    min-height: 100vh;
+    position: relative;
+
+    .articleCount {
+      line-height: 30px;
+      text-align: center;
+      margin: 50px 0 0 0;
+      span {
+        font-size: 20px;
+        color: $numberColor;
+        padding: 10px;
+      }
+    }
+  }
+}
