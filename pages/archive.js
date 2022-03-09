@@ -1,0 +1,51 @@
+import Headers from "~/src/components/Header/Header";
+import Navigationtop from "~/src/components/NavigationTop/NavTop";
+import Footer from "~/src/components/Footer/Footer";
+import styles from "~/styles/archive.module.scss";
+import { useDispatch } from "react-redux";
+import { changeBgImg, pageTitleChange } from "../src/store/action";
+import { useEffect, useState } from "react";
+import ArchiveItem from "~/src/components/ArchiveItem/ArchiveItem";
+import BackTop from "~/src/components/BackTop/BackTop";
+import axios from "axios";
+
+export default function Archive() {
+  const dispatch = useDispatch();
+  const [artcileData, setArticleData] = useState([]);
+  const [ArticleCount, setArticleCount] = useState("0");
+
+  
+  useEffect(() => {
+    const fetchData = async function () {
+      dispatch(pageTitleChange(`归档`));
+      const result = await axios(
+        "http://localhost:3000/api/articles/getArchiveInfo"
+      );
+
+      const { articlesCount, info } = result.data;
+
+      setArticleData(info);
+      setArticleCount(articlesCount);
+    };
+
+    fetchData();
+  }, []);
+  return (
+    <>
+      <Headers></Headers>
+      <Navigationtop></Navigationtop>
+      <div className={styles.container}>
+        <p className={styles.articleCount}>
+          一共有<span>{ArticleCount ?? 0}</span>篇文章
+        </p>
+
+        {artcileData.map((item) => {
+        
+          return <ArchiveItem info={item} key={item.year} />;
+        })}
+      </div>
+      <BackTop />
+      <Footer />
+    </>
+  );
+}
