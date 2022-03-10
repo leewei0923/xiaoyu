@@ -107,6 +107,9 @@ export default function AdminFrame(props) {
             <SubMenu key="sub3" icon={<TeamOutlined />} title="内容">
               <Menu.Item key="projrect">我的作品</Menu.Item>
             </SubMenu>
+            <Menu.Item key="account" icon={<FileOutlined />}>
+              <Link href="/admin/account">账号管理</Link>
+            </Menu.Item>
             <Menu.Item key="aboutMe" icon={<FileOutlined />}>
               关于作者
             </Menu.Item>
