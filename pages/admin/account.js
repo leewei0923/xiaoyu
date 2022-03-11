@@ -69,6 +69,14 @@ export default function Account() {
       dataIndex: "permission",
     },
     {
+      title: "ip",
+      dataIndex: "ip",
+    },
+    {
+      title: "平台",
+      dataIndex: "platform",
+    },
+    {
       title: "操作",
       dataIndex: "options",
       render: () =>
@@ -106,20 +114,27 @@ export default function Account() {
   // TODO: AXIOS
 
   const onSave = () => {
+
     if ((userName ?? "").length < 2 || (password ?? "").length < 2) {
       message.error("用户名 或 密码 字数不够, 请重新检查");
     } else {
-      axios
-        .post("http://localhost:3001/api/login/insertUser", {
+
+      const {
+        userAgent,
+        userAgentData: { platform },
+      } = window.navigator;
+      axios.post("http://localhost:3001/api/login/insertUser", {
           name: userName,
           password: password,
-          permission: curSelect
+          permission: curSelect,
+          platform,
+          userAgent
         })
         .then(function (res) {
           console.log(res);
         })
         .catch(function (err) {
-          console.log("出现错误account",err);
+          console.log("出现错误account", err);
         });
     }
   };
@@ -145,9 +160,13 @@ export default function Account() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get(
-        "http://localhost:3001/api/login/getUserInfo"
-      );
+      const result = await axios({
+        url: "http://localhost:3001/api/login/getUserInfo",
+        method: "get",
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
       setDataList(result.data.info);
     };
 
@@ -207,3 +226,6 @@ export default function Account() {
     </AdminFrame>
   );
 }
+
+
+
