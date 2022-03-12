@@ -1,5 +1,6 @@
 // leewei 22.02.19 额外的小代码
 import md5 from "blueimp-md5";
+import { Base64 } from "js-base64";
 
 // 防抖
 
@@ -51,5 +52,24 @@ const onEncrypt = (str, key) => {
 const generateID = (str) => {
   return onEncrypt(str);
 };
+//  base64 转换为 字符串
+const decodeBase64 = (str) => {
 
-export { Throttle, Debounce, UseDebounce, onEncrypt, generateID };
+  if(typeof str != 'string') {
+    return "error"
+  }
+  return Buffer.from(str, "base64").toString("binary");
+};
+// 字符转换为 base64
+
+const encodeBase64 = (str) => Base64.encode(str);
+
+export {
+  Throttle,
+  Debounce,
+  UseDebounce,
+  onEncrypt,
+  generateID,
+  decodeBase64,
+  encodeBase64,
+};

@@ -14,15 +14,44 @@ import {
 } from "antd";
 import { useState, useEffect, useRef } from "react";
 import styles from "~/styles/admin/account.module.scss";
-import axios from "axios";
-import { use } from "marked";
 import { timeFormatte } from "~/src/utils/timeFormatte";
+import { apiAccountUser, apiInsertUser, apiOndelete } from "~/src/request/api";
+import { decodeBase64 } from "~/src/utils/utils";
 
 export default function Account() {
+  /**
+   * 用于用户名获取请求网络
+   */
+  const fetchData = function fetchUserData() {
+    // 集成化 api 管理获取用户账号资料
+    apiAccountUser().then((res) => {
+      setDataList(res.data.info);
+    });
+  };
+
   // 操作区
 
-  const onDelete = () => {
-    console.log("删除");
+  const onDelete = (e) => {
+    const { _id } = e;
+    const [name, permission] = decodeBase64(localStorage.getItem('userInfo')).split(' ');
+
+    if (permission === "admin") {
+      apiOndelete({ deleteContent: [{ _id}], name: name }).then(
+        (res) => {
+          const { status } = res.data;
+          if (status == "ok") {
+            message.success("删除成功");
+            // 调用请求网络 刷新页面
+            fetchData();
+          }
+
+          console.log(res);
+        }
+      ).catch(err => console.log("account 52",err))  
+    } else {
+      message.warn("权限不够, 无法执行该操作");
+    }
+    // api 请求
   };
 
   const artOption = [
@@ -34,7 +63,7 @@ export default function Account() {
     },
   ];
 
-  // 表格配置
+  // 表格前checkbox 选中事件
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -46,6 +75,7 @@ export default function Account() {
     },
   };
 
+  // 表格表头
   const columns = [
     {
       title: "ID",
@@ -79,11 +109,11 @@ export default function Account() {
     {
       title: "操作",
       dataIndex: "options",
-      render: () =>
+      render: (text, record) =>
         artOption.map((item) => (
           <Button
             key={item.key}
-            onClick={item.click}
+            onClick={() => item.click(record)}
             type={item.type}
             size={`small`}
             style={{ margin: `0 5px` }}
@@ -108,34 +138,44 @@ export default function Account() {
   // 关闭 model
 
   const onCancel = () => {
+    // 内容初始化
+    setUsername("");
+    setPassword("");
+    setCurSelect("visitor");
     setModelVisible(false);
   };
 
   // TODO: AXIOS
 
   const onSave = () => {
-
     if ((userName ?? "").length < 2 || (password ?? "").length < 2) {
       message.error("用户名 或 密码 字数不够, 请重新检查");
     } else {
-
       const {
         userAgent,
         userAgentData: { platform },
       } = window.navigator;
-      axios.post("http://localhost:3001/api/login/insertUser", {
-          name: userName,
-          password: password,
-          permission: curSelect,
-          platform,
-          userAgent
-        })
-        .then(function (res) {
-          console.log(res);
-        })
-        .catch(function (err) {
-          console.log("出现错误account", err);
-        });
+
+      // api 添加用户资料
+      apiInsertUser({
+        name: userName,
+        password: password,
+        permission: curSelect,
+        platform,
+        userAgent,
+      }).then((res) => {
+        const { status, msg } = res.data;
+        if (status == "ok") {
+          message.success(msg);
+          // 内容初始化
+          setUsername("");
+          setPassword("");
+          setCurSelect("visitor");
+          fetchData();
+        } else {
+          message.error(msg);
+        }
+      });
     }
   };
 
@@ -159,17 +199,6 @@ export default function Account() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios({
-        url: "http://localhost:3001/api/login/getUserInfo",
-        method: "get",
-        headers: {
-          authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-      setDataList(result.data.info);
-    };
-
     fetchData();
   }, []);
 
@@ -178,6 +207,15 @@ export default function Account() {
       <Button type="primary" onClick={() => onShowModel()}>
         添加账号
       </Button>
+
+      <Button
+        type="danger"
+        onClick={() => onShowModel()}
+        style={{ margin: "0 10px" }}
+      >
+        批量删除
+      </Button>
+
       <Divider />
       <Table
         rowSelection={{
@@ -204,6 +242,7 @@ export default function Account() {
           <Form.Item label="账号">
             <Input
               name="username"
+              value={userName}
               onChange={(e) => getUsernameText(e)}
             />
           </Form.Item>
@@ -211,6 +250,7 @@ export default function Account() {
           <Form.Item label="密码">
             <Input
               name="password"
+              value={password}
               onChange={(e) => getPasswordText(e)}
             />
           </Form.Item>
@@ -226,6 +266,3 @@ export default function Account() {
     </AdminFrame>
   );
 }
-
-
-

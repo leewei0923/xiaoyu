@@ -8,24 +8,22 @@ import { useEffect, useState } from "react";
 import ArchiveItem from "~/src/components/ArchiveItem/ArchiveItem";
 import BackTop from "~/src/components/BackTop/BackTop";
 import axios from "axios";
+import { apiArchiveInfo } from "~/src/request/api";
 
 export default function Archive() {
   const dispatch = useDispatch();
-  const [artcileData, setArticleData] = useState([]);
-  const [ArticleCount, setArticleCount] = useState("0");
+  const [artcileData, setArticleData] = useState([]); // 文章信息
+  const [ArticleCount, setArticleCount] = useState("0"); // 文章数量
 
-  
   useEffect(() => {
-    const fetchData = async function () {
+    const fetchData =  function () {
       dispatch(pageTitleChange(`归档`));
-      const result = await axios(
-        "http://localhost:3000/api/articles/getArchiveInfo"
-      );
-
-      const { articlesCount, info } = result.data;
-
-      setArticleData(info);
-      setArticleCount(articlesCount);
+      // 集成化 api 管理 
+      apiArchiveInfo().then((res) => {
+        const { articlesCount, info } = res.data;
+        setArticleData(info);
+        setArticleCount(articlesCount);
+      });
     };
 
     fetchData();
@@ -40,7 +38,6 @@ export default function Archive() {
         </p>
 
         {artcileData.map((item) => {
-        
           return <ArchiveItem info={item} key={item.year} />;
         })}
       </div>

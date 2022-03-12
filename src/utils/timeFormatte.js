@@ -4,7 +4,7 @@
  * 时间格式化
  */
 
-const timeFormatte = (date, type="common") => {
+const timeFormatte = (date, type = "common") => {
   switch (type) {
     case "yy-mm-dd":
       return handleShortDelimiter(date);
@@ -47,12 +47,12 @@ const handleMixTime = (date) => {
 // 生成2022-10-01 12:00 格式的时间
 
 const handleCommonTime = (date) => {
- return new Date(date)
-          .toISOString()
-          .replace(/T/g, " ")
-          .replace(/\.[\d]{3}Z/, "")
-          .replace(/:/g, ":")
-          .split(" ");
-}
+  return new Date(date)
+    .toISOString()
+    .replace(/T/g, " ")
+    .replace(/\.[\d]{3}Z/, "")
+    .replace(/:/g, ":")
+    .split(" ");
+};
 
 export { timeFormatte };

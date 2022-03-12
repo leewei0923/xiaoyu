@@ -1,6 +1,6 @@
 import Navigationtop from "~/src/components/NavigationTop/NavTop";
 import Footer from "~/src/components/Footer/Footer";
-import { Layout, Menu, Breadcrumb, Button } from "antd";
+import { Layout, Menu, Breadcrumb, Button, message } from "antd";
 import {
   PieChartOutlined,
   FileOutlined,
@@ -8,23 +8,26 @@ import {
   UserOutlined,
   FormOutlined,
   LeftOutlined,
+  LoginOutlined,
 } from "@ant-design/icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTheKey, changeSubKey } from "~/src/store/action";
 import styles from "./adminFrame.module.scss";
+import { decodeBase64 } from "~/src/utils/utils";
 
 export default function AdminFrame(props) {
   const { children } = props;
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { Content, Sider } = Layout;
   const { SubMenu } = Menu;
 
   const [collapsed, setCollapsed] = useState(false);
-  
-  
+
+  // 导航栏向左缩小
   const onTrigger = (e) => {
     setCollapsed(!collapsed);
   };
@@ -36,8 +39,8 @@ export default function AdminFrame(props) {
 
   const onSubMenu = (e) => {
     dispatch(changeSubKey([...e]));
-  }
-
+  };
+  // 用于保持导航栏选中的状态
   const theKey = useSelector((state) => {
     return state.changeTheKey.theKey;
   });
@@ -46,7 +49,26 @@ export default function AdminFrame(props) {
     return state.changeSubKey.subKey;
   });
 
- // ----
+  // ----
+
+  const logout = function loginOut() {
+    localStorage.removeItem("token");
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const expTime = JSON.parse(decodeBase64(token.split(".")[1])).exp;
+      if (Date.now() > expTime * 1000) {
+        message.error("token过期，请重新登录");
+        router.push("/admin/login");
+      }
+    } else {
+      message.error("token不存在或无效");
+
+      router.push("/admin/login");
+    }
+  }, [router]);
 
   return (
     <>
@@ -112,6 +134,15 @@ export default function AdminFrame(props) {
             </Menu.Item>
             <Menu.Item key="aboutMe" icon={<FileOutlined />}>
               关于作者
+            </Menu.Item>
+            <Menu.Item key="logOut">
+              <Button
+                onClick={() => logout()}
+                className={styles.onCollapsed}
+                icon={<LoginOutlined />}
+              >
+                退出
+              </Button>
             </Menu.Item>
           </Menu>
 
