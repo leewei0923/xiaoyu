@@ -1,6 +1,73 @@
+
+$bgCommonColor: #ffffff;
+$blueColor: #8AAFDB;
+
 // 适配大屏
 @media screen and (min-width: 1000px) {
-  
+  .CenterConatiner {
+    
+    .userCard {
+      width: 90%;
+      background-color: $bgCommonColor;
+      display: flex;
+      height: 200px;
+      position: relative;
+      .avator {
+        width: 100px;
+        height: 100px;
+        background-color: cadetblue;
+        margin: auto 20px;
+        border-radius: 50%;
+      }
+
+      .userInfo {
+        margin: auto 0;
+        p {
+          margin: 0.5rem;
+          color: $blueColor;
+          span {
+            color: #000000;
+            font-size: 15px;
+            font-weight: 700;
+          }
+        }
+        .nickName {
+          font-size: 30px;
+          font-weight: 800;
+          color: #000000;
+        }
+
+        .motto {
+          
+        }
+
+        .company {
+
+        }
+
+        .email {
+
+        }
+      }
+
+      .options {
+        margin: 50px 40px;
+      }
+    }
+
+    .accountInfo {
+      width: 90%;
+      .history {
+        font-size: 18px;
+        span {
+          font-weight: 700;
+          margin-right: 100px;
+        }
+      }
+    }
+
+
+  }
   
 }
 

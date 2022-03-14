@@ -13,7 +13,7 @@ import {
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { changeTheKey, changeSubKey } from "~/src/store/action";
+import { changeTheKey, changeSubKey, changeUserName } from "~/src/store/action";
 import styles from "./adminFrame.module.scss";
 import { decodeBase64 } from "~/src/utils/utils";
 
@@ -64,6 +64,8 @@ export default function AdminFrame(props) {
     const token = localStorage.getItem("token");
     if (token) {
       const expTime = JSON.parse(decodeBase64(token.split(".")[1])).exp;
+      const loginName = JSON.parse(decodeBase64(token.split(".")[1])).data;
+      dispatch(changeUserName(loginName));
       if (Date.now() > expTime * 1000) {
         message.error("token过期，请重新登录");
         router.push("/admin/login");
@@ -73,7 +75,7 @@ export default function AdminFrame(props) {
 
       router.push("/admin/login");
     }
-  }, [router]);
+  }, [router, dispatch]);
 
   return (
     <>

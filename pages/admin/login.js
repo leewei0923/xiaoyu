@@ -8,17 +8,24 @@ import { timeFormatte } from "~/src/utils/timeFormatte";
 import { useRouter } from "next/router";
 import { decodeBase64, encodeBase64 } from "~/src/utils/utils";
 import { apiLoginIn } from "~/src/request/api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeUserName } from "~/src/store/action";
 
 export default function Login() {
+
   // next 路由
   const router = useRouter();
   const dispatch = useDispatch();
 
+
   // ref
   const username = useRef(null);
   const password = useRef(null);
+
+  // 从redux 获取
+  const loginName = useSelector((state) => {
+    return state.changeLoginUserName.userName;
+  });
 
   const onLogin = () => {
     const name = username.current.value;
@@ -28,8 +35,6 @@ export default function Login() {
       password: pwd,
     })
       .then(function (res) {
-
-        console.log(res);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem(
           "token-date",
@@ -51,6 +56,18 @@ export default function Login() {
         console.log("出现错误account", err);
       });
   };
+
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const tokenName = JSON.parse(decodeBase64(token.split(".")[1])).data;
+      if (loginName == tokenName) {
+        router.push("/admin");
+        
+      }
+    }
+  }, [loginName, router]);
 
   return (
     <>
@@ -80,3 +97,4 @@ export default function Login() {
   );
 }
 
+ 
