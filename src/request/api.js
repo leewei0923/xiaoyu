@@ -1,7 +1,7 @@
 import service from "./index";
 
-const host3000 = "http://localhost:3000/";
-const host3001 = "http://localhost:3001/";
+const host3000 = "http://127.0.0.1:3000/";
+const host3001 = "http://127.0.0.1:3001/";
 // 请求本地文章接口
 
 // pages\archive.js 用于文章归档 POST

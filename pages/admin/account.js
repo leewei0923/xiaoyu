@@ -20,6 +20,16 @@ import { decodeBase64 } from "~/src/utils/utils";
 
 export default function Account() {
   /**
+   * 全局
+   *
+   */
+  // name: 执行人(已登录人) name 权限 permission
+  const [userInfo, setUserInfo] = useState(''); 
+  const [name, permission] = decodeBase64(userInfo).split(" ");
+
+  /**----------------------- */
+
+  /**
    * 用于用户名获取请求网络
    */
   const fetchData = function fetchUserData() {
@@ -32,22 +42,24 @@ export default function Account() {
   // 操作区
 
   const onDelete = (e) => {
-    const { _id } = e;
-    const [name, permission] = decodeBase64(localStorage.getItem('userInfo')).split(' ');
+    const { _id, name: nameDelete } = e;
 
     if (permission === "admin") {
-      apiOndelete({ deleteContent: [{ _id}], name: name }).then(
-        (res) => {
+      if (nameDelete == name) {
+        message.warn("无法执行该操作!");
+        return;
+      }
+      // 执行删除用户
+      apiOndelete({ deleteContent: [{ _id, nameDelete }], name: name })
+        .then((res) => {
           const { status } = res.data;
           if (status == "ok") {
             message.success("删除成功");
             // 调用请求网络 刷新页面
             fetchData();
           }
-
-          console.log(res);
-        }
-      ).catch(err => console.log("account 52",err))  
+        })
+        .catch((err) => console.log("account 52", err));
     } else {
       message.warn("权限不够, 无法执行该操作");
     }
@@ -133,7 +145,12 @@ export default function Account() {
 
   // 打开model
   const onShowModel = () => {
-    setModelVisible(true);
+    if (permission !== "admin") {
+      message.warn("权限不够");
+      return;
+    } else {
+      setModelVisible(true);
+    }
   };
   // 关闭 model
 
@@ -199,7 +216,16 @@ export default function Account() {
   };
 
   useEffect(() => {
-    fetchData();
+    let isMouted = false;
+    if (!isMouted) {
+      fetchData();
+      setUserInfo(localStorage.getItem("userInfo"));
+    }
+    
+
+    return () => {
+      isMouted = true;
+    };
   }, []);
 
   return (

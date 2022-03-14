@@ -5,7 +5,7 @@ import { generateID } from "~/src/utils/utils";
 import axios from "axios";
 import Link from "next/link";
 
-const articleListUrl = `http://localhost:3000/api/articles/list/1`;
+const articleListUrl = `http://127.0.0.1:3000/api/articles/list/1`;
 
 export default function MyArticles() {
   const [listData, setListData] = useState("");

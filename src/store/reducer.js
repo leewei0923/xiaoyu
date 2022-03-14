@@ -21,6 +21,11 @@ const initPageMode = {
   modeState: false,
 };
 
+const initLoginUser = {
+  userName: '',
+}
+
+// 更改 headers 背景图
 const imgUrlReducer = (state = initialImgUrl, { type, changeBg }) => {
   switch (type) {
     case types.IMGURL:
@@ -31,6 +36,7 @@ const imgUrlReducer = (state = initialImgUrl, { type, changeBg }) => {
   }
 };
 
+// 更改navTop的title
 const pageReducer = (state = initlPageTitle, { type, title }) => {
   switch (type) {
     case types.PAGETITLE:
@@ -58,6 +64,7 @@ const SubKeyReducer = (state = initSubKey, { type, key }) => {
   }
 };
 
+// 使用
 const pageModeReducer = (state = initPageMode, { type, pState }) => {
   switch (type) {
     case types.PAGEMODE:
@@ -67,12 +74,28 @@ const pageModeReducer = (state = initPageMode, { type, pState }) => {
   }
 };
 
+
+/**
+ * 用于 
+ */
+
+const loginUserReducer = (state = initLoginUser, {type, name}) => {
+  switch (type) {
+    case types.LOGINUSER:
+      return { userName: name };
+    default:
+      return state;
+  }
+}
+
+
 const reducers = {
-  changeBgImg: imgUrlReducer,
+  changeBgImg: imgUrlReducer, 
   pageTitleChange: pageReducer,
   changeTheKey: theKeyReducer,
   changeSubKey: SubKeyReducer,
   changePageState: pageModeReducer,
+  changeLoginUserName: loginUserReducer,
 };
 
 export default combineReducers(reducers);

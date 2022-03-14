@@ -49,10 +49,15 @@ export default function AdminFrame(props) {
     return state.changeSubKey.subKey;
   });
 
+  const loginUserName = useSelector((state) => {
+    return state.changeLoginUserName.userName;
+  })
+
   // ----
 
   const logout = function loginOut() {
     localStorage.removeItem("token");
+    router.push("/admin/login");
   };
 
   useEffect(() => {
@@ -133,7 +138,7 @@ export default function AdminFrame(props) {
               <Link href="/admin/account">账号管理</Link>
             </Menu.Item>
             <Menu.Item key="aboutMe" icon={<FileOutlined />}>
-              关于作者
+              <Link href="/admin/mine">{`欢迎 ${loginUserName}`}</Link>
             </Menu.Item>
             <Menu.Item key="logOut">
               <Button

@@ -38,3 +38,13 @@ export const changePageMode = (state) => (dispatch) => {
     modeState: state,
   });
 };
+
+
+// 在切换admin页面的保持登录名称不变
+
+export const changeUserName = (name) => (dispatch) => {
+  dispatch({
+    type: types.LOGINUSER,
+    name,
+  })
+}

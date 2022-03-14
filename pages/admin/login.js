@@ -8,10 +8,13 @@ import { timeFormatte } from "~/src/utils/timeFormatte";
 import { useRouter } from "next/router";
 import { decodeBase64, encodeBase64 } from "~/src/utils/utils";
 import { apiLoginIn } from "~/src/request/api";
+import { useDispatch } from "react-redux";
+import { changeUserName } from "~/src/store/action";
 
 export default function Login() {
   // next 路由
   const router = useRouter();
+  const dispatch = useDispatch();
 
   // ref
   const username = useRef(null);
@@ -25,6 +28,8 @@ export default function Login() {
       password: pwd,
     })
       .then(function (res) {
+
+        console.log(res);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem(
           "token-date",
@@ -35,7 +40,8 @@ export default function Login() {
           encodeBase64(res.data.name + " " + res.data.permission)
         );
         if (res.data.status == "ok") {
-          message.success("登录成功");
+          message.success(`欢迎 ${res.data.name}`);
+          dispatch(changeUserName(res.data.name));
           router.push("/admin/");
         } else {
           message.warn("登录失败");
@@ -73,3 +79,4 @@ export default function Login() {
     </>
   );
 }
+
