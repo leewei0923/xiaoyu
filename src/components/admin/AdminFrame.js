@@ -68,6 +68,7 @@ export default function AdminFrame(props) {
       dispatch(changeUserName(loginName));
       if (Date.now() > expTime * 1000) {
         message.error("token过期，请重新登录");
+        localStorage.removeItem("token");
         router.push("/admin/login");
       }
     } else {

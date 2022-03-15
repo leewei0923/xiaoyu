@@ -31,3 +31,11 @@ export const apiOndelete = (options) =>
 export const apiLoginIn = (options) =>
   service.post(`${host3001}api/login/loginIn`, options);
 
+// pages\admin\mine.js 用户个性信息获取
+export const apiPersonalInfo = (options) =>
+  service.post(`${host3001}api/login/getPersonInfo`, options);
+
+
+// pages\admin\mine.js 用户个性信息插入
+export const apiInsertPersonalInfo = (options) =>
+  service.post(`${host3001}api/login/insertPersonalInfo`, options);

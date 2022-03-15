@@ -1,38 +1,139 @@
 import AdminFrame from "~/src/components/admin/adminFrame";
 import styles from "~/styles/admin/mine.module.scss";
-import { Button, Divider, Modal, Input } from "antd";
-import { useState } from "react";
+import { Button, Divider, Modal, Input, Form, InputNumber } from "antd";
+import { useState, useEffect } from "react";
+import { decodeBase64 } from "~/src/utils/utils";
+import { apiInsertPersonalInfo, apiPersonalInfo } from "~/src/request/api";
+import { timeFormatte } from "~/src/utils/timeFormatte";
+import { message } from "antd";
+import { useRouter } from "next/router";
 
 export default function Mine() {
+  // 全局路由
+
+  const router = useRouter();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  // 用户的个性信息
+  const [personalInfo, setPersonalInfo] = useState({});
+
+  // 全局的loginname 登录账号的name
+
+  const [loginName, setLoginName] = useState("");
+
+  /**
+   * 2022.03.15
+   * 获取数据
+   */
+  const fetchData = function fetchPersonalData(n) {
+    apiPersonalInfo({ name: n }).then((res) => {
+      if (res.data.status == "ok") {
+        setPersonalInfo(res.data.info);
+      }
+    });
+  };
+
+
+  /**
+   * 2022.03.15
+   * 打开model
+   */
 
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
+  /**
+   * 2022.03.15
+   * 取消保存
+   */
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
+  /**
+   * 2022.03.15
+   * 提交保存
+   */
+  const onSave = (values) => {
+    const { company, email, motto, nickname, website } = values.user;
+
+    apiInsertPersonalInfo({
+      name: loginName,
+      company: company,
+      email: email,
+      motto: motto,
+      nickname: nickname,
+      website: website,
+    }).then((res) => {
+      if (res.data.status === "ok") {
+        message.success("添加成功");
+        fetchData(loginName);
+      } else {
+        message.error("添加失败");
+      }
+    });
+  };
+
+  /**
+   * 2022.03.15
+   * 退出
+   */
+
+  const logout = function loginOut() {
+    if (confirm("确定要退出?")) {
+      localStorage.removeItem("token");
+      router.push("/admin/login");
+    }
+  };
+  
+
+  useEffect(() => {
+    let isMouted = false;
+    /**
+     * 2022.03.15
+     * 请求网络
+     */
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      const isLoginName = JSON.parse(decodeBase64(token.split(".")[1])).data;
+      if (!isMouted) {
+        setLoginName(isLoginName);
+        fetchData(loginName);
+      }
+    }
+
+    return () => {
+      isMouted = true;
+    };
+  }, [loginName]);
+
   return (
     <AdminFrame>
       <main className={styles.CenterConatiner}>
         <div className={styles.userCard}>
           <div className={styles.avator}></div>
           <div className={styles.userInfo}>
-            <p className={styles.nickName}>小黄人向前冲</p>
+            <p className={styles.nickName}>{personalInfo.nickname ?? ""}</p>
             <p className={styles.motto}>
-              <span>-Motto: </span>人生无常,就像大肠包小肠
+              <span>-Motto: </span>
+              {personalInfo.motto ?? ""}
             </p>
             <p className={styles.company}>
-              <span>-Company: </span>@字节跳动
+              <span>-Company: </span>@{personalInfo.company ?? ""}
             </p>
             <p className={styles.email}>
-              <span>-Email: </span>2955538482@qq.com
+              <span>-Email: </span>
+              {personalInfo.email ?? ""}
+            </p>
+
+            <p className={styles.website}>
+              <span>-Website: </span>
+              <a href={personalInfo.website ?? "#"}>
+                {personalInfo.website ?? ""}
+              </a>
             </p>
           </div>
 
@@ -41,7 +142,12 @@ export default function Mine() {
               编辑个人资料
             </Button>
 
-            <Button style={{ marginLeft: "30px" }} size="small" type="danger">
+            <Button
+              style={{ marginLeft: "30px" }}
+              size="small"
+              type="danger"
+              onClick={() => logout()}
+            >
               退出
             </Button>
           </div>
@@ -51,7 +157,8 @@ export default function Mine() {
 
         <div className={styles.accountInfo}>
           <p className={styles.history}>
-            <span>加入于</span>2021-07-04
+            <span>加入于</span>
+            {timeFormatte(Date(personalInfo.date))[0] ?? ""}
           </p>
         </div>
       </main>
@@ -59,12 +166,39 @@ export default function Mine() {
       {/* 弹出框 */}
 
       <Modal
-        title="修改资料"
+        title="编辑个人资料"
         visible={isModalVisible}
-        onOk={handleOk}
         onCancel={handleCancel}
       >
-        
+        <Form name="nest-messages" onFinish={onSave}>
+          <Form.Item name={["user", "nickname"]} label="昵称">
+            <Input placeholder={personalInfo.nickname ?? ""} />
+          </Form.Item>
+          <Form.Item name={["user", "email"]} label="Email">
+            <Input placeholder={personalInfo.email ?? ""} />
+          </Form.Item>
+          <Form.Item name={["user", "motto"]} label="motto">
+            <Input
+              showCount
+              maxLength={40}
+              placeholder={personalInfo.motto ?? ""}
+            />
+          </Form.Item>
+
+          <Form.Item name={["user", "company"]} label="company">
+            <Input placeholder={personalInfo.company ?? ""} />
+          </Form.Item>
+
+          <Form.Item name={["user", "website"]} label="website">
+            <Input placeholder={personalInfo.website ?? ""} />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              保存
+            </Button>
+          </Form.Item>
+        </Form>
       </Modal>
     </AdminFrame>
   );

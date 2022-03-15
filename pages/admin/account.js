@@ -180,6 +180,7 @@ export default function Account() {
         permission: curSelect,
         platform,
         userAgent,
+        date: Date.now() + 8 * 3600 *1000,
       }).then((res) => {
         const { status, msg } = res.data;
         if (status == "ok") {
@@ -190,7 +191,7 @@ export default function Account() {
           setCurSelect("visitor");
           fetchData();
         } else {
-          message.error(msg);
+          message.error(msg ?? "添加失败");
         }
       });
     }
