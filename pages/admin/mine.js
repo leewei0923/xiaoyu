@@ -1,6 +1,14 @@
 import AdminFrame from "~/src/components/admin/adminFrame";
 import styles from "~/styles/admin/mine.module.scss";
-import { Button, Divider, Modal, Input, Form, InputNumber } from "antd";
+import {
+  Button,
+  Divider,
+  Modal,
+  Input,
+  Form,
+  InputNumber,
+  Tooltip,
+} from "antd";
 import { useState, useEffect } from "react";
 import { decodeBase64 } from "~/src/utils/utils";
 import { apiInsertPersonalInfo, apiPersonalInfo } from "~/src/request/api";
@@ -33,7 +41,6 @@ export default function Mine() {
       }
     });
   };
-
 
   /**
    * 2022.03.15
@@ -87,7 +94,6 @@ export default function Mine() {
       router.push("/admin/login");
     }
   };
-  
 
   useEffect(() => {
     let isMouted = false;
@@ -119,10 +125,14 @@ export default function Mine() {
             <p className={styles.nickName}>{personalInfo.nickname ?? ""}</p>
             <p className={styles.motto}>
               <span>-Motto: </span>
-              {personalInfo.motto ?? ""}
+              <Tooltip title={personalInfo.motto ?? ""} arrowPointAtCenter>
+                {personalInfo.motto ?? ""}
+              </Tooltip>
             </p>
             <p className={styles.company}>
-              <span>-Company: </span>@{personalInfo.company ?? ""}
+              <Tooltip title={personalInfo.company ?? ""} arrowPointAtCenter>
+                <span>-Company: </span>@{personalInfo.company ?? ""}
+              </Tooltip>
             </p>
             <p className={styles.email}>
               <span>-Email: </span>
@@ -180,7 +190,7 @@ export default function Mine() {
           <Form.Item name={["user", "motto"]} label="motto">
             <Input
               showCount
-              maxLength={40}
+              maxLength={20}
               placeholder={personalInfo.motto ?? ""}
             />
           </Form.Item>

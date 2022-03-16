@@ -2,39 +2,53 @@ import styles from "./navigationTop.module.scss";
 import { useEffect, useState } from "react";
 import Navpage from "../NavigationPage/NavPage";
 import { useSelector } from "react-redux";
+import classnames from "classnames";
 
 export default function Navigationtop() {
   const [isNavPageHide, setIsNavPage] = useState(true);
   // navtopBar 进度条长度
-  const [topBarLen, setTopBarLen] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
   // 接收 从[slug].js(page)页获取标题
   const pageTitle = useSelector((state) => {
     return state.pageTitleChange.navTopTitle;
   });
 
+  /**
+   * 22.03.16
+   * 滑轮滚动事件
+   */
+
+  const onScrollFunc = (e) => {
+    if (e.wheelDeltaY > 0) {
+      setIsVisible(true);
+      // console.log("向上", e.wheelDeltaY);
+    } else {
+      setIsVisible(false);
+      // console.log("向下", e.wheelDeltaY);
+    }
+  };
+
+  const navTopContainer = classnames({
+    [styles.navTopContainer]: true,
+    [styles.isVisible]: isVisible
+  }) 
+
   useEffect(() => {
-    // 用于控制 navTop 
+    // 用于控制 navTop
     let isMounted = false;
     let navTopToggle = async () => {
-      window.addEventListener("scroll", () => {
-        // 用来计算进度条百分比
-        let offsetY = window.pageYOffset;
-        let clientY = document.body.clientHeight;
-        let barLen = ((offsetY / clientY)*100).toFixed(0);
-        if (offsetY / clientY >= 0.15) {
-          if (!isMounted){
-            setTopBarLen(barLen);
-          } 
-        } else {
-          if (!isMounted){
-            setTopBarLen(barLen);
-          } 
-        }
-        // console.log("移动", window.pageYOffset, "页面高度", document.body.clientHeight)
-      });
+      //   document.addEventListener("DOMMouseScroll", (e) => {
+      //     // 用来计算进度条百分比
+      //     let offsetY = window.pageYOffset;
+      //     // console.log("移动", window.pageYOffset, "页面高度", document.body.clientHeight)
+      //     console.log(e);
+      //   }, false);
+
+      document.addEventListener("DOMMouseScroll", onScrollFunc, false);
+      window.onmousewheel = document.onmousewheel = onScrollFunc;
     };
-    navTopToggle();
+    if(!isMounted) navTopToggle();
 
     return () => {
       isMounted = true;
@@ -46,22 +60,13 @@ export default function Navigationtop() {
     setIsNavPage(!isNavPageHide);
   };
 
-
- 
-
   return (
     <>
-      <div className={styles.navTopContainer}>
-        {/* progress bar | 进度条 */}
-        <div
-          className={styles.progressBar}
-          style={{ width: `${topBarLen}%` }}
-        ></div>
-
+      <div className={navTopContainer}>
         {/* 百分比 | 目录 | 标题 | 按钮 */}
         <div className={styles.features}>
           <div className={styles.percent}>
-            <span>{topBarLen}%</span>
+            <span>{0}%</span>
           </div>
 
           <p className={styles.articleTitle}>

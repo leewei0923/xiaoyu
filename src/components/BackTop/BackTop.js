@@ -16,9 +16,9 @@ export default function BackTop(props) {
   const backTopShow = () => {
     let backTop = document.documentElement.scrollTop || document.body.scrollTop;
 
-    if (backTop > (visibilityHeight ?? 450) && !isVisible) {
+    if (backTop > (visibilityHeight || 450) && !isVisible) {
       setIsVisible(true);
-    } else if (backTop <= (visibilityHeight ?? 450) && isVisible) {
+    } else if (backTop <= (visibilityHeight || 450) && isVisible) {
       setIsVisible(false);
     }
   };
@@ -28,7 +28,7 @@ export default function BackTop(props) {
     const scrollSmoothTo = function (position) {
       if (!window.requestAnimationFrame) {
         window.requestAnimationFrame = function (callback, element) {
-          return setTimeout(callback, duration ?? 450);
+          return setTimeout(callback, duration || 450);
         };
       }
 

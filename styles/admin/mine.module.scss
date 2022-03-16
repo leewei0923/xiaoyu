@@ -1,11 +1,9 @@
-
 $bgCommonColor: #ffffff;
-$blueColor: #8AAFDB;
+$blueColor: #8aafdb;
 
 // 适配大屏
 @media screen and (min-width: 1000px) {
   .CenterConatiner {
-    
     .userCard {
       width: 90%;
       background-color: $bgCommonColor;
@@ -22,6 +20,9 @@ $blueColor: #8AAFDB;
 
       .userInfo {
         margin: auto 0;
+        width: 35%;
+        overflow: hidden;
+        text-overflow: ellipsis;
         p {
           margin: 0.5rem;
           color: $blueColor;
@@ -38,15 +39,21 @@ $blueColor: #8AAFDB;
         }
 
         .motto {
-          
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
         }
 
         .company {
-
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
         }
 
         .email {
-
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
         }
       }
 
@@ -65,13 +72,9 @@ $blueColor: #8AAFDB;
         }
       }
     }
-
-
   }
-  
 }
 
 // 适配小屏幕
-@media screen and (max-width: 1000px){
-
-} 
+@media screen and (max-width: 1000px) {
+}
