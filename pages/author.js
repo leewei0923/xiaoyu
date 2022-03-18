@@ -4,76 +4,74 @@ import Navigationtop from "~/src/components/NavigationTop/NavTop";
 import styles from "~/styles/author.module.scss";
 import { useEffect, useRef, useState } from "react";
 import classnames from "classnames";
+import { Chrono } from "react-chrono";
+import { useDispatch } from "react-redux";
+import { pageTitleChange } from "~/src/store/action";
+import { Divider } from "antd";
+import Introduction from "~/src/components/Introduction"
 
 export default function Author() {
-  // byteCard
-  const byteCard = useRef(null);
-  const [bytephotoOffsetX, setOffsetX] = useState(0);
+const dispatch = useDispatch(); 
+
+const timelineBox = useRef(null);
 
 
-  /**
-   * 
-   * @param {*} target 
-   * @param {*} callback 
-   * desc: 拖动滑块
-   */
-  const startDrag = function dragPhotoCard(target, callback) {
-    let left = 0;
-    let currentX = 0;
-    let flag;
-    // 0 left 当前的left值, 1 currentX, 2 flag
-    // 按下事件
-    target.onmousedown = (e) => {
-      flag = true;
-      // 取消默认事件
-      if (e.preventDefault) {
-        e.preventDefault();
-      } else {
-        e.preventDefault = false;
-      }
-      console.log("按下", flag);
-      currentX = e.screenX;
-    };
-
-    // 鼠标移动
-
-    target.onmousemove = (e) => {
-      e = e || window.event;
-
-      if (flag) {
-        let nowX = e.screenX;
-        let disX = nowX - currentX;
-
-        setOffsetX(disX);
-        console.log("移动了", disX);
-      }
-    };
-
-    // 鼠标松开
-
-    target.onmouseup = (e) => {
-      const disX = e.screenX - currentX;
-      currentX = 0;
-      if (disX <= 200 && disX >= -200) {
-        setOffsetX(0);
-      } else {
-        setOffsetX(disX);
-      }
-      console.log("放开");
-      flag = false;
-    };
-  };
-
-  // --------
-
-  const byteIcon = classnames({
-    [styles.byteIcon]: true,
-    [styles.centerIcon]: true,
-    [styles.commonIcon]: false,
-  });
+  const items = [
+    {
+      title: "二月",
+      cardTitle: "Dunkirk",
+      url: "http://www.history.com",
+      cardSubtitle:
+        "Men of the British Expeditionary Force (BEF) wade out to..",
+      cardDetailedText:
+        "Men of the British Expeditionary Force (BEF) wade out to..",
+    },
+    {
+      title: "一日",
+      cardTitle: "主页",
+      url: "http://www.history.com",
+      cardSubtitle:
+        "Men of the British Expeditionary Force (BEF) wade out to..",
+      cardDetailedText:
+        "Men of the British Expeditionary Force (BEF) wade out to..",
+    },
+    {
+      title: "二日",
+      cardTitle: "笔记",
+      url: "http://www.history.com",
+      cardSubtitle:
+        "Men of the British Expeditionary Force (BEF) wade out to..",
+      cardDetailedText:
+        "Men of the British Expeditionary Force (BEF) wade out to..",
+    },
+    {
+      title: "三日",
+      cardTitle: "主页",
+      url: "http://www.history.com",
+      cardSubtitle:
+        "Men of the British Expeditionary Force (BEF) wade out to..",
+      cardDetailedText:
+        "Men of the British Expeditionary Force (BEF) wade out to..",
+    },
+    {
+      title: "四日",
+      cardTitle: "笔记",
+      url: "http://www.history.com",
+      cardSubtitle:
+        "Men of the British Expeditionary Force (BEF) wade out to..",
+      cardDetailedText:
+        "Men of the British Expeditionary Force (BEF) wade out to..",
+    },
+  ];
 
   useEffect(() => {
-    startDrag(byteCard.current);
+
+    // redux
+
+    dispatch(pageTitleChange(`作者介绍页`))
+    timelineBox.current.onmousewheel = (e) => {
+      
+    }
   }, []);
 
   return (
@@ -81,32 +79,27 @@ export default function Author() {
       <Headers></Headers>
       {/* {console.log(bytephotoOffsetX)} */}
       <Navigationtop></Navigationtop>
-      <div className={styles.conatiner}>
-        <div className={styles.Memorabilia}>
-          <p className={styles.title}>大事记</p>
-
-          {/* 展示内容 */}
-          <div className={styles.byteCard} ref={byteCard}>
-            <div
-              className={styles.bytePhoto}
-              style={{
-                left: `${bytephotoOffsetX}px`,
-                transition: `all 0s linear`,
-              }}
-            ></div>
-          </div>
-
-          {/* 小图标 */}
-
-          <div className={styles.smallIcon} ref={byteCard}>
-            <div className={styles.itemBox}>
-              <div className={styles.beforeLine}></div>
-              <div className={byteIcon}>03.12</div>
-              <div className={styles.afterLine}></div>
-            </div>
+      <main className={styles.container}>
+        <div className={styles.authorIntroduction}>
+          <div className={styles.title}>作者介绍</div>
+          <div className={styles.introduction}>
+            <Introduction />
           </div>
         </div>
-      </div>
+
+        <Divider />
+        <div className={styles.memorabilia}>
+          <div className={styles.title}>历史记录</div>
+          <div className={styles.timelineBox} ref={timelineBox}>
+            <Chrono
+              items={items}
+              hideControls
+              scrollable="false"
+              mode="VERTICAL_ALTERNATING"
+            />
+          </div>
+        </div>
+      </main>
       <Footer></Footer>
     </>
   );

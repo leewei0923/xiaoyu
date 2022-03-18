@@ -19,7 +19,7 @@ body {
 
 /* 这是针对缺省样式 (必须的) */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 1px;
 }
 /* 滑块颜色 */
 

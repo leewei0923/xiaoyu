@@ -1,0 +1,281 @@
+$grayBg: rgba(70, 63, 63, 0.3);
+$whiteFont: white;
+$graspColor: #25dac6; // 了解
+$familar: #FFAE37; // 熟悉
+
+
+// 适配大屏
+@media screen and (min-width: 1000px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .peronInfo {
+      display: flex;
+      margin: auto;
+      width: 80%;
+      background: $grayBg;
+      border-radius: 10px;
+      padding: 1rem;
+      &::before {
+        content: "";
+        display: block;
+        filter: blur(20px);
+      }
+
+      .avatar {
+        margin-right: 5rem;
+      }
+      .personInfoBox1 {
+        margin-left: 5rem;
+        .icon {
+          span {
+            font-size: 20px;
+            margin: 1rem 1rem 2rem 0;
+            color: $whiteFont;
+          }
+        }
+      }
+
+      .personInfoBox2 {
+        margin-left: 5rem;
+        .icon {
+          span {
+            font-size: 20px;
+            margin: 1rem 1rem 2rem 0;
+            color: $whiteFont;
+          }
+        }
+      }
+    }
+
+    // 技能
+
+    .peronDetailBox {
+      display: flex;
+      margin: 20px auto;
+      width: 80%;
+
+      .skillBox {
+        display: flex;
+        flex-direction: column;
+        background: $grayBg;
+        margin-right: 10px;
+        width: 49%;
+        padding: 5px 20px;
+        position: relative;
+        border-radius: 10px;
+        .subTitle {
+          font-size: 20px;
+          margin: auto;
+          color: $whiteFont;
+        }
+
+        .skill {
+          font-size: 15px;
+          color: $whiteFont;
+
+          .skillDetail {
+            display: flex;
+            .laug {
+              margin: 5px 10px;
+              line-height: 20px;
+              width: 100px;
+            }
+
+            [data-pro="熟悉"] {
+              background: $familar;
+            }
+            [data-pro="了解"] {
+              background: $graspColor;
+            }
+            .proficiency {
+              position: relative;
+              font-size: 14px;
+              margin: 5px 0;
+
+              &::before {
+                content: "";
+                display: block;
+                height: 18px;
+                width: 200px;
+                position: absolute;
+                background: rgba(0, 0, 0, 0.2);
+              }
+            }
+          }
+        }
+      }
+
+      .introduction {
+        background: $grayBg;
+        margin-left: 10px;
+        width: 49%;
+        padding: 5px 20px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        .subTitle {
+          font-size: 20px;
+          margin: auto;
+          color: $whiteFont;
+        }
+
+        .content {
+          color: $whiteFont;
+          .contentText {
+            list-style: circle;
+            margin: 5px 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+
+    
+
+    .peronInfo {
+      display: flex;
+      margin: auto;
+      width: 80%;
+      background: $grayBg;
+      border-radius: 10px;
+      padding: 0.8rem;
+      flex-wrap: wrap;
+      &::before {
+        content: "";
+        display: block;
+        filter: blur(20px);
+      }
+
+      .avatar {
+        margin-right: 2rem;
+      }
+      .personInfoBox1 {
+        margin-left: 2rem;
+        .icon {
+          span {
+            font-size: 15px;
+            flex: 0 1;
+            margin: 1rem 1rem 2rem 0;
+            color: $whiteFont;
+          }
+        }
+      }
+
+      .personInfoBox2 {
+        margin-left: 2rem;
+        .icon {
+          span {
+            font-size: 15px;
+            flex: 0 1;
+            margin: 1rem 1rem 2rem 0;
+            color: $whiteFont;
+          }
+        }
+      }
+    }
+
+    // 技能
+
+    .peronDetailBox {
+      display: flex;
+      flex-direction: column;
+      margin: 20px auto;
+      width: 80%;
+
+      .skillBox {
+        display: flex;
+        flex-direction: column;
+        background: $grayBg;
+        width: 100%;
+        padding: 5px 20px;
+        position: relative;
+        border-radius: 10px;
+        .subTitle {
+          font-size: 20px;
+          margin: auto;
+          color: $whiteFont;
+        }
+
+        .skill {
+          font-size: 15px;
+          color: $whiteFont;
+
+          .skillDetail {
+            display: flex;
+            position: relative;
+            .laug {
+              margin: 5px 10px;
+              line-height: 20px;
+              width: 100px;
+            }
+
+            [data-pro="熟悉"] {
+              background: $familar;
+            }
+            [data-pro="了解"] {
+              background: $graspColor;
+            }
+            .proficiency {
+              position: relative;
+              font-size: 14px;
+              margin: 5px 0;
+
+              &::before {
+                content: "";
+                display: block;
+                height: 18px;
+                max-width: 200px;
+                min-width: inherit;
+                position: absolute;
+                background: rgba(0, 0, 0, 0.2);
+              }
+            }
+          }
+        }
+      }
+
+      .introduction {
+        background: $grayBg;
+        width: 100%;
+        padding: 5px 20px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        margin: 20px 0;
+        .subTitle {
+          font-size: 20px;
+          margin: auto;
+          color: $whiteFont;
+        }
+
+        .content {
+          color: $whiteFont;
+          .contentText {
+            list-style: circle;
+            margin: 5px 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 400px) { 
+  .avatorIcon {
+      margin: 0 30px;
+    }
+}
