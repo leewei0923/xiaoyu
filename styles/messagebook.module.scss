@@ -1,11 +1,23 @@
-
 // 适配大屏
 @media screen and (min-width: 1000px) {
-  
-  
+
+  .titleContent {
+    h3 {
+      font-size: 25px;
+      font-weight: 700;
+      margin: 5px 50px;
+    }
+    p {
+      font-size: 18px;
+      font-weight: 500;
+      margin: 0 50px;
+    }
+  }
+  .chatBox {
+    padding: 0 50px;
+  }
 }
 
 // 适配小屏幕
-@media screen and (max-width: 1000px){
-
-} 
+@media screen and (max-width: 1000px) {
+}

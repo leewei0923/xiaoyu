@@ -39,3 +39,21 @@ export const apiPersonalInfo = (options) =>
 // pages\admin\mine.js 用户个性信息插入
 export const apiInsertPersonalInfo = (options) =>
   service.post(`${host3001}api/login/insertPersonalInfo`, options);
+
+
+/**
+ * 留言录
+ */
+
+
+// 添加信息
+
+export const apiInsertComment = (options) =>
+  service.post(`${host3001}api/message/insertComment`, options);
+
+// 获取信息
+
+export const apiGetCommentInfo = (options) =>
+  service.post(`${host3001}api/message/getCommentInfo`, options);
+
+

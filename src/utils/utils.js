@@ -56,9 +56,9 @@ const generateID = (str) => {
 const decodeBase64 = (str) => {
 
   if(typeof str != 'string') {
-    return "error"
+    return;
   }
-  return Buffer.from(str, "base64").toString("binary");
+  return Base64.decode(str);
 };
 // 字符转换为 base64
 

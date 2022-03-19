@@ -1,0 +1,29 @@
+$bgcolor: #F5F5F5;
+
+// 适配大屏
+@media screen and (min-width: 1000px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: $bgcolor;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    .title {
+      font-size: 20px;
+      font-weight: 800;
+      justify-self: flex-start;
+    }
+    .personalInfo {
+      display: flex;
+    }
+
+
+  }
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px){
+
+} 
