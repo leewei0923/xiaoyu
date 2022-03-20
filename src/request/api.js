@@ -56,4 +56,14 @@ export const apiInsertComment = (options) =>
 export const apiGetCommentInfo = (options) =>
   service.post(`${host3001}api/message/getCommentInfo`, options);
 
+// 后台获取详细信息
+
+export const apiGetCommentDetaill = (options) => 
+  service.post(`${host3001}api/message/getCommentDeatilInfo`, options);
+
+// 后台回复信息
+
+export const apiReplayComment = (options) =>
+  service.post(`${host3001}api/message/replayComment`, options);
+
 

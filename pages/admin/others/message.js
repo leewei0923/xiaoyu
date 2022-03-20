@@ -1,103 +1,244 @@
 import AdminFrame from "~/src/components/admin/adminFrame";
-import { Tag, Button, Table } from "antd";
+import {
+  Tag,
+  Button,
+  Table,
+  message,
+  Tooltip,
+  Popover,
+  Modal,
+  Form,
+  Input,
+} from "antd";
 import Link from "next/link";
+import { addItem, getItem } from "~/src/utils/localStorage";
+import { useEffect, useState } from "react";
+import { apiGetCommentDetaill, apiReplayComment } from "~/src/request/api";
+import { timeFormatte } from "~/src/utils/timeFormatte";
 
-export default function message() {
+export default function Message() {
+  //顶层
+  const { TextArea } = Input;
 
+  const [userInfo, setUserInfo] = useState([]);
+  const [dataList, setDataList] = useState([]);
+  // 控制model 显示和隐藏
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  // commentInfo 评论的关键信息
+  const [commentInfo, setCommentInfo] = useState([]);
+  // 储存 textArea 内容
+  const [textAreaText, setTextArea] = useState("");
 
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      // console.log(
+      //   `selectedRowKeys: ${selectedRowKeys}`,
+      //   "selectedRows: ",
+      //   selectedRows
+      // );
+    },
+  };
 
-   const rowSelection = {
-     onChange: (selectedRowKeys, selectedRows) => {
-       // console.log(
-       //   `selectedRowKeys: ${selectedRowKeys}`,
-       //   "selectedRows: ",
-       //   selectedRows
-       // );
-     },
-   };
+  // 关闭 model
+  const handleCancel = () => {
+    // 关闭model
+    setIsModalVisible(false);
+    setTextArea("");
+  };
 
-   // 操作区
+  // model 提交信息
+  const handleOk = async () => {
+    const [_id, parentID, commentName] = commentInfo;
+    const date = timeFormatte(Date.now() + 28800000).join(" ");
+    const commentedID = commentInfo[3] || _id;
+    const level = parentID + 1;
 
-   const onEdit = () => {
-     console.log("修改");
-   };
+    const bacMsg = await apiReplayComment({
+      _id: commentedID,
+      parentID: level,
+      commentName: userInfo[0],
+      content: textAreaText,
+      commentedName: commentName,
+      date,
+    });
+    console.log(bacMsg)
+    if (bacMsg.data.status == "ok") {
+      message.success(bacMsg.data.msg);
+      handleCancel();
+    } else {
+      message.success(bacMsg.data.msg);
+    }
+  };
 
-   const onDelete = () => {
-     console.log("删除");
-   };
+  // 操作区
 
-   const artOption = [
-     {
-       key: "1",
-       title: "修改",
-       click: onEdit,
-       type: "primary",
-     },
-     {
-       key: "2",
-       title: "删除",
-       click: onDelete,
-       type: "danger",
-     },
-   ];
+  const onReplay = (info) => {
+    const { _id, parentID, commentName, comemntedID } = info;
+    setCommentInfo([_id, parentID, commentName, comemntedID]);
+    setIsModalVisible(true);
+  };
 
-   const columns = [
-     {
-       title: "ID",
-       dataIndex: "key",
-     },
-     {
-       title: "昵称",
-       dataIndex: "nicknames",
-     },
-     {
-       title: "邮箱",
-       dataIndex: "mail",
-     },
-     {
-       title: "网址",
-       dataIndex: "url",
-     },
-     {
-       title: "类型",
-       dataIndex: "type",
-     },
-     {
-       title: "内容",
-       dataIndex: "content",
-     },
-     {
-       title: "日期",
-       dataIndex: "date",
-     },
-     {
-       title: "操作",
-       dataIndex: "options",
-       render: () =>
-         artOption.map((item) => (
-           <Button
-             key={item.key}
-             onClick={item.click}
-             type={item.type}
-             size={`small`}
-             style={{ margin: `0 5px` }}
-           >
-             {item.title}
-           </Button>
-         )),
-     },
-   ];
+  const onDelete = () => {
+    console.log("删除");
+  };
+
+  const artOption = [
+    {
+      key: "1",
+      title: "回复",
+      click: onReplay,
+      type: "primary",
+    },
+    {
+      key: "2",
+      title: "删除",
+      click: onDelete,
+      type: "danger",
+    },
+  ];
+
+  const content = (info) =>
+    artOption.map((item) => (
+      <Button
+        type={item.type}
+        key={item.key}
+        size={`small`}
+        onClick={() => item.click(info)}
+      >
+        {item.title}
+      </Button>
+    ));
+
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "_id",
+      ellipsis: true,
+      render: (text) => {
+        return (
+          <Tooltip placement="top" title={text} arrowPointAtCenter key={text}>
+            <span>{text}</span>
+          </Tooltip>
+        );
+      },
+    },
+    {
+      title: "昵称",
+      dataIndex: "commentName",
+      ellipsis: true,
+    },
+    {
+      title: "邮箱",
+      dataIndex: "email",
+      ellipsis: true,
+      render: (text) => {
+        return (
+          <Tooltip placement="top" title={text} arrowPointAtCenter>
+            <span>{text}</span>
+          </Tooltip>
+        );
+      },
+    },
+    {
+      title: "网址",
+      dataIndex: "website",
+      ellipsis: true,
+    },
+    {
+      title: "ip",
+      dataIndex: "ip",
+      ellipsis: true,
+    },
+    {
+      title: "内容",
+      dataIndex: "content",
+      ellipsis: true,
+      render: (text) => {
+        return (
+          <Tooltip placement="top" title={text} arrowPointAtCenter key={text}>
+            <span>{text}</span>
+          </Tooltip>
+        );
+      },
+    },
+    {
+      title: "日期",
+      dataIndex: "date",
+      ellipsis: true,
+    },
+    {
+      title: "操作",
+      dataIndex: "options",
+      render: (text, info) => (
+        <Popover title="更多" trigger="click" content={() => content(info)}>
+          <Button type="primary" size="small">
+            更多
+          </Button>
+        </Popover>
+      ),
+    },
+  ];
+
+  // 获取TextArea 的内容
+
+  const getTextAreaText = (e) => {
+    // TODO: 防抖
+    setTextArea(e.target.value);
+  };
+
+  // 开始加载的时候获取 信息
+  const fetchData = async () => {
+    const { data } = await apiGetCommentDetaill();
+    if (data.status == "ok") {
+      setDataList(data.info);
+    }
+  };
+
+  useEffect(() => {
+    let isMouted = false;
+
+    const [user, permission] = getItem("userInfo").value.split(" ");
+    fetchData();
+    if (!isMouted) {
+      setUserInfo([user, permission]);
+    }
+
+    () => {
+      isMouted = true;
+    };
+  }, []);
 
   return (
     <AdminFrame>
       <Table
         rowSelection={{
-          type: 'checkbox',
+          type: "checkbox",
           ...rowSelection,
         }}
         columns={columns}
-        // dataSource={listData}
+        dataSource={dataList}
+        rowKey={(e) => {
+          return e._id;
+        }}
+        size={"small"}
+        pagination={{ pageSize: 10 }}
       />
+
+      {/* model */}
+      <Modal
+        title={`回复: ${commentInfo[2]}`}
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <TextArea
+          placeholder="请输入你要回复的内容"
+          maxLength={200}
+          showCount={true}
+          onChange={getTextAreaText}
+          value={textAreaText}
+        />
+      </Modal>
     </AdminFrame>
   );
 }

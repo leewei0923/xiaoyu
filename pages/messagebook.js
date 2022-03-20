@@ -19,6 +19,7 @@ export default function Messagebook({ children }) {
 
   const fetchData = () => {
     apiGetCommentInfo().then((res) => {
+      console.log(res.data);
       const { status, info } = res.data;
       if (status == "ok") {
         setCommentInfo(info);
@@ -52,7 +53,6 @@ export default function Messagebook({ children }) {
         <p>欢迎畅所欲言,提出意见和建议!</p>
       </section>
       <Divider />
-      {console.log(10 * (currentPage - 1), 10 * currentPage)}
       <div className={styles.chatBox}>
         {messageInfo
           .slice(10 * (currentPage - 1), 10 * currentPage)
@@ -62,13 +62,18 @@ export default function Messagebook({ children }) {
             );
           })}
       </div>
-      <Pagination
-        current={currentPage}
-        onChange={(p) => changePagation(p)}
-        total={messageInfo.length}
-        showLessItems="true"
-        pageSize={10}
-      />
+      <div className={styles.paginationBox}>
+        <Pagination
+          current={currentPage}
+          onChange={(p) => changePagation(p)}
+          total={messageInfo.length}
+          showLessItems="true"
+          pageSize={10}
+          responsive="true"
+          className={styles.pagination}
+        />
+      </div>
+
       <Divider />
 
       <Editor fetchData={fetchData} />
