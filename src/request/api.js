@@ -76,3 +76,22 @@ export const apiDelFrontComment = (options) =>
 export const apiDelBackComment = (options) =>
   service.post(`${host3001}api/message/delBackComment`, options);
 
+/**
+ * 图库
+ */
+
+// 添加图片
+
+export const apiAddPhoto = (options) =>
+  service.post(`${host3001}api/gallery/insertGallery`, options);
+
+// 删除图片
+
+export const apiDelPhoto = (options) =>
+  service.post(`${host3001}api/gallery/delGallery`, options);
+
+// 加载图片
+
+
+export const apiLoadPhoto = (options) =>
+  service.post(`${host3001}api/gallery/loadPhoto`, options);

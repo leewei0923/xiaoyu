@@ -9,89 +9,63 @@ import {
   Form,
   Input,
   Upload,
+  message,
 } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "~/styles/admin/gallery.module.scss";
 import { InfoCircleOutlined, UploadOutlined } from "@ant-design/icons";
-
-
+import { timeFormatte } from "~/src/utils/timeFormatte";
+import { apiAddPhoto, apiDelPhoto, apiLoadPhoto } from "~/src/request/api";
+import { getItem } from "~/src/utils/localStorage";
 
 export default function Gallery() {
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === "Disabled User",
-      // Column configuration not to be checked
-      name: record.name,
-    }),
+  const [form] = Form.useForm();
+  const { TextArea } = Input;
+  const [photosInfo, setPhotoInfo] = useState([]);
+  // 使用model
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  // 获取数据 更新页面
+
+  const fetchData = async () => {
+    const photos = await apiLoadPhoto();
+
+    if (photos.data.status == "ok") {
+      setPhotoInfo(photos.data.info);
+    } else {
+      message.error("加载出错");
+    }
   };
 
-  // 使用model 
-   const [isModalVisible, setIsModalVisible] = useState(false);
+  //--------------
 
-   const handleOk = () => {
-     setIsModalVisible(false);
-     console.log("确定");
-   };
+  // 暂时不用
+  // const rowSelection = {
+  //   onChange: (selectedRowKeys, selectedRows) => {
+  //     console.log(
+  //       `selectedRowKeys: ${selectedRowKeys}`,
+  //       "selectedRows: ",
+  //       selectedRows
+  //     );
+  //   },
+  //   getCheckboxProps: (record) => ({
+  //     disabled: record.name === "Disabled User",
+  //     name: record.name,
+  //   }),
+  // };
 
-   const handleCancel = () => {
-     setIsModalVisible(false);
-     console.log("取消")
-   };
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
 
   const onCreatePhoto = () => {
     setIsModalVisible(true);
+  };
+
+  const onClear = () => {
+    form.resetFields();
   }
 
   // 表格设置
-
-  const [form] = Form.useForm();
-  const {TextArea} = Input;
-
-
-  // 图片上传
-
-  const [fileList, setFileList] = useState([
-    {
-      uid: "-1",
-      name: "xxx.png",
-      status: "done",
-      url: "http://www.baidu.com/xxx.png",
-    },
-  ]);
-
-  const handleChange = (info) => {
-    let fileList = [...info.fileList];
-
-    // 1. Limit the number of uploaded files
-    // Only to show two recent uploaded files, and old ones will be replaced by the new
-    fileList = fileList.slice(-2);
-
-    // 2. Read from response and show file link
-    fileList = fileList.map(file => {
-      if (file.response) {
-        // Component will show file.url as link
-        file.url = file.response.url;
-      }
-      return file;
-
-    })
-
-    setFileList(fileList)
-  }
-
-
-  const props = {
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    onChange: handleChange,
-    multiple: false,
-  };
 
 
   // 按钮设置
@@ -100,8 +74,21 @@ export default function Gallery() {
     console.log("修改");
   };
 
-  const onDelete = () => {
-    console.log("删除");
+  const onDelete = async (info) => {
+    const {_id} = info;
+    const [user, permission] = getItem("userInfo").split(" ");
+    if(permission == 'admin') {
+     const backInfo = await apiDelPhoto({_id});
+
+     if(backInfo.data.status == 'admin') {
+       message.success(backInfo.data.msg);
+       fetchData();
+     } else {
+       message.error('删除失败')
+     }
+    } else {
+      message.warn("权限不足");
+    }
   };
 
   const artOption = [
@@ -119,33 +106,41 @@ export default function Gallery() {
     },
   ];
 
-
   const columns = [
     {
       title: "id",
-      dataIndex: "id",
+      dataIndex: "_id",
       render: (text) => <a>{text}</a>,
+      ellipsis: true,
     },
     {
       title: "图片地址",
-      dataIndex: "url",
+      dataIndex: "photoUrl",
+      ellipsis: true,
     },
     {
       title: "描述",
-      dataIndex: "desc",
+      dataIndex: "photoDescrption",
+      ellipsis: true,
     },
     {
       title: "图片故事",
-      dataIndex: "content",
+      dataIndex: "photoStory",
+      ellipsis: true,
+    },
+    {
+      title: "日期",
+      dataIndex: "date",
+      ellipsis: true,
     },
     {
       title: "操作",
       dataIndex: "action",
-      render: () =>
+      render: (text, info) =>
         artOption.map((item) => (
           <Button
             key={item.key}
-            onClick={item.click}
+            onClick={() => item.click(info)}
             type={item.type}
             size={`small`}
             style={{ margin: `0 5px` }}
@@ -156,6 +151,34 @@ export default function Gallery() {
     },
   ];
 
+  // 保存图片
+
+  const onSavePhoto = async (e) => {
+    const { des, story, url } = e;
+    const date = timeFormatte(Date.now() + 28800000).join(" ");
+    const backInfo = await apiAddPhoto({
+      photoUrl: url,
+      photoDescrption: des,
+      photoStory: story,
+      date,
+    });
+    if (backInfo.data.status == "ok") {
+      message.success(backInfo.data.msg);
+      form.resetFields();
+      fetchData();
+    }
+  };
+
+  useEffect(() => {
+    let isMouted = false;
+    if (!isMouted) {
+      fetchData();
+    }
+
+    () => {
+      isMouted = true;
+    };
+  }, []);
 
   return (
     <AdminFrame>
@@ -168,12 +191,15 @@ export default function Gallery() {
       <Divider />
 
       <Table
-        rowSelection={{
-          type: "checkbox",
-          ...rowSelection,
+        // rowSelection={{
+        //   type: "checkbox",
+        //   ...rowSelection,
+        // }}
+        rowKey={(e) => {
+          return e._id;
         }}
         columns={columns}
-        // dataSource={data}
+        dataSource={photosInfo}
       />
 
       {/* Model */}
@@ -181,20 +207,17 @@ export default function Gallery() {
       <Modal
         title="添加图片"
         visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        okText="保存"
-        cancelText="取消"
+        onOk={() => onClear()}
+        onCancel={() => handleOk()}
+        okText="清除所有"
+        cancelText="关闭"
       >
-        <Form
-          form={form}
-          layout="vertical"
-          initialValues={{ requiredMarkValue: "required" }}
-        >
+        <Form form={form} layout="vertical" onFinish={onSavePhoto}>
           <Form.Item
             label="图片地址"
             required
             tooltip="请填写正确的图片网络地址例如:https://qi.7miaoyu.com/"
+            name="url"
           >
             <Input placeholder="网络地址" />
           </Form.Item>
@@ -205,24 +228,19 @@ export default function Gallery() {
               title: "适用于网页读屏软件",
               icon: <InfoCircleOutlined />,
             }}
+            name="des"
           >
             <Input placeholder="图片描述" />
           </Form.Item>
 
-          <Form.Item label="图片故事">
+          <Form.Item label="图片故事" name="story">
             <TextArea rows={4} placeholder="限制140个字" maxLength={140} />
           </Form.Item>
 
-          <Form.Item
-            label="点击上传图片"
-            tooltip={{
-              title: "如果上传了图片,就不需要填写图片地址",
-              icon: <InfoCircleOutlined />,
-            }}
-          >
-            <Upload {...props} fileList={fileList}>
-              <Button icon={<UploadOutlined />}>Upload</Button>
-            </Upload>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              保存
+            </Button>
           </Form.Item>
         </Form>
       </Modal>

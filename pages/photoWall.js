@@ -2,18 +2,38 @@ import Headers from "~/src/components/Header/Header";
 import Navigationtop from "~/src/components/NavigationTop/NavTop";
 import Footer from "~/src/components/Footer/Footer";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { pageTitleChange } from "~/src/store/action";
 import styles from "~/styles/photoWall.module.scss";
 import imgLinks from "~/src/utils/imgUrl";
 import { Image } from "antd";
 import BackTop from "~/src/components/BackTop/BackTop";
+import { apiLoadPhoto } from "~/src/request/api";
 
 export default function Photowall() {
   const dispatch = useDispatch();
+  const [photoList, setPhotoList] = useState([]);
+
+  const fetchData = async () => {
+    const photoInfo = await apiLoadPhoto();
+    if (photoInfo.data.status == "ok") {
+      setPhotoList(photoInfo.data.info);
+    }
+    console.log(photoInfo)
+  };
+
+
   useEffect(() => {
+    let isMouted = false;
+
+    if (!isMouted) {
+      fetchData();
+    }
     dispatch(pageTitleChange("照片墙"));
-  });
+    () => {
+      isMouted = true;
+    };
+  },[]);
 
   return (
     <>
@@ -28,13 +48,13 @@ export default function Photowall() {
 
         {/* 照片 */}
         <div className={styles.photoContainer}>
-          {imgLinks.map((item) => {
+          {photoList.map((item) => {
             return (
               <Image
-                key={item.url}
+                key={item._id}
                 width={250}
-                src={item.url}
-                alt={item.desc}
+                src={item.photoUrl}
+                alt={item.photoDescrption}
                 className={styles.img}
               />
             );
