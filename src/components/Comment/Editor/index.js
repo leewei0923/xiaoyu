@@ -1,3 +1,7 @@
+/**
+ * 回复评论组件
+ */
+
 import React, { useEffect, useState } from "react";
 import styles from "./editor.module.scss";
 import { Form, Input, Button, Checkbox, Popover } from "antd";
@@ -6,6 +10,7 @@ import { generateID, encodeBase64, decodeBase64 } from "~/src/utils/utils";
 import { timeFormatte } from "~/src/utils/timeFormatte";
 import { apiGetCommentInfo, apiInsertComment } from "~/src/request/api";
 import { message } from "antd";
+
 
 export default function Index(props) {
   const { TextArea } = Input;
@@ -52,7 +57,7 @@ export default function Index(props) {
       return;
     }
 
-    const comemntId = generateID(nickname + email);
+    const userId = generateID(nickname + email);
     const date = timeFormatte(Date.now() + 28800000).join(" ");
 
     apiInsertComment({
@@ -61,7 +66,7 @@ export default function Index(props) {
       website,
       content,
       date,
-      comemntID: comemntId,
+      userID: userId,
     }).then((res) => {
       const { status, message: msg } = res.data;
       if (status == "ok") {
@@ -71,9 +76,11 @@ export default function Index(props) {
       }
     });
 
+    // TODO: 需要进行优化
     localStorage.setItem("nickname", encodeBase64(nickname));
     localStorage.setItem("email", encodeBase64(email));
     localStorage.setItem("website", encodeBase64(website));
+    localStorage.setItem("userID", encodeBase64(userId));
     fetchData();
     HideMenu()
     form.resetFields();
@@ -109,6 +116,7 @@ export default function Index(props) {
     localStorage.removeItem("nickname");
     localStorage.removeItem("email");
     localStorage.removeItem("website");
+    localStorage.removeItem("userID");
     setSubUser([])
   }
   

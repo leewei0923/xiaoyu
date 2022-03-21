@@ -19,7 +19,6 @@ export default function Messagebook({ children }) {
 
   const fetchData = () => {
     apiGetCommentInfo().then((res) => {
-      console.log(res.data);
       const { status, info } = res.data;
       if (status == "ok") {
         setCommentInfo(info);
@@ -57,9 +56,24 @@ export default function Messagebook({ children }) {
         {messageInfo
           .slice(10 * (currentPage - 1), 10 * currentPage)
           .map((item) => {
-            return (
-              <Comment key={item._id + item.date} messageInfo={item}></Comment>
-            );
+            if (item.child) {
+              return (
+                <Comment
+                  key={item._id + item.date}
+                  messageInfo={item}
+                  onUpdate={fetchData}
+                >
+                  {item.child.map((item2) => {
+                    return (
+                      <Comment
+                        key={item2._id + item2.date}
+                        messageInfo={item2}
+                      ></Comment>
+                    );
+                  })}
+                </Comment>
+              );
+            }
           })}
       </div>
       <div className={styles.paginationBox}>

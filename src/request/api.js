@@ -66,4 +66,13 @@ export const apiGetCommentDetaill = (options) =>
 export const apiReplayComment = (options) =>
   service.post(`${host3001}api/message/replayComment`, options);
 
+// 前台删除信息
+
+export const apiDelFrontComment = (options) =>
+  service.post(`${host3001}api/message/delFrontComment`, options);
+
+// 后台删除信息
+
+export const apiDelBackComment = (options) =>
+  service.post(`${host3001}api/message/delBackComment`, options);
 

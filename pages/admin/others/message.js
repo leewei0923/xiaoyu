@@ -13,7 +13,11 @@ import {
 import Link from "next/link";
 import { addItem, getItem } from "~/src/utils/localStorage";
 import { useEffect, useState } from "react";
-import { apiGetCommentDetaill, apiReplayComment } from "~/src/request/api";
+import {
+  apiGetCommentDetaill, // 获取详细留言板信息
+  apiReplayComment, // 回复消息
+  apiDelBackComment, // 删除操作
+} from "~/src/request/api";
 import { timeFormatte } from "~/src/utils/timeFormatte";
 
 export default function Message() {
@@ -29,6 +33,7 @@ export default function Message() {
   // 储存 textArea 内容
   const [textAreaText, setTextArea] = useState("");
 
+  //
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       // console.log(
@@ -38,6 +43,16 @@ export default function Message() {
       // );
     },
   };
+
+  // 开始加载的时候获取 信息  更新页面
+  const fetchData = async () => {
+    const { data } = await apiGetCommentDetaill();
+    if (data.status == "ok") {
+      setDataList(data.info);
+    }
+  };
+
+  // ---------------------
 
   // 关闭 model
   const handleCancel = () => {
@@ -61,25 +76,34 @@ export default function Message() {
       commentedName: commentName,
       date,
     });
-    console.log(bacMsg)
+
     if (bacMsg.data.status == "ok") {
       message.success(bacMsg.data.msg);
       handleCancel();
+      fetchData();
     } else {
       message.success(bacMsg.data.msg);
     }
   };
 
   // 操作区
-
+  // 回复
   const onReplay = (info) => {
-    const { _id, parentID, commentName, comemntedID } = info;
-    setCommentInfo([_id, parentID, commentName, comemntedID]);
+    const { _id, parentID, commentName, comemntedID, type } = info;
+    setCommentInfo([_id, parentID, commentName, comemntedID, type]);
     setIsModalVisible(true);
   };
 
-  const onDelete = () => {
-    console.log("删除");
+  // 删除
+  const onDelete = async (info) => {
+    const { _id, type } = info;
+    const backInfo = await apiDelBackComment({ _id, type });
+    if (backInfo.data.status == "ok") {
+      message.success(backInfo.data.msg);
+      fetchData();
+    } else {
+      message.error("删除失败");
+    }
   };
 
   const artOption = [
@@ -186,14 +210,6 @@ export default function Message() {
     setTextArea(e.target.value);
   };
 
-  // 开始加载的时候获取 信息
-  const fetchData = async () => {
-    const { data } = await apiGetCommentDetaill();
-    if (data.status == "ok") {
-      setDataList(data.info);
-    }
-  };
-
   useEffect(() => {
     let isMouted = false;
 
@@ -223,7 +239,6 @@ export default function Message() {
         size={"small"}
         pagination={{ pageSize: 10 }}
       />
-
       {/* model */}
       <Modal
         title={`回复: ${commentInfo[2]}`}

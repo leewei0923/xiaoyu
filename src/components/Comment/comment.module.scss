@@ -1,0 +1,18 @@
+
+// 适配大屏
+@media screen and (min-width: 1000px) {
+ .tag {
+   font-size: 2px;
+    padding: 1px;
+    background: #108ee9;
+    color: white;
+    border-radius: 5px;
+    margin: 0px 2px 2px 1px ;
+ }
+  
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px){
+
+} 
