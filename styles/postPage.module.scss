@@ -9,6 +9,15 @@ $mobileMask: rgba(0, 0, 0, 0.2);
 $tabelBorderColor: #dadde1;
 $aColor: #0fc1ee;
 
+$bgLeftSideColor: #e1e1e1;
+$pageBg: #f6f7f7;
+$selectCatalogColor: #25c2a0;
+$fontCommonColor: #333;
+$borderCommon: #9ce3d3;
+$tabelBorderColor: #dadde1;
+$aColor: #0fc1ee;
+$mobileMask: rgba(0, 0, 0, 0.2);
+
 @media screen and (min-width: 1000px) {
   .postPage {
     display: flex;
@@ -65,6 +74,43 @@ $aColor: #0fc1ee;
         margin-top: -60px !important;
         height: 60px;
         pointer-events: none;
+      }
+
+      table {
+        border-collapse: collapse;
+        display: block;
+        margin-bottom: 1rem;
+
+        thead {
+          display: table-header-group;
+          vertical-align: middle;
+          border-color: inherit;
+          tr {
+            th {
+              background-color: inherit;
+              color: inherit;
+              font-weight: 700;
+              line-height: 50px;
+              border: 1px solid $tabelBorderColor;
+              text-align: center;
+            }
+          }
+        }
+
+        tr {
+          border-bottom: 1px solid $tabelBorderColor;
+          background-color: transparent;
+          border-top: 1px solid $tabelBorderColor;
+
+          td {
+            background-color: inherit;
+            color: inherit;
+            font-weight: 700;
+
+            border: 1px solid $tabelBorderColor;
+            padding: 0.75rem;
+          }
+        }
       }
     }
     .catalogLinkContainer {

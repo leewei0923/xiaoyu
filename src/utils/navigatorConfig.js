@@ -20,8 +20,8 @@ const baseNav = [
   },
   {
     id: 2,
-    text: "代码日记",
-    url: "/code",
+    text: "作品集",
+    url: "/works",
   },
 ];
 

@@ -131,7 +131,6 @@ export async function getStaticPaths() {
     });
   });
 
-  console.log(files)
   const paths = files.map((filename) => ({
     params: {
       slug: [filename[0], filename[1].replace(".md", "")],

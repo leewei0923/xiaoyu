@@ -1,0 +1,16 @@
+// 适配大屏
+@media screen and (min-width: 1000px) {
+  .container {
+    width: 100vw;
+    height: 100vh;
+
+  }
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px) {
+  .container {
+    width: 100vw;
+    height: 100vh;
+  }
+}

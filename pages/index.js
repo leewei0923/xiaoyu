@@ -51,6 +51,8 @@ export async function getStaticProps() {
     });
   });
 
+  console.log(files);
+  console.log(types);
 
   // 获取 slug
 

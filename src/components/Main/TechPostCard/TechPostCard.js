@@ -30,10 +30,13 @@ export default function TechPostCard(props) {
           onClick={() => jumpLink(`/articles/${slug}`)}
         >
           {desc.join("") ?? ""}
-          <Link href={`/articles/${slug}`}>
-            <a>阅读更多</a>
-          </Link>
         </p>
+        <div className={styles.Links}>
+          <Link href={`/articles/${slug}`}>
+          <a>阅读更多</a>
+        </Link>
+        </div>
+        
 
         {/* 时间, 标签 */}
         <div className={styles.mixBox}>
@@ -45,7 +48,6 @@ export default function TechPostCard(props) {
             {tags.map((item) => {
               return <span key={item}>{item}</span>;
             })}
-            <span></span>
           </div>
         </div>
       </div>
