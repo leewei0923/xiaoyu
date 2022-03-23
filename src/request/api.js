@@ -1,14 +1,30 @@
 import service from "./index";
 
-const host3000 = "http://127.0.0.1:3000/";
-const host3001 = "http://127.0.0.1:3001/";
+const host3001 =
+  process.env.NODE_ENV == "production"
+    ? "http://101:43.63.71:3001/"
+    : "http://127.0.0.1:3001/";
+
+const host3000 =
+  process.env.NODE_ENV == "production"
+    ? "http://101:43.63.71:3000/"
+    : "http://127.0.0.1:3000/";
+
+// const host3001 =
+//   process.env.NODE_ENV == "production"
+//     ? "http://127.0.0.1:3001/"
+//     : "http://127.0.0.1:3001/";
+
+// const host3000 =
+//   process.env.NODE_ENV == "production"
+//     ? "http://127.0.0.1:3000/"
+//     : "http://127.0.0.1:3000/";
+
 // 请求本地文章接口
 
 // pages\archive.js 用于文章归档 POST
 export const apiArchiveInfo = (options) =>
   service.post(`${host3000}api/articles/getArchiveInfo`, options);
-
-
 
 // 请求user 接口
 
@@ -35,16 +51,13 @@ export const apiLoginIn = (options) =>
 export const apiPersonalInfo = (options) =>
   service.post(`${host3001}api/login/getPersonInfo`, options);
 
-
 // pages\admin\mine.js 用户个性信息插入
 export const apiInsertPersonalInfo = (options) =>
   service.post(`${host3001}api/login/insertPersonalInfo`, options);
 
-
 /**
  * 留言录
  */
-
 
 // 添加信息
 
@@ -58,7 +71,7 @@ export const apiGetCommentInfo = (options) =>
 
 // 后台获取详细信息
 
-export const apiGetCommentDetaill = (options) => 
+export const apiGetCommentDetaill = (options) =>
   service.post(`${host3001}api/message/getCommentDeatilInfo`, options);
 
 // 后台回复信息
@@ -91,7 +104,6 @@ export const apiDelPhoto = (options) =>
   service.post(`${host3001}api/gallery/delGallery`, options);
 
 // 加载图片
-
 
 export const apiLoadPhoto = (options) =>
   service.post(`${host3001}api/gallery/loadPhoto`, options);

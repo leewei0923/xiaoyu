@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { pageTitleChange } from "~/src/store/action";
 import { Divider } from "antd";
 import Introduction from "~/src/components/Introduction"
+import { memorables } from "~/src/utils/history";
 
 export default function Author() {
 const dispatch = useDispatch(); 
@@ -92,7 +93,7 @@ const timelineBox = useRef(null);
           <div className={styles.title}>历史记录</div>
           <div className={styles.timelineBox} ref={timelineBox}>
             <Chrono
-              items={items}
+              items={memorables}
               hideControls
               scrollable="false"
               mode="VERTICAL_ALTERNATING"

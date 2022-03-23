@@ -19,7 +19,7 @@ export default function Photowall() {
     if (photoInfo.data.status == "ok") {
       setPhotoList(photoInfo.data.info);
     }
-    console.log(photoInfo)
+
   };
 
 
