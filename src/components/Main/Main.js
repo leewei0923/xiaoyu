@@ -8,7 +8,12 @@ import TechPostCard from "./TechPostCard/TechPostCard";
 import React from "react";
 import { marked } from "marked";
 export default function Mains(props) {
-  // const {frontmatter:{date, description, tags, title, img}, slug} = {frontmatter: {title: '使用 React 和 Next.js 构建博客', description: 'Next.js 是由 Vercel 创建和维护的基于 React 的应用程序框架。本教程将从零开始学习如何使用 Next.js 构建一个小型的博客网站。', date: '2022.01.22', tags: Array(3), img: 'https://cdn.pixabay.com/photo/2022/01/01/15/40/train-6907884_1280.jpg'},slug: "articles"};
+
+
+  // 首页文章模式模式
+  const indexPageMode = useSelector((state) => {
+    return state.changePageState.modeState;
+  });
 
   return (
     <div className={styles.mainContainer}>
@@ -20,10 +25,10 @@ export default function Mains(props) {
         }
         const textpattren = /[\u4e00-\u9fa5 | \w | \, | \, |\. | \。]+/g;
         const desc = item.content.slice(0, 200).match(textpattren);
-        
+
         return (
           <React.Fragment key={item.slug + "frag"}>
-            {item.type === "life" ? (
+            {item.type === "life" && !indexPageMode ? (
               <PostCard
                 post={item}
                 index={index}
@@ -39,7 +44,7 @@ export default function Mains(props) {
                 post={item}
                 key={item.slug + "technical"}
                 type={item.type}
-                desc = {desc}
+                desc={desc}
               />
             ) : (
               ""

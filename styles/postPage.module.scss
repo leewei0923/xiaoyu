@@ -24,6 +24,7 @@ $mobileMask: rgba(0, 0, 0, 0.2);
     width: 100%;
     justify-content: center;
     margin: 5% 0;
+    position: relative;
     .articlesPost {
       display: flex;
       flex-direction: column;
@@ -143,6 +144,11 @@ $mobileMask: rgba(0, 0, 0, 0.2);
           color: $selectCatalogColor;
         }
       }
+    }
+    img {
+      position: relative;
+      width: 60%;
+      margin: 0 10%;
     }
   }
 }
@@ -300,6 +306,12 @@ $mobileMask: rgba(0, 0, 0, 0.2);
     .ZeroWidth {
       width: 0%;
       transition: width 0.5s ease-in;
+    }
+
+    img {
+      position: relative;
+      width: 60%;
+      margin: 0 10%;
     }
   }
 }

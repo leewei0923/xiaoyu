@@ -4,7 +4,7 @@ import matter from "gray-matter";
 import Layout from "../src/components/Layout/Layout";
 import Mains from "../src/components/Main/Main";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import bg from "../public/images/header-bg.jpg";
 import { changeBgImg, pageTitleChange } from "../src/store/action";
@@ -12,6 +12,17 @@ import Navigationtop from "~/src/components/NavigationTop/NavTop";
 import BackTop from "~/src/components/BackTop/BackTop";
 export default function Home({ posts }) {
   const dispatch = useDispatch();
+  const articlesLen = posts.length;
+
+  const [articlesCount, setArticleCount] = useState(5); // 加载页面的时候显示的文章数量
+
+  const addArticle = () => {
+    if (articlesCount < articlesLen) {
+      setArticleCount(articlesCount + 2);
+    } else {
+      setArticleCount(articlesLen);
+    }
+  };
 
   useEffect(() => {
     // 改变 主页背景的 背景图片
@@ -19,6 +30,16 @@ export default function Home({ posts }) {
     // 改变主页背景的 标题
     dispatch(pageTitleChange(`主页`));
   });
+
+  const loadMoreStyle = {
+    visibility: articlesCount == articlesLen ? "hidden" : "visible",
+    lineHeight: "20px",
+    textAlign: "center",
+    fontSize: "20px",
+    padding: "10px",
+    background: "#696969",
+    color: "white",
+  };
 
   return (
     <>
@@ -33,8 +54,11 @@ export default function Home({ posts }) {
         {/*  */}
         <Navigationtop></Navigationtop>
         {/* 文章概要 */}
-        <Mains posts={posts}></Mains>
-        <BackTop  />
+        <Mains posts={posts.slice(0, articlesCount)}></Mains>
+        <div onClick={() => addArticle()} style={loadMoreStyle}>
+          加载更多
+        </div>
+        <BackTop />
       </Layout>
     </>
   );
@@ -66,7 +90,7 @@ export async function getStaticProps() {
       "utf-8"
     );
 
-    const { data: frontmatter ,content} = matter(markdownWhiteMeta);
+    const { data: frontmatter, content } = matter(markdownWhiteMeta);
     return {
       slug,
       type,

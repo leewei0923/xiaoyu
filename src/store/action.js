@@ -34,8 +34,8 @@ export const changeSubKey = (key) => (dispatch) => {
 
 export const changePageMode = (state) => (dispatch) => {
   dispatch({
-    type: types.SUBKEY,
-    modeState: state,
+    type: types.PAGEMODE,
+    pstate: state,
   });
 };
 

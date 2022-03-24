@@ -4,9 +4,9 @@ import { message } from "antd";
 
 const isProduction = process.env.NODE_ENV == "production";
 
-const basicUrl = isProduction ? "101.43.63.71" : "127.0.0.1";
+// const basicUrl = isProduction ? "101.43.63.71" : "127.0.0.1";
 
-// const basicUrl = isProduction ? "127.0.0.1" : "127.0.0.1";
+const basicUrl = isProduction ? "101.43.63.71" : "127.0.0.1";
 // 设置axios基础路径
 
 const service = axios.create({
@@ -38,7 +38,6 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   (res) => {
-    console.log(res);
     // 根据返回不同的状态码做出不同的事情
     //
 
@@ -60,7 +59,7 @@ service.interceptors.response.use(
       return res;
     }
   },
-  (error) => Promise.reject("错误 58", console.log(error))
+  (error) => Promise.reject("错误 58 24", error)
 );
 
 export default service;

@@ -13,9 +13,9 @@ export default function TechPostCard(props) {
 
   // 点击跳转链接
   const jumpLink = (slug) => {
-    router.push(slug)
+    router.push(slug);
   };
-
+  
   return (
     <>
       <div className={styles.techCard}>
@@ -29,14 +29,13 @@ export default function TechPostCard(props) {
           className={styles.summary}
           onClick={() => jumpLink(`/articles/${slug}`)}
         >
-          {desc.join("") ?? ""}
+          {description || desc.join("")}
         </p>
         <div className={styles.Links}>
           <Link href={`/articles/${slug}`}>
-          <a>阅读更多</a>
-        </Link>
+            <a>阅读更多</a>
+          </Link>
         </div>
-        
 
         {/* 时间, 标签 */}
         <div className={styles.mixBox}>

@@ -65,10 +65,11 @@ const SubKeyReducer = (state = initSubKey, { type, key }) => {
 };
 
 // 使用
-const pageModeReducer = (state = initPageMode, { type, pState }) => {
+const pageModeReducer = (state = initPageMode, { type, pstate }) => {
+
   switch (type) {
     case types.PAGEMODE:
-      return { modeState: pState };
+      return { modeState: pstate };
     default:
       return state;
   }

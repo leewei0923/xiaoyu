@@ -16,18 +16,18 @@ export default function Archive() {
   const [ArticleCount, setArticleCount] = useState("0"); // 文章数量
 
   useEffect(() => {
-    const fetchData =  function () {
+    const fetchData = function () {
       dispatch(pageTitleChange(`归档`));
-      // 集成化 api 管理 
+      // 集成化 api 管理
       apiArchiveInfo().then((res) => {
         const { articlesCount, info } = res.data;
-        setArticleData(info);
-        setArticleCount(articlesCount);
+        setArticleData(info || []);
+        setArticleCount(articlesCount || "");
       });
     };
 
     fetchData();
-  }, []);
+  }, [dispatch]);
   return (
     <>
       <Headers></Headers>

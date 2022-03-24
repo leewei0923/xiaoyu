@@ -5,10 +5,10 @@ module.exports = {
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
   },
-webpack: config => {
-  config.resolve.alias['~'] = path.resolve(__dirname);
-  return config;
-},
+  webpack: (config) => {
+    config.resolve.alias["~"] = path.resolve(__dirname);
+    return config;
+  },
   // 配置图片的域名
   images: {
     domains: ["cdn.pixabay.com", "www.7miaoyu.com"],

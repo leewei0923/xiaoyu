@@ -2,23 +2,14 @@ import service from "./index";
 
 const host3001 =
   process.env.NODE_ENV == "production"
-    ? "http://101:43.63.71:3001/"
+    ? "http://101.43.63.71:3001/"
     : "http://127.0.0.1:3001/";
 
 const host3000 =
   process.env.NODE_ENV == "production"
-    ? "http://101:43.63.71:3000/"
+    ? "http://101.43.63.71:3000/"
     : "http://127.0.0.1:3000/";
 
-// const host3001 =
-//   process.env.NODE_ENV == "production"
-//     ? "http://127.0.0.1:3001/"
-//     : "http://127.0.0.1:3001/";
-
-// const host3000 =
-//   process.env.NODE_ENV == "production"
-//     ? "http://127.0.0.1:3000/"
-//     : "http://127.0.0.1:3000/";
 
 // 请求本地文章接口
 

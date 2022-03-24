@@ -26,12 +26,15 @@ $navContainerBg: #fff;
       display: flex;
       flex-direction: row;
       width: 100%;
-      .percent {
-        position: relative;
+      position: relative;
+      .mode {
+        position: absolute;
         top: 0;
         left: 10px;
         text-align: center;
         line-height: 50px;
+        font-size: 700;
+        cursor: pointer;
       }
 
       .articleTitle {

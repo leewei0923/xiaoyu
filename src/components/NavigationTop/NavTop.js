@@ -1,10 +1,13 @@
 import styles from "./navigationTop.module.scss";
 import { useEffect, useState } from "react";
 import Navpage from "../NavigationPage/NavPage";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import classnames from "classnames";
+import { changePageMode } from "~/src/store/action";
 
 export default function Navigationtop() {
+  const dispatch = useDispatch();
+
   const [isNavPageHide, setIsNavPage] = useState(true);
   // navtopBar 进度条长度
   const [isVisible, setIsVisible] = useState(false);
@@ -13,6 +16,17 @@ export default function Navigationtop() {
   const pageTitle = useSelector((state) => {
     return state.pageTitleChange.navTopTitle;
   });
+
+  // 首页文章模式模式
+  const indexPageMode = useSelector((state) => {
+    return state.changePageState.modeState;
+  });
+
+  // 点击改变主页文章展示的方式 true 为纯技术 false 为 生活和 技术混合的
+  const changeModeState = () => {
+    console.log(indexPageMode)
+    dispatch(changePageMode(!indexPageMode));
+  };
 
   /**
    * 22.03.16
@@ -31,8 +45,8 @@ export default function Navigationtop() {
 
   const navTopContainer = classnames({
     [styles.navTopContainer]: true,
-    [styles.isVisible]: isVisible
-  }) 
+    [styles.isVisible]: isVisible,
+  });
 
   useEffect(() => {
     // 用于控制 navTop
@@ -48,7 +62,7 @@ export default function Navigationtop() {
       document.addEventListener("DOMMouseScroll", onScrollFunc, false);
       window.onmousewheel = document.onmousewheel = onScrollFunc;
     };
-    if(!isMounted) navTopToggle();
+    if (!isMounted) navTopToggle();
 
     return () => {
       isMounted = true;
@@ -65,8 +79,12 @@ export default function Navigationtop() {
       <div className={navTopContainer}>
         {/* 百分比 | 目录 | 标题 | 按钮 */}
         <div className={styles.features}>
-          <div className={styles.percent}>
-            <span>{0}%</span>
+          <div
+            className={styles.mode}
+            onClick={() => changeModeState()}
+            style={{ display: pageTitle == "主页" ? "" : "none" }}
+          >
+            {indexPageMode ? "技术" : "混合"}
           </div>
 
           <p className={styles.articleTitle}>
