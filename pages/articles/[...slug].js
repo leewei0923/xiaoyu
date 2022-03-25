@@ -64,13 +64,13 @@ export default function PostPage({
     dispatch(pageTitleChange(title));
     // 代码高亮
 
-    // document.querySelectorAll("pre code").forEach((block) => {
-    //   try {
-    //     hljs.highlightElement(block);
-    //   } catch (error) {
-    //     consoel.log("NavPage 有错误", error);
-    //   }
-    // });
+    document.querySelectorAll("pre code").forEach((block) => {
+      try {
+        hljs.highlightElement(block);
+      } catch (error) {
+        consoel.log("NavPage 有错误", error);
+      }
+    });
 
 
     return () => {

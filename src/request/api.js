@@ -10,7 +10,6 @@ const host3000 =
     ? "http://101.43.63.71:3000/"
     : "http://127.0.0.1:3000/";
 
-
 // 请求本地文章接口
 
 // pages\archive.js 用于文章归档 POST
@@ -98,3 +97,10 @@ export const apiDelPhoto = (options) =>
 
 export const apiLoadPhoto = (options) =>
   service.post(`${host3001}api/gallery/loadPhoto`, options);
+
+/**
+ * 代码日记
+ */
+
+export const apiInsertCode = (options) =>
+  service.post(`${host3001}api/code/insertCode`, options);

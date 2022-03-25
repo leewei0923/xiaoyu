@@ -5,7 +5,10 @@ import frontmatter from "@bytemd/plugin-frontmatter";
 import highlightSsr from "@bytemd/plugin-highlight-ssr";
 import { useState } from "react";
 import styles from "~/styles/admin/editArticles.module.scss";
-import { Button, message } from "antd";
+import { Button, message, Select } from "antd";
+import matter from "gray-matter";
+import { apiInsertCode, insertCode } from "~/src/request/api";
+import { getItem } from "~/src/utils/localStorage";
 
 const plugins = [
   gfm(),
@@ -15,25 +18,70 @@ const plugins = [
 ];
 
 export default function EditArticles() {
-  const [value, setValue] = useState("");
-  const [titleText, setText] = useState("");
+  // select 选项
+  const { Option } = Select;
 
+  const [value, setValue] = useState(""); // 编辑器内容
+  const [titleText, setText] = useState(""); // 标题
+
+  // 发文类型  algorithm 算法 small-talk 说说(目前无)
+  const [types, setTypes] = useState("algorithm");
+  // 写标题
   const onChangeText = (e) => {
     setText(e.target.value);
   };
 
-  
+  const onSaveCode = async () => {
+    const {data: frontmatter} = matter(value)
+    const { link, tags, date } = frontmatter;
+    const user = getItem("userInfo").value.split(' ')[0];
+    const data = {
+      content: value,
+      types,
+      name: titleText,
+      draft: false,
+      link,
+      tags,
+      date,
+      user,
+    };
+
+    console.log(data);
+    const info = await apiInsertCode(data);
+    console.log(info);
+    if (info.data.status == "ok") {
+      message.success(info.data.msg);
+    }
+  };
+
+  // 保存为草稿
   const handleDraft = () => {};
 
+  // 保存
   const handleSubmit = () => {
-
-    if(titleText.length < 5) {
-      message.error("标题字数小于5")
+    if (titleText.length < 0) {
+      message.error("标题字数小于5");
     } else {
-      console.log(titleText);
+      switch (types) {
+        case "algorithm":
+          onSaveCode();
+          return;
+        case "small-talk":
+          return;
+        default:
+          return;
+      }
     }
-    
+
   };
+
+  // 选择保存路径
+
+  const handleSavePath = (value) => {
+    setTypes(value);
+  };
+
+  
 
   return (
     <AdminFrame theKey="editArticles">
@@ -46,6 +94,10 @@ export default function EditArticles() {
           onChange={(e) => onChangeText(e)}
         />
         <div className={styles.options}>
+          <Select defaultValue="algorithm" onChange={(v) => handleSavePath(v)}>
+            <Option value="algorithm">算法</Option>
+            <Option value="Small-talk">说说</Option>
+          </Select>
           <Button
             ghost
             type="primary"
@@ -70,6 +122,8 @@ export default function EditArticles() {
           setValue(v);
         }}
       />
+
+      <div draggable="true" > df</div>
     </AdminFrame>
   );
 }
