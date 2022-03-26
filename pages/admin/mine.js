@@ -15,6 +15,7 @@ import { apiInsertPersonalInfo, apiPersonalInfo } from "~/src/request/api";
 import { timeFormatte } from "~/src/utils/timeFormatte";
 import { message } from "antd";
 import { useRouter } from "next/router";
+import CalendarGraph from "~/src/components/CalendarGraph/index";
 
 export default function Mine() {
   // 全局路由
@@ -172,9 +173,7 @@ export default function Mine() {
           </p>
         </div>
       </main>
-
       {/* 弹出框 */}
-
       <Modal
         title="编辑个人资料"
         visible={isModalVisible}
@@ -210,6 +209,7 @@ export default function Mine() {
           </Form.Item>
         </Form>
       </Modal>
+      <CalendarGraph />  
     </AdminFrame>
   );
 }

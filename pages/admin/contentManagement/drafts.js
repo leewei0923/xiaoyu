@@ -110,6 +110,7 @@ export default function Drafts() {
           return item.component;
         }
       })}
+      
     </AdminFrame>
   );
 }

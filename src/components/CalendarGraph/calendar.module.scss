@@ -1,0 +1,24 @@
+.container {
+  .calendarHeader {
+    .headerTitle {
+
+    }
+
+    .select {
+
+    }
+  }
+
+  .graph {
+    .calendarGraphSvg {
+      .contributionCalendarDay {
+        cursor: pointer;
+
+        &:hover {
+          background: black;
+        }
+      }
+
+    }
+  }
+}

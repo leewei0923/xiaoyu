@@ -55,4 +55,22 @@ const handleCommonTime = (date) => {
     .split(" ");
 };
 
-export { timeFormatte };
+// 生成每天的日期从当年的1月1日
+
+const generateAllDay = (d) => {
+  return new Array(364).fill(0).map((x, i) => {
+    return timeFormatte(new Date(d) + i * 86400000)[0];
+  });
+};
+
+const generateCurAllDay = () => {
+  const dateList =new Array(364).fill(0).map((x, i) => {
+    return timeFormatte(Date.now() - i * 86400000)[0];
+  });
+
+  return dateList.reverse()
+
+}
+
+
+export { timeFormatte, generateAllDay, generateCurAllDay };
