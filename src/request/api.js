@@ -102,5 +102,31 @@ export const apiLoadPhoto = (options) =>
  * 代码日记
  */
 
+// 添加
+
 export const apiInsertCode = (options) =>
   service.post(`${host3001}api/code/insertCode`, options);
+
+// 后台查询
+
+export const apiLoadBackCode = (options) =>
+  service.post(`${host3001}api/code/loadBackCode`, options);
+
+// 更新信息
+
+export const apiUpdateInfoCode = (options) =>
+  service.post(`${host3001}api/code/updateInfo`, options);
+// 删除内容
+
+export const apiDeleteCode = (options) =>
+  service.post(`${host3001}api/code/deleteCode`, options);
+
+/**
+ * draft 处的api
+ * 
+ */
+
+// 更新信息
+
+export const apiLoadCodeDrafts = (options) =>
+  service.post(`${host3001}api/code/loadCodeDrafts`, options);

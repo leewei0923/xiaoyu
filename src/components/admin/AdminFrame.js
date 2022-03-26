@@ -118,6 +118,10 @@ export default function AdminFrame(props) {
               <Menu.Item key="drafts">
                 <Link href="/admin/contentManagement/drafts">草稿箱</Link>
               </Menu.Item>
+
+              <Menu.Item key="code">
+                <Link href="/admin/contentManagement/code">算法日记</Link>
+              </Menu.Item>
               <Menu.Item key="gallery">
                 <Link href="/admin/contentManagement/gallery">我的图库</Link>
               </Menu.Item>
@@ -125,7 +129,7 @@ export default function AdminFrame(props) {
                 <Link href="/admin/contentManagement/tags">标签</Link>
               </Menu.Item>
               <Menu.Item key="notions">
-                <Link href="/admin/contentManagement/drafts">公告</Link>
+                <Link href="/admin/contentManagement/notions">公告</Link>
               </Menu.Item>
             </SubMenu>
             <SubMenu key="sub2" icon={<TeamOutlined />} title="游览">

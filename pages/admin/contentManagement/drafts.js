@@ -1,102 +1,115 @@
 import AdminFrame from "~/src/components/admin/adminFrame";
 import {
-  Table,
-  Radio,
-  Divider,
-  Button,
-  Checkbox,
-  Modal,
-  Form,
-  Input,
-  Upload,
+  Select,
+  message
 } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import DraftCode from "~/src/components/admin/DraftCode/index";
+import {
+  apiLoadCodeDrafts,
+  apiUpdateInfoCode,
+  apiDeleteCode,
+} from "~/src/request/api";
 
-export default function drafts() {
-  // 按钮设置
+export default function Drafts() {
+  const { Option } = Select;
+  const [types, setTypes] = useState("algorithm");
+  const [dataList, setDataList] = useState("");
 
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      // console.log(
-      //   `selectedRowKeys: ${selectedRowKeys}`,
-      //   "selectedRows: ",
-      //   selectedRows
-      // );
-    },
-  };
-
+  // select 选择索要展示的页面
+  // 算法页面
   const onEdit = () => {
     console.log("修改");
   };
 
-  const onDelete = () => {
-    console.log("删除");
+  const onDelete = async () => {
+     const info = await apiDeleteCode({
+       _id: v._id,
+     });
+
+     if (info.data.status == "ok") {
+       message.success(info.data.msg);
+       fetchData();
+     }
   };
 
-  const artOption = [
+  const onPost = async (v) => {
+    const info = await apiUpdateInfoCode({
+      _id: v._id,
+      draft: false,
+    });
+
+    if (info.data.status == "ok") {
+      message.success(info.data.msg);
+      fetchData();
+    }
+  };
+
+  const showList = [
     {
-      key: "1",
-      title: "修改",
-      click: onEdit,
-      type: "primary",
+      key: 1,
+      text: "算法",
+      name: "algorithm",
+      component: (
+        <DraftCode
+          listData={dataList}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          onPost={onPost}
+          key="algorithm-componnet"
+        />
+      ),
+      api: apiLoadCodeDrafts,
     },
     {
-      key: "2",
-      title: "删除",
-      click: onDelete,
-      type: "danger",
+      key: 2,
+      text: "说说",
+      name: "small-talk",
+      component: "",
+      api: "",
     },
   ];
 
-  const columns = [
-    {
-      title: "id",
-      dataIndex: "id",
-    },
-    {
-      title: "名称",
-      dataIndex: "names",
-    },
-    {
-      title: "日期",
-      dataIndex: "date",
-    },
-    {
-      title: "类型",
-      dataIndex: "type",
-    },
-    {
-      title: "标签",
-      dataIndex: "tags",
-    },
-    {
-      title: "操作",
-      dataIndex: "action",
-      render: () =>
-        artOption.map((item) => (
-          <Button
-            key={item.key}
-            onClick={item.click}
-            type={item.type}
-            size={`small`}
-            style={{ margin: `0 5px` }}
-          >
-            {item.title}
-          </Button>
-        )),
-    },
-  ];
+  // 获取数据
+
+  const fetchData = () => {
+    showList.map(async (item) => {
+      if (item.name == types) {
+        let info = await item.api();
+        setDataList(info.data.info);
+      }
+    });
+  };
+
+  //
+  const handleSelection = (v) => {
+    setTypes(v);
+  };
+
+  useEffect(() => {
+    let isMouted = false;
+
+    if (!isMouted) {
+      fetchData();
+    }
+
+    () => {
+      isMouted = true;
+    };
+  }, []);
 
   return (
     <AdminFrame>
-      <Table
-        rowSelection={{
-          type: Checkbox,
-          ...rowSelection,
-        }}
-        columns={columns}
-        // dataSource={listData}
-      />
+      <Select defaultValue="algorithm" onChange={(v) => handleSelection(v)}>
+        <Option value="algorithm">算法</Option>
+        <Option value="Small-talk">说说</Option>
+      </Select>
+      <hr style={{ margin: "5px 0" }} />
+      {showList.map((item) => {
+        if (item.name == types) {
+          return item.component;
+        }
+      })}
     </AdminFrame>
   );
 }

@@ -9,6 +9,7 @@ import { Button, message, Select } from "antd";
 import matter from "gray-matter";
 import { apiInsertCode, insertCode } from "~/src/request/api";
 import { getItem } from "~/src/utils/localStorage";
+import { timeFormatte } from "~/src/utils/timeFormatte";
 
 const plugins = [
   gfm(),
@@ -33,7 +34,8 @@ export default function EditArticles() {
 
   const onSaveCode = async () => {
     const {data: frontmatter} = matter(value)
-    const { link, tags, date } = frontmatter;
+    const { link, tags } = frontmatter;
+    const date = timeFormatte(Date.now() + 288800000).join(' ');
     const user = getItem("userInfo").value.split(' ')[0];
     const data = {
       content: value,
@@ -46,7 +48,6 @@ export default function EditArticles() {
       user,
     };
 
-    console.log(data);
     const info = await apiInsertCode(data);
     console.log(info);
     if (info.data.status == "ok") {
