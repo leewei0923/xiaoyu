@@ -1,11 +1,9 @@
 .container {
   .calendarHeader {
     .headerTitle {
-
     }
 
     .select {
-
     }
   }
 
@@ -13,12 +11,12 @@
     .calendarGraphSvg {
       .contributionCalendarDay {
         cursor: pointer;
-
-        &:hover {
-          background: black;
-        }
+        
       }
-
+      [data-count = '1'] {
+          fill: green;
+        }
     }
   }
+
 }

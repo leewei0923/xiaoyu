@@ -180,7 +180,7 @@ export default function Account() {
         permission: curSelect,
         platform,
         userAgent,
-        date: Date.now() + 8 * 3600 *1000,
+        date: timeFormatte(Date.now() + 8 * 3600 *1000).join(' '),
       }).then((res) => {
         const { status, msg } = res.data;
         if (status == "ok") {

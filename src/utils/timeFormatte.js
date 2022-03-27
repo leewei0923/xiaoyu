@@ -47,19 +47,24 @@ const handleMixTime = (date) => {
 // 生成2022-10-01 12:00 格式的时间
 
 const handleCommonTime = (date) => {
-  return new Date(date)
+  try{
+    return new Date(date || '')
     .toISOString()
     .replace(/T/g, " ")
     .replace(/\.[\d]{3}Z/, "")
     .replace(/:/g, ":")
     .split(" ");
+  } catch(err) {
+    throw(err);
+  }
+  
 };
 
 // 生成每天的日期从当年的1月1日
 
 const generateAllDay = (d) => {
   return new Array(364).fill(0).map((x, i) => {
-    return timeFormatte(new Date(d) + i * 86400000)[0];
+    return handleCommonTime(new Date(d).getTime() + i * 86400000)[0];
   });
 };
 

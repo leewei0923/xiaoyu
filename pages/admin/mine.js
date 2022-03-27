@@ -9,9 +9,13 @@ import {
   InputNumber,
   Tooltip,
 } from "antd";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { decodeBase64 } from "~/src/utils/utils";
-import { apiInsertPersonalInfo, apiPersonalInfo } from "~/src/request/api";
+import {
+  apiInsertPersonalInfo,
+  apiPersonalInfo,
+  apiLoadCommitCount,
+} from "~/src/request/api";
 import { timeFormatte } from "~/src/utils/timeFormatte";
 import { message } from "antd";
 import { useRouter } from "next/router";
@@ -31,16 +35,22 @@ export default function Mine() {
 
   const [loginName, setLoginName] = useState("");
 
+  const [commitCount, setCommitCount] = useState([]);
+
   /**
    * 2022.03.15
    * 获取数据
    */
-  const fetchData = function fetchPersonalData(n) {
+  const fetchData = async function fetchPersonalData(n) {
     apiPersonalInfo({ name: n }).then((res) => {
       if (res.data.status == "ok") {
         setPersonalInfo(res.data.info);
       }
     });
+    const info = await apiLoadCommitCount();
+    if (info.data.status == "ok") {
+      setCommitCount(info.data.info);
+    }
   };
 
   /**
@@ -169,7 +179,7 @@ export default function Mine() {
         <div className={styles.accountInfo}>
           <p className={styles.history}>
             <span>加入于</span>
-            {timeFormatte(Date(personalInfo.date))[0] ?? ""}
+            {timeFormatte(new Date(personalInfo.date || Date.now()))[0] ?? ""}
           </p>
         </div>
       </main>
@@ -209,7 +219,8 @@ export default function Mine() {
           </Form.Item>
         </Form>
       </Modal>
-      <CalendarGraph />  
+
+      <CalendarGraph commitData={commitCount} />
     </AdminFrame>
   );
 }

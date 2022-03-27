@@ -121,6 +121,11 @@ export const apiUpdateInfoCode = (options) =>
 export const apiDeleteCode = (options) =>
   service.post(`${host3001}api/code/deleteCode`, options);
 
+// 加载日期
+
+export const apiLoadCommitCount = (options) =>
+  service.get(`${host3001}api/code/loadCommitCount`, options);
+
 /**
  * draft 处的api
  * 

@@ -4,22 +4,43 @@ import styles from "./calendar.module.scss";
 import { useEffect, useState } from "react";
 import { generateAllDay, generateCurAllDay } from "~/src/utils/timeFormatte";
 
-export default function Index() {
+export default function Index(props) {
   const { Option } = Select;
+  // 选择器数据
   const [selectValue, setSelectValue] = useState("过去的一年");
-  const [allDate, setAllDate] = useState([]);
+  const [allDate, setAllDate] = useState(generateCurAllDay());
+  const [refresh, setRefrsh] = useState();
+  // 题目的个数
+  const { commitData } = props;
+
+  const addCommitData = (d) => {
+
+    const date = [...d];
+    for (const x of commitData) {
+      const index = date.indexOf(x.date);
+      const tem = date[index];
+      date[index] = [];
+      if (date[index][1]) {
+        date[index][1] += 1;
+      } else {
+        date[index].push(tem, 1);
+      }
+    }
+    setAllDate(date);
+    setRefrsh(' ')
+  };
 
   const onSelectChange = (v) => {
     setSelectValue(v);
     if (v == "过去的一") {
-      setAllDate(generateCurAllDay());
+      addCommitData(generateCurAllDay());
     } else {
-      setAllDate(generateAllDay(v));
+      addCommitData(generateAllDay(v));
     }
   };
 
   useEffect(() => {
-    setAllDate(generateCurAllDay());
+    addCommitData(generateCurAllDay());
   }, []);
 
   return (
@@ -33,7 +54,7 @@ export default function Index() {
             onChange={(v) => onSelectChange(v)}
           >
             <Option value="过去的一">过去的一年</Option>
-            <Option value="2022">2022年</Option>
+            <Option value="2022-01-01">2022年</Option>
           </Select>
         </div>
       </div>
@@ -58,17 +79,29 @@ export default function Index() {
                         className={styles.contributionCalendarDay}
                         rx="2"
                         ry="2"
-                        data-count="0"
-                        data-date={allDate[(index + 1) * (index2 + 1)]}
-                        data-level="0"
+                        data-count={
+                          typeof allDate[index * 7 + index2] == "object"
+                            ? allDate[index * 7 + index2][1]
+                            : 0
+                        }
+                        data-date={
+                          typeof allDate[index * 7 + index2] == "object"
+                            ? allDate[index * 7 + index2][0]
+                            : allDate[index * 7 + index2]
+                        }
                         fill="#EBEDF0"
-                      ></rect>
+                      >
+                        <title className={styles.title}>
+                          {`${allDate[index * 7 + index2]}, ${
+                            allDate[index * 7 + index2][1]
+                          }${refresh}次`}
+                        </title>
+                      </rect>
                     );
                   })}
                 </g>
               );
             })}
-
           </g>
         </svg>
       </div>
