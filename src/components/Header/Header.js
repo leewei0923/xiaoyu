@@ -1,11 +1,22 @@
 import styles from "./header.module.css";
 import { useSelector } from "react-redux";
 import bg from "~/public/images/header-bg.jpg";
+import { useEffect, useState } from "react";
+import { apiLoadMotto } from "~/src/request/api";
 
 export default function Headers() {
+  const [motto, setMotto] = useState();
   const imgUrl = useSelector((state) => {
     return state.changeBgImg.imgUrl;
   });
+  const fetchData = async () => {
+    const data = await apiLoadMotto();
+    setMotto(data.data.motto);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <header
       className={styles.headerBg}
@@ -19,12 +30,10 @@ export default function Headers() {
         {/* 名人名言  */}
 
         <div className={styles.mottoContainer}>
-          <p className={styles.content}>
-            多活十年又如何。你最多能比别人多活80或90岁那十年。不能多活20岁这十年。
-          </p>
+          <p className={styles.content}>{motto ? motto.content  :  ''}</p>
 
           <p className={styles.space}>-</p>
-          <p className={styles.author}>三坨土</p>
+          <p className={styles.author}>{motto? motto.author : ''}</p>
         </div>
 
         {/*  */}

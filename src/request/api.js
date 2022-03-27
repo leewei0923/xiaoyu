@@ -135,3 +135,6 @@ export const apiLoadCommitCount = (options) =>
 
 export const apiLoadCodeDrafts = (options) =>
   service.post(`${host3001}api/code/loadCodeDrafts`, options);
+
+export const apiLoadMotto = (options) =>
+  service.get(`${host3001}api/motto`, options);
