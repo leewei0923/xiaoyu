@@ -2,6 +2,7 @@ import styles from "./archiveItem.module.scss";
 import Link from "next/link";
 
 export default function ArchiveItem(props) {
+  const { currentPage } = props;
   const { year, child } = props.info;
 
   // 按照时间排序 最新排在最前面
@@ -14,7 +15,7 @@ export default function ArchiveItem(props) {
       <ul>
         <h3 className={styles.title}>{year}</h3>
 
-        {child.map((item) => {
+        {child.slice((currentPage - 1) * 7, currentPage * 7).map((item) => {
           const { slug, date, name, tags, type } = item;
 
           return (

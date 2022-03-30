@@ -71,4 +71,11 @@ export const memorables = [
     cardSubtitle: "本地完好，上线后状态不断",
     cardDetailedText: "本地运行npm run build 准备就绪",
   },
+  {
+    title: "三十日",
+    cardTitle: "优化主页面文章排列",
+    url: blogLink,
+    cardSubtitle: "",
+    cardDetailedText: "实现基本的功能，优先显示最新文章",
+  },
 ];

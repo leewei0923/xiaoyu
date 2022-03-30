@@ -21,7 +21,6 @@ export default function MyArticles() {
    const fetchData = async () => {
      const result = await apiArticleList();
      const { info } = result.data;
-
      setListData(info);
    };
 
@@ -132,6 +131,9 @@ export default function MyArticles() {
         columns={columns}
         dataSource={listData}
         pagination={{ defaultPageSize: 7 }}
+        rowKey={(e) => {
+          return e._id;
+        }}
       />
     </AdminFrame>
   );

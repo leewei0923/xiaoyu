@@ -9,7 +9,7 @@ import { changeBgImg, pageTitleChange } from "../../src/store/action";
 import styles from "../../styles/postPage.module.scss";
 import { handleMarkdown } from "../../src/utils/handleMarkdown";
 import hljs from "highlight.js";
-// import "highlight.js/styles/Vs2015.css";
+import "highlight.js/styles/Vs2015.css";
 import classnames from "classnames";
 import Navigationtop from "~/src/components/NavigationTop/NavTop";
 import BackTop from "~/src/components/BackTop/BackTop";
