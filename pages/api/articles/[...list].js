@@ -32,25 +32,27 @@ export default function handler(req, res) {
   });
 
   // console.log(articleInfoList)
-  const curIndex = list[1] ?? "1";
-  const len = articleInfoList.length;
-  const totalPages = Math.ceil(len / 10);
-  let shortList = [];
-  if (curIndex <= totalPages) {
-    shortList = articleInfoList.slice([
-      (curIndex - 1) * 10,
-      (curIndex - 1) * 10 + 9,
-    ]);
-  } else {
-    res
-      .status(400)
-      .json({ status: "fail", message: "你请求的的页面数量大于最大长度" });
-  }
+  // 分页设置，先放弃
+  // const curIndex = list[1] ?? "1";
+  // const len = articleInfoList.length;
+  // const totalPages = Math.ceil(len / 10);
+  // let shortList = [];
+  // if (curIndex <= totalPages) {
+  //   shortList = articleInfoList.slice([
+  //     (curIndex - 1) * 10,
+  //     (curIndex - 1) * 10 + 9,
+  //   ]);
+  // } else {
+  //   res
+  //     .status(400)
+  //     .json({ status: "fail", message: "你请求的的页面数量大于最大长度" });
+  // }
+
+  // currentPage: curIndex,
+  //   totalPages: totalPages,
 
   res.status(200).json({
     status: "ok",
-    currentPage: curIndex,
-    totalPages: totalPages,
-    articlesInfoList: shortList,
+    articlesInfoList: articleInfoList,
   });
 }

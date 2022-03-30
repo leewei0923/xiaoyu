@@ -8,8 +8,6 @@ import TechPostCard from "./TechPostCard/TechPostCard";
 import React from "react";
 import { marked } from "marked";
 export default function Mains(props) {
-
-
   // 首页文章模式模式
   const indexPageMode = useSelector((state) => {
     return state.changePageState.modeState;
@@ -23,8 +21,6 @@ export default function Mains(props) {
         {
           /* const {frontmatter:{date, description, tags, title, img}, slug}  = item; */
         }
-        const textpattren = /[\u4e00-\u9fa5 | \w | \, | \, |\. | \。]+/g;
-        const desc = item.content.slice(0, 200).match(textpattren);
 
         return (
           <React.Fragment key={item.slug + "frag"}>
@@ -44,7 +40,6 @@ export default function Mains(props) {
                 post={item}
                 key={item.slug + "technical"}
                 type={item.type}
-                desc={desc}
               />
             ) : (
               ""

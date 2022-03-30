@@ -4,7 +4,7 @@ import { timeFormatte } from "~/src/utils/timeFormatte";
 import { useRouter } from "next/router";
 
 export default function TechPostCard(props) {
-  const { post, type, desc } = props;
+  const { post, type } = props;
   const {
     frontmatter: { date, title, tags, description },
     slug,
@@ -29,7 +29,7 @@ export default function TechPostCard(props) {
           className={styles.summary}
           onClick={() => jumpLink(`/articles/${slug}`)}
         >
-          {description || desc.join("")}
+          {description}
         </p>
         <div className={styles.Links}>
           <Link href={`/articles/${slug}`}>

@@ -16,6 +16,15 @@ const host3000 =
 export const apiArchiveInfo = (options) =>
   service.post(`${host3000}api/articles/getArchiveInfo`, options);
 
+// 首页 加载文章 摘要
+
+export const apiArticleList = (options) =>
+  service.post(`${host3001}api/article/list`,options);
+
+// 同步文章
+
+export const apiSyncArticle = (options) => service.get(`${host3001}api/syncArticle`, options);
+
 // 请求user 接口
 
 // 用户管理接口
@@ -138,3 +147,4 @@ export const apiLoadCodeDrafts = (options) =>
 
 export const apiLoadMotto = (options) =>
   service.get(`${host3001}api/motto`, options);
+

@@ -4,6 +4,11 @@ import Link from "next/link";
 export default function ArchiveItem(props) {
   const { year, child } = props.info;
 
+  // 按照时间排序 最新排在最前面
+  child.sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+
   return (
     <div className={styles.container}>
       <ul>

@@ -10,12 +10,27 @@ import bg from "../public/images/header-bg.jpg";
 import { changeBgImg, pageTitleChange } from "../src/store/action";
 import Navigationtop from "~/src/components/NavigationTop/NavTop";
 import BackTop from "~/src/components/BackTop/BackTop";
+import { apiArticleList } from "~/src/request/api";
 export default function Home({ posts }) {
   const dispatch = useDispatch();
-  const articlesLen = posts.length;
-
+  const [articleList, setArticleList] = useState([]); // 文章列表
+  const articlesLen = articleList.length;
   const [articlesCount, setArticleCount] = useState(5); // 加载页面的时候显示的文章数量
 
+  // 加载数据
+  const fetchData = async () => {
+    const data = await apiArticleList();
+    if (data.data.status == "ok") {
+      const list = data.data.info;
+      // 按照时间排序 最新排在最前面
+      list.sort((a, b) => {
+        return new Date(b.date[0]).getTime() - new Date(a.date[0]).getTime();
+      });
+      setArticleList(list);
+    }
+  };
+
+  // 点击加载更多文章
   const addArticle = () => {
     if (articlesCount < articlesLen) {
       setArticleCount(articlesCount + 2);
@@ -29,7 +44,10 @@ export default function Home({ posts }) {
     dispatch(changeBgImg(bg.src));
     // 改变主页背景的 标题
     dispatch(pageTitleChange(`主页`));
-  });
+
+    // 加载文章列表
+    fetchData();
+  }, [dispatch]);
 
   const loadMoreStyle = {
     visibility: articlesCount == articlesLen ? "hidden" : "visible",
@@ -54,7 +72,7 @@ export default function Home({ posts }) {
         {/*  */}
         <Navigationtop></Navigationtop>
         {/* 文章概要 */}
-        <Mains posts={posts.slice(0, articlesCount)}></Mains>
+        <Mains posts={articleList.slice(0, articlesCount)}></Mains>
         <div onClick={() => addArticle()} style={loadMoreStyle}>
           加载更多
         </div>
@@ -90,12 +108,11 @@ export async function getStaticProps() {
       "utf-8"
     );
 
-    const { data: frontmatter, content } = matter(markdownWhiteMeta);
+    const { data: frontmatter } = matter(markdownWhiteMeta);
     return {
       slug,
       type,
       frontmatter,
-      content,
     };
   });
 

@@ -20,6 +20,7 @@ export default function Archive() {
       dispatch(pageTitleChange(`归档`));
       // 集成化 api 管理
       apiArchiveInfo().then((res) => {
+        console.log(res.data)
         const { articlesCount, info } = res.data;
         setArticleData(info || []);
         setArticleCount(articlesCount || "");

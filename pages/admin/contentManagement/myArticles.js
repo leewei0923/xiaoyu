@@ -1,11 +1,9 @@
 import AdminFrame from "~/src/components/admin/adminFrame";
-import { Table, Tag, Radio, Divider, Checkbox, Button } from "antd";
+import { Table, Tag, Radio, Divider, Checkbox, Button, message } from "antd";
 import { useState, useEffect } from "react";
 import { generateID } from "~/src/utils/utils";
-import axios from "axios";
 import Link from "next/link";
-
-const articleListUrl = `http://127.0.0.1:3000/api/articles/list/1`;
+import { apiArticleList, apiSyncArticle } from "~/src/request/api";
 
 export default function MyArticles() {
   const [listData, setListData] = useState("");
@@ -18,6 +16,23 @@ export default function MyArticles() {
       //   selectedRows
       // );
     },
+  };
+
+   const fetchData = async () => {
+     const result = await apiArticleList();
+     const { info } = result.data;
+
+     setListData(info);
+   };
+
+  const syncArticles = async () => {
+    const info = await apiSyncArticle();
+    if (info.data.status == "ok") {
+      message.success(info.data.msg);
+      fetchData(); 
+    } else {
+      message.success(info.data.msg);
+    }
   };
 
   // 表格操作区
@@ -49,6 +64,7 @@ export default function MyArticles() {
     {
       title: "ID",
       dataIndex: "key",
+      ellipsis: true,
     },
     {
       title: "名称",
@@ -75,7 +91,7 @@ export default function MyArticles() {
     {
       title: "创建日期",
       dataIndex: "date",
-      render: text => text.join(' ')
+      render: (text) => text.join(" "),
     },
     {
       title: "操作",
@@ -96,19 +112,18 @@ export default function MyArticles() {
   ];
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(articleListUrl);
-
-      const { articlesInfoList } = result.data;
-
-      setListData(articlesInfoList);
-    };
-
+  
     fetchData();
   }, []);
 
   return (
     <AdminFrame>
+      <div>
+        <Button type="primary" ghost onClick={() => syncArticles()}>
+          同步文章进数据库
+        </Button>
+      </div>
+      <hr style={{ marign: "10px 0", height: "10px" }} />
       <Table
         rowSelection={{
           type: Checkbox,
@@ -116,6 +131,7 @@ export default function MyArticles() {
         }}
         columns={columns}
         dataSource={listData}
+        pagination={{ defaultPageSize: 7 }}
       />
     </AdminFrame>
   );
