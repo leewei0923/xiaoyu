@@ -130,7 +130,7 @@ export const apiUpdateInfoCode = (options) =>
 export const apiDeleteCode = (options) =>
   service.post(`${host3001}api/code/deleteCode`, options);
 
-// 加载日期
+// 加载提交的数量
 
 export const apiLoadCommitCount = (options) =>
   service.get(`${host3001}api/code/loadCommitCount`, options);

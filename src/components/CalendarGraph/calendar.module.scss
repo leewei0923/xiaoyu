@@ -11,12 +11,24 @@
     .calendarGraphSvg {
       .contributionCalendarDay {
         cursor: pointer;
-        
       }
-      [data-count = '1'] {
-          fill: green;
-        }
+      [data-count = "1"] {
+        fill: #99CC33;
+      }
+
+      [data-count ="2"] {
+        fill: #669933;
+      }
+
+      [data-count = "3"] {
+        fill: #339933;
+      }
+      [data-count = "4"] {
+        fill: #006633;
+      }
+      [data-count = "5"] {
+        fill: #006633;
+      }
     }
   }
-
 }

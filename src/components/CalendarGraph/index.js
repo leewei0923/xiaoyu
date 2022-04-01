@@ -14,20 +14,16 @@ export default function Index(props) {
   const { commitData } = props;
 
   const addCommitData = (d) => {
-
     const date = [...d];
     for (const x of commitData) {
-      const index = date.indexOf(x.date);
-      const tem = date[index];
+      const { _id, code_count } = x;
+      const index = date.indexOf(_id);
       date[index] = [];
-      if (date[index][1]) {
-        date[index][1] += 1;
-      } else {
-        date[index].push(tem, 1);
-      }
+
+      date[index].push(_id, code_count);
     }
     setAllDate(date);
-    setRefrsh(' ')
+    setRefrsh(" ");
   };
 
   const onSelectChange = (v) => {

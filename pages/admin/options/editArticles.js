@@ -35,7 +35,7 @@ export default function EditArticles() {
   const onSaveCode = async () => {
     const { data: frontmatter } = matter(value);
     const { link, tags } = frontmatter;
-    const date = timeFormatte(Date.now() + 288800000).join(" ");
+    const date = timeFormatte(Date.now() + 28800000)[0];
     const user = getItem("userInfo").value.split(" ")[0];
     const data = {
       content: value,
@@ -121,10 +121,6 @@ export default function EditArticles() {
         }}
       />
 
-      <div draggable="true">
-        "---\n" link: 'https://leetcode-cn.com/problems/valid-parentheses/'
-        ``tags:`` `['栈']`` date:`` '2022.03.25' ---`
-      </div>
     </AdminFrame>
   );
 }
