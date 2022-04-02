@@ -33,7 +33,7 @@ export default function Photowall() {
     () => {
       isMouted = true;
     };
-  },[]);
+  }, [dispatch]);
 
   return (
     <>

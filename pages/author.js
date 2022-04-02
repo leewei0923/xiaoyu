@@ -66,14 +66,11 @@ const timelineBox = useRef(null);
   ];
 
   useEffect(() => {
-
     // redux
 
-    dispatch(pageTitleChange(`作者介绍页`))
-    timelineBox.current.onmousewheel = (e) => {
-      
-    }
-  }, []);
+    dispatch(pageTitleChange(`作者介绍页`));
+    timelineBox.current.onmousewheel = (e) => {};
+  }, [dispatch]);
 
   return (
     <>

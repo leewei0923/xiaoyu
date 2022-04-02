@@ -6,8 +6,6 @@ import { useDispatch } from "react-redux";
 import { pageTitleChange } from "~/src/store/action";
 import { useEffect } from "react";
 
-apiLoadMotto;
-
 export default function CodeShow() {
   const dispatch = useDispatch();
 
