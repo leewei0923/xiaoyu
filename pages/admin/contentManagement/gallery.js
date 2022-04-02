@@ -36,56 +36,49 @@ export default function Gallery() {
     }
   };
 
-  //--------------
-
-  // 暂时不用
-  // const rowSelection = {
-  //   onChange: (selectedRowKeys, selectedRows) => {
-  //     console.log(
-  //       `selectedRowKeys: ${selectedRowKeys}`,
-  //       "selectedRows: ",
-  //       selectedRows
-  //     );
-  //   },
-  //   getCheckboxProps: (record) => ({
-  //     disabled: record.name === "Disabled User",
-  //     name: record.name,
-  //   }),
-  // };
-
   const handleOk = () => {
     setIsModalVisible(false);
   };
 
   const onCreatePhoto = () => {
+    const [user, permission] = getItem("userInfo").value.split(" ");
+    if(permission !== 'admin') {
+      message.warn("权限不足");
+      return;
+    }
     setIsModalVisible(true);
   };
 
   const onClear = () => {
     form.resetFields();
-  }
+  };
 
   // 表格设置
 
-
   // 按钮设置
 
-  const onEdit = () => {
-    console.log("修改");
+  const onEdit = (info) => {
+    const { _id } = info;
+    const [user, permission] = getItem("userInfo").value.split(" ");
+    if (permission == "admin") {
+      message.success("还未开发");
+    } else {
+      message.warn("权限不足");
+    }
   };
 
   const onDelete = async (info) => {
-    const {_id} = info;
-    const [user, permission] = getItem("userInfo").split(" ");
-    if(permission == 'admin') {
-     const backInfo = await apiDelPhoto({_id});
+    const { _id } = info;
+    const [user, permission] = getItem("userInfo").value.split(" ");
+    if (permission == "admin") {
+      const backInfo = await apiDelPhoto({ _id });
 
-     if(backInfo.data.status == 'admin') {
-       message.success(backInfo.data.msg);
-       fetchData();
-     } else {
-       message.error('删除失败')
-     }
+      if (backInfo.data.status == "admin") {
+        message.success(backInfo.data.msg);
+        fetchData();
+      } else {
+        message.error("删除失败");
+      }
     } else {
       message.warn("权限不足");
     }

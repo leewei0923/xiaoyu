@@ -9,22 +9,23 @@ export default function Index(props) {
   // 选择器数据
   const [selectValue, setSelectValue] = useState("过去的一年");
   const [allDate, setAllDate] = useState(generateCurAllDay());
-  const [refresh, setRefrsh] = useState();
   // 题目的个数
   const { commitData } = props;
 
+  //
   const addCommitData = (d) => {
     const date = [...d];
     for (const x of commitData) {
       const { _id, code_count } = x;
       const index = date.indexOf(_id);
       date[index] = [];
-
       date[index].push(_id, code_count);
     }
     setAllDate(date);
-    setRefrsh(" ");
   };
+
+
+
 
   const onSelectChange = (v) => {
     setSelectValue(v);
@@ -33,7 +34,10 @@ export default function Index(props) {
     } else {
       addCommitData(generateAllDay(v));
     }
+
   };
+
+  
 
   useEffect(() => {
     addCommitData(generateCurAllDay());
@@ -88,9 +92,9 @@ export default function Index(props) {
                         fill="#EBEDF0"
                       >
                         <title className={styles.title}>
-                          {`${allDate[index * 7 + index2]}, ${
+                          {`${allDate[index * 7 + index2][0]}, ${
                             allDate[index * 7 + index2][1]
-                          }${refresh}次`}
+                          }题`}
                         </title>
                       </rect>
                     );

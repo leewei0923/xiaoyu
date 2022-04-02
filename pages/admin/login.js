@@ -10,6 +10,7 @@ import { decodeBase64, encodeBase64 } from "~/src/utils/utils";
 import { apiLoginIn } from "~/src/request/api";
 import { useDispatch, useSelector } from "react-redux";
 import { changeUserName } from "~/src/store/action";
+import { enCode } from "~/src/utils/crypto";
 
 export default function Login() {
 
@@ -32,7 +33,7 @@ export default function Login() {
     const pwd = password.current.value;
     apiLoginIn({
       name: name,
-      password: pwd,
+      password: enCode(pwd),
     })
       .then(function (res) {
         localStorage.setItem("token", res.data.token);

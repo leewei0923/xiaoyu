@@ -56,10 +56,24 @@ export default function EditArticles() {
   };
 
   // 保存为草稿
-  const handleDraft = () => {};
+  const handleDraft = () => {
+     const [user, permission] = getItem("userInfo").value.split(" ");
+     if (permission !== "admin") {
+       message.warn("权限不足无法存入草稿箱, 暂未开放");
+       return;
+     }
+  };
 
   // 保存
   const handleSubmit = () => {
+
+    const [user, permission] = getItem("userInfo").value.split(" ");
+    if (permission !== "admin") {
+      message.warn("权限不足无法保存, 可以申请权限");
+      return;
+    }
+
+
     if (titleText.length < 0) {
       message.error("标题字数小于5");
     } else {

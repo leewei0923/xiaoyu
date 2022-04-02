@@ -17,6 +17,8 @@ import styles from "~/styles/admin/account.module.scss";
 import { timeFormatte } from "~/src/utils/timeFormatte";
 import { apiAccountUser, apiInsertUser, apiOndelete } from "~/src/request/api";
 import { decodeBase64 } from "~/src/utils/utils";
+import { enCode, deCode } from "~/src/utils/crypto";
+
 
 export default function Account() {
   /**
@@ -98,10 +100,6 @@ export default function Account() {
       dataIndex: "name",
     },
     {
-      title: "密码",
-      dataIndex: "password",
-    },
-    {
       title: "创建日期",
       dataIndex: "date",
       render: (text) => timeFormatte(text)[0],
@@ -176,7 +174,7 @@ export default function Account() {
       // api 添加用户资料
       apiInsertUser({
         name: userName,
-        password: password,
+        password: enCode(password),
         permission: curSelect,
         platform,
         userAgent,

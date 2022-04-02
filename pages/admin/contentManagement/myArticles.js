@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { generateID } from "~/src/utils/utils";
 import Link from "next/link";
 import { apiArticleList, apiSyncArticle } from "~/src/request/api";
+import { getItem } from "~/src/utils/localStorage";
 
 export default function MyArticles() {
   const [listData, setListData] = useState("");
@@ -25,6 +26,12 @@ export default function MyArticles() {
    };
 
   const syncArticles = async () => {
+    const [user, permission] = getItem("userInfo").value.split(" ");
+    if (permission !== "admin") {
+      message.warn("权限不足");
+      return;
+    }
+
     const info = await apiSyncArticle();
     if (info.data.status == "ok") {
       message.success(info.data.msg);
@@ -36,12 +43,23 @@ export default function MyArticles() {
 
   // 表格操作区
 
+  // 修改
   const onEdit = () => {
-    console.log("修改");
+    const [user, permission] = getItem("userInfo").value.split(" ");
+    if (permission !== "admin") {
+      message.warn("权限不足且修改功能暂未开发");
+      return;
+    }
+    message.info("修改功能暂未开发")
   };
 
   const onDelete = () => {
-    console.log("删除");
+    const [user, permission] = getItem("userInfo").value.split(" ");
+    if (permission !== "admin") {
+      message.warn("权限不足且删除功能暂未开发");
+      return;
+    }
+    message.info("删除功能暂未开发");
   };
 
   const artOption = [
