@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminFrame from '~/src/components/admin/adminFrame'
+import AdminFrame from '~/src/components/admin/AdminFrame'
 export default function AdminIndex() {
   return (
     <AdminFrame>

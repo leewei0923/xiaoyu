@@ -1,4 +1,4 @@
-import AdminFrame from "~/src/components/admin/adminFrame";
+import AdminFrame from "~/src/components/admin/AdminFrame";
 import styles from "~/styles/admin/mine.module.scss";
 import {
   Button,

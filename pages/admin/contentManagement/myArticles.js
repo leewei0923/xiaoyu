@@ -1,4 +1,4 @@
-import AdminFrame from "~/src/components/admin/adminFrame";
+import AdminFrame from "~/src/components/admin/AdminFrame";
 import { Table, Tag, Radio, Divider, Checkbox, Button, message } from "antd";
 import { useState, useEffect } from "react";
 import { generateID } from "~/src/utils/utils";
