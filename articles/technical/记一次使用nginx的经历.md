@@ -168,3 +168,14 @@ location  /proxy/ {
 域名访问： `http://127.0.0.1:3000/proxy/test.html`
 
 结论：会被代理到 `http://127.0.0.1:81/proxy/test.html` 这个url
+
+## PM2 运行
+
+```js
+# 自定义Express服务器
+# https://github.com/zeit/next.js/tree/master/examples/custom-server-express
+NODE_ENV=production pm2 start ./server.js --interpreter ./node_modules/.bin/babel-node --watch src --name next-blog
+# 默认Next.js内置的方式
+NODE_ENV=production pm2 start npm --name "next-blog" -- start
+```
+
