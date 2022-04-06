@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import Navigationtop from "~/src/components/NavigationTop/NavTop";
 import Footer from "~/src/components/Footer/Footer";
 import styles from "~/styles/admin/login.module.scss";
-import axios from "axios";
 import { message } from "antd";
 import { timeFormatte } from "~/src/utils/timeFormatte";
 import { useRouter } from "next/router";

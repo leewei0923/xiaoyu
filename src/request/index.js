@@ -59,7 +59,7 @@ service.interceptors.response.use(
       return res;
     }
   },
-  (error) => Promise.reject("错误 58 24", error)
+  (error) => Promise.reject("错误 58 24")
 );
 
 export default service;

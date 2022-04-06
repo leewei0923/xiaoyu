@@ -24,7 +24,6 @@ export default function Navigationtop() {
 
   // 点击改变主页文章展示的方式 true 为纯技术 false 为 生活和 技术混合的
   const changeModeState = () => {
-    console.log(indexPageMode)
     dispatch(changePageMode(!indexPageMode));
   };
 

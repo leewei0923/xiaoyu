@@ -18,9 +18,8 @@ $navContainerBg: #fff;
     transition: all 1s ease-in;
     box-shadow: 4.2px 6.2px 10px rgba(0, 0, 0, 0.03),
       32px 48px 80px rgba(0, 0, 0, 0.06);
-      opacity: 0;
+    visibility: hidden;
     transition: opacity 0.5s ease-in-out;
-   
 
     .features {
       display: flex;
@@ -57,8 +56,8 @@ $navContainerBg: #fff;
   }
 
   .isVisible {
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
+    visibility: visible;
+    transition: visibility 0.5s ease-in-out;
   }
 }
 

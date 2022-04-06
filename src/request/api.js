@@ -3,12 +3,14 @@ import service from "./index";
 const host3001 =
   process.env.NODE_ENV == "production"
     ? "https://doc.icenew.top/"
-    : "http://127.0.0.1:3001";
+    : "http://127.0.0.1:3001/";
 
 const host3000 =
   process.env.NODE_ENV == "production"
     ? "https://doc.icenew.top/"
     : "http://127.0.0.1:3000/";
+
+
 
 // 请求本地文章接口
 
