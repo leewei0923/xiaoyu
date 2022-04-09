@@ -1,5 +1,6 @@
 {
   "name": "xiaoyu",
+  "version": "1.02",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

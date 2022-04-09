@@ -1,3 +1,13 @@
+/*
+ * @Author: leewei
+ * @Date: 2022-03-06 21:31:30
+ * @LastEditors: leewei
+ * @LastEditTime: 2022-04-09 22:07:51
+ * @FilePath: \xiaoyu\pages\api\articles\[...list].js
+ * @Description: 
+ * 
+ * Copyright (c) 2022 by leewei, All Rights Reserved. 
+ */
 import fs from "fs";
 import path from "path";
 import { generateID } from "~/src/utils/utils";
@@ -17,7 +27,7 @@ export default function handler(req, res) {
       const { data: frontmatter } = matter(markdownWithMeta);
 
       const date = timeFormatte(stats.ctime);
-
+      
       const slug = `${dir}/${file}`.replace(".md", "");
       articleInfoList.push({
         key: generateID(slug),

@@ -26,6 +26,13 @@ export const apiArticleList = (options) =>
 // 同步文章
 
 export const apiSyncArticle = (options) => service.get(`${host3001}blogApi/syncArticle`, options);
+// 后台加载数据
+export const apiArticleBackList = (options) =>
+  service.post(`${host3001}blogApi/article/backList`, options);
+
+export const apiUpdateState = (options) =>
+  service.post(`${host3001}blogApi/article/updateArticleState`, options);
+  
 
 // 请求user 接口
 

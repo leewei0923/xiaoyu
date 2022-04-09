@@ -3,7 +3,12 @@ import { Table, Tag, Radio, Divider, Checkbox, Button, message } from "antd";
 import { useState, useEffect } from "react";
 import { generateID } from "~/src/utils/utils";
 import Link from "next/link";
-import { apiArticleList, apiSyncArticle } from "~/src/request/api";
+import {
+  apiArticleList,
+  apiSyncArticle,
+  apiArticleBackList,
+  apiUpdateState,
+} from "~/src/request/api";
 import { getItem } from "~/src/utils/localStorage";
 
 export default function MyArticles() {
@@ -20,7 +25,7 @@ export default function MyArticles() {
   };
 
    const fetchData = async () => {
-     const result = await apiArticleList();
+     const result = await apiArticleBackList();
      const { info } = result.data;
      setListData(info);
    };
@@ -53,13 +58,25 @@ export default function MyArticles() {
     message.info("修改功能暂未开发")
   };
 
-  const onDelete = () => {
+  // 改变文章的状态
+
+  const onDelete = async (info) => {
     const [user, permission] = getItem("userInfo").value.split(" ");
     if (permission !== "admin") {
-      message.warn("权限不足且删除功能暂未开发");
+      message.warn("权限不足");
       return;
     }
-    message.info("删除功能暂未开发");
+    const {_id, key, hiden} = info;
+    const backInfo = await apiUpdateState({_id:_id, key: key, hiden: !hiden});
+
+    if(backInfo.data.status == 'ok') {
+      fetchData();
+      message.success(backInfo.data.msg);
+    } else {
+      message.success(backInfo.data.msg);
+    }
+
+    
   };
 
   const artOption = [
@@ -71,7 +88,7 @@ export default function MyArticles() {
     },
     {
       key: "2",
-      title: "删除",
+      title: "草稿",
       click: onDelete,
       type: "danger",
     },
@@ -86,10 +103,10 @@ export default function MyArticles() {
     {
       title: "名称",
       dataIndex: "slug",
-      render: (text) => {
+      render: (text, info) => {
         return (
           <Link href={`/articles/${text}`}>
-            <a>{text.split("/")[1]}</a>
+            <a style={{color: info.hiden == true ? 'black' : ''}}>{text.split("/")[1]}</a>
           </Link>
         );
       },
@@ -113,11 +130,11 @@ export default function MyArticles() {
     {
       title: "操作",
       dataIndex: "options",
-      render: () =>
+      render: (x, info) =>
         artOption.map((item) => (
           <Button
             key={item.key}
-            onClick={item.click}
+            onClick={() => item.click(info)}
             type={item.type}
             size={`small`}
             style={{ margin: `0 5px` }}
