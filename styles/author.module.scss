@@ -1,89 +1,18 @@
 // 适配大屏
+
+.container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(0, #00BCB4, #C4E86B);
+  opacity: 0.8;
+  min-height: 100vh;
+}
+
 @media screen and (min-width: 1000px) {
-  .container {
-    width: 100%;
-
-    // 作者介绍
-    .authorIntroduction {
-      height: 100vh;
-   
-      .title {
-        font-size: 30px;
-        font-weight: 700;
-        margin: 60px 30px;
-      }
-      .introduction {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-
-    // 大事记
-    .memorabilia {
-      height: 100vh;
-      position: relative;
-
-      .title {
-        font-size: 30px;
-        font-weight: 700;
-        margin: 60px 30px;
-      }
-
-      .timelineBox {
-        width: 90%;
-        border: 1px solid white;
-        margin: auto;
-        border-radius: 10px;
-        height: 70%;
-        overflow: scroll;
-        &:hover {
-          border: 1px solid orange;
-          transition: border 0.5s ease;
-        }
-      }
-    }
-  }
 }
 
 // 适配小屏幕
 @media screen and (max-width: 1000px) {
-  .container {
-    width: 100%;
-    // 作者介绍
-    .authorIntroduction {
-      height: 100vh;
-   
-      .title {
-        font-size: 30px;
-        font-weight: 700;
-        margin: 20px 30px;
-      }
-      .introduction {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-    // 大事记
-    .memorabilia {
-      height: 100vh;
-      position: relative;
-
-      .title {
-        font-size: 30px;
-        font-weight: 700;
-        margin: 60px 30px;
-      }
-
-      .timelineBox {
-        width: 90%;
-        border: 1px solid orange;
-        margin: auto;
-        border-radius: 10px;
-        height: 70%;
-        overflow: scroll;
-      }
-    }
-  }
 }

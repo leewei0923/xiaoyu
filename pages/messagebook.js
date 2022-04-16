@@ -3,7 +3,7 @@ import Headers from "~/src/components/Header/Header";
 import Navigationtop from "~/src/components/NavigationTop/NavTop";
 import styles from "~/styles/messagebook.module.scss";
 import { useDispatch } from "react-redux";
-import { pageTitleChange } from "~/src/store/action";
+import { pageTitleChange, changeBgImg } from "~/src/store/action";
 import { useEffect, useState } from "react";
 import BackTop from "~/src/components/BackTop/BackTop";
 
@@ -33,6 +33,11 @@ export default function Messagebook({ children }) {
   useEffect(() => {
     // 改变标题
     dispatch(pageTitleChange("留言录"));
+    dispatch(
+      changeBgImg(
+        "https://cdn.pixabay.com/photo/2022/04/13/05/46/architecture-7129532_1280.jpg"
+      )
+    );
 
     // 获取评论信息
 

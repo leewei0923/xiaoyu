@@ -15,6 +15,7 @@ import hljs from "highlight.js";
 import "highlight.js/styles/Vs2015.css";
 import MultiFunctionalMenu from "~/src/components/MultiFunctionalMenu/MultiFunctionalMenu";
 import classnames from 'classnames';
+import Head from "next/head";
 
 
 export default function Doc(props) {
@@ -89,14 +90,28 @@ export default function Doc(props) {
     document.querySelectorAll("pre code").forEach((block) => {
       try {
         hljs.highlightElement(block);
+        hljs.configure({ ignoreUnescapedHTML: true });
       } catch (error) {
-        consoel.log("NavPage 有错误", error);
+        console.log("NavPage 有错误", error);
       }
     });
   });
 
   return (
     <>
+      <Head>
+        {/* <!-- sns 社交标签 begin --> */}
+        {/* <!-- 参考微博API --> */}
+        <title>笔记|文档</title>
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://doc.icenew.top" />
+        <meta property="og:title" content={`七秒鱼|文档笔记`} />
+        <meta
+          property="og:description"
+          content="学习笔记记载的页面"
+        />
+        {/* <!-- sns 社交标签 end --> */}
+      </Head>
       {/* navtop 导航栏 */}
       <Navigationtop></Navigationtop>
 
@@ -166,9 +181,13 @@ export default function Doc(props) {
 
       {/* 返回顶部 */}
       <BackTop />
-      <MultiFunctionalMenu click={[changeLeftNav,changeRightNav]} title={["导航", "目录"]} barState={[isLeftHide, isRightHide]}/>
+      <MultiFunctionalMenu
+        click={[changeLeftNav, changeRightNav]}
+        title={["导航", "目录"]}
+        barState={[isLeftHide, isRightHide]}
+      />
       {/* 底部 */}
-      <Footer></Footer>
+      <Footer />
     </>
   );
 }

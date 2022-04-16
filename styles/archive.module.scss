@@ -20,12 +20,10 @@ $numberColor: #1e80ff;
         padding: 10px;
       }
     }
-  }
-
-  .pagination {
-    width: 80%;
-    margin: 50px auto;
-
+    .pagination {
+      width: 80%;
+      margin: 50px auto;
+    }
   }
 }
 
@@ -44,6 +42,11 @@ $numberColor: #1e80ff;
         color: $numberColor;
         padding: 10px;
       }
+    }
+
+    .pagination {
+      width: 90%;
+      margin: 30px auto;
     }
   }
 }

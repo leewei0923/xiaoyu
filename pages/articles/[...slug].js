@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { marked } from "marked";
+import Head from "next/head";
 import Layout from "../../src/components/Layout/Layout";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -15,6 +16,7 @@ import Navigationtop from "~/src/components/NavigationTop/NavTop";
 import BackTop from "~/src/components/BackTop/BackTop";
 import MultiFunctionalMenu from "~/src/components/MultiFunctionalMenu/MultiFunctionalMenu";
 
+
 export default function PostPage({
   frontmatter: { title, date, img },
   slug,
@@ -22,7 +24,6 @@ export default function PostPage({
 }) {
   const dispatch = useDispatch();
 
-  // ----
   // 目录生成
   // 处理和生成目录树
   const catatlogList = handleMarkdown(marked(content));
@@ -53,10 +54,6 @@ export default function PostPage({
   });
 
   useEffect(() => {
-    // 用于处理异步操作取消绑定
-
-    let isMounted = false;
-
     // 改变 header 图片背景
     dispatch(changeBgImg(img));
 
@@ -72,14 +69,24 @@ export default function PostPage({
       }
     });
 
-
-    return () => {
-      isMounted = true;
-    };
   }, [dispatch, img, content, title]);
 
   return (
     <Layout>
+      <Head>
+        {/* <!-- sns 社交标签 begin --> */}
+        {/* <!-- 参考微博API --> */}
+        <title>{title}</title>
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="https://doc.icenew.top" />
+        <meta property="og:title" content={`七秒鱼|${title}`} />
+        <meta
+          property="og:description"
+          content="七秒鱼，前端开发者自己的博客网站。做自己想做的东西。"
+        />
+        {/* <!-- sns 社交标签 end --> */}
+      </Head>
+
       <Navigationtop></Navigationtop>
       <div className={styles.postPage}>
         <div className={styles.articlesPost}>

@@ -266,7 +266,7 @@ $mobileMask: rgba(0, 0, 0, 0.2);
       height: 100vh;
       overflow-y: scroll;
       background-color: $mobileMask;
-      transition: width 0.5s ease-in;
+      transition: all 0.5s ease-in;
       .catalogLinks {
         width: 80%;
         height: auto;
@@ -305,7 +305,7 @@ $mobileMask: rgba(0, 0, 0, 0.2);
 
     .ZeroWidth {
       width: 0%;
-      transition: width 0.5s ease-in;
+      transition: all 0.5s ease-in;
     }
 
     img {

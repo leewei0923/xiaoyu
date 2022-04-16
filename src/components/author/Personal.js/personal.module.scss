@@ -1,0 +1,44 @@
+.container {
+  width: 90%;
+  background-color: #f9f9f9;
+  height: 100%;
+  margin: 100px auto;
+  border-radius: 20px;
+  position: relative;
+  display: flex;
+  .leftOptions {
+    display: flex;
+    position: relative;
+    .optionName {
+      margin: 5px;
+      position: relative;
+      top: 40px;
+      left: 15%;
+      font-size: 12px;
+      font-weight: 600;
+    }
+  }
+
+  .topContent {
+    width: inherit;
+    position: inherit;
+
+    .avator {
+      width: 100%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      transform: translate(0, -50%);
+      .mineImg {
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1000px) {
+}
+
+// 适配小屏幕
+@media screen and (max-width: 1000px) {
+}

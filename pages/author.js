@@ -6,10 +6,11 @@ import { useEffect, useRef, useState } from "react";
 import classnames from "classnames";
 import { Chrono } from "react-chrono";
 import { useDispatch } from "react-redux";
-import { pageTitleChange } from "~/src/store/action";
+import { pageTitleChange, changeBgImg } from "~/src/store/action";
 import { Divider } from "antd";
 import Introduction from "~/src/components/Introduction"
 import { memorables } from "~/src/utils/history";
+import Personal from "~/src/components/author/Personal.js/Personal";
 
 export default function Author() {
 const dispatch = useDispatch(); 
@@ -17,86 +18,24 @@ const dispatch = useDispatch();
 const timelineBox = useRef(null);
 
 
-  const items = [
-    {
-      title: "二月",
-      cardTitle: "Dunkirk",
-      url: "http://www.history.com",
-      cardSubtitle:
-        "Men of the British Expeditionary Force (BEF) wade out to..",
-      cardDetailedText:
-        "Men of the British Expeditionary Force (BEF) wade out to..",
-    },
-    {
-      title: "一日",
-      cardTitle: "主页",
-      url: "http://www.history.com",
-      cardSubtitle:
-        "Men of the British Expeditionary Force (BEF) wade out to..",
-      cardDetailedText:
-        "Men of the British Expeditionary Force (BEF) wade out to..",
-    },
-    {
-      title: "二日",
-      cardTitle: "笔记",
-      url: "http://www.history.com",
-      cardSubtitle:
-        "Men of the British Expeditionary Force (BEF) wade out to..",
-      cardDetailedText:
-        "Men of the British Expeditionary Force (BEF) wade out to..",
-    },
-    {
-      title: "三日",
-      cardTitle: "主页",
-      url: "http://www.history.com",
-      cardSubtitle:
-        "Men of the British Expeditionary Force (BEF) wade out to..",
-      cardDetailedText:
-        "Men of the British Expeditionary Force (BEF) wade out to..",
-    },
-    {
-      title: "四日",
-      cardTitle: "笔记",
-      url: "http://www.history.com",
-      cardSubtitle:
-        "Men of the British Expeditionary Force (BEF) wade out to..",
-      cardDetailedText:
-        "Men of the British Expeditionary Force (BEF) wade out to..",
-    },
-  ];
-
   useEffect(() => {
     // redux
 
     dispatch(pageTitleChange(`作者介绍页`));
-    timelineBox.current.onmousewheel = (e) => {};
+    dispatch(
+      changeBgImg(
+        "https://cdn.pixabay.com/photo/2022/01/18/16/49/town-6947538_1280.jpg"
+      )
+    );
   }, [dispatch]);
 
   return (
     <>
       <Headers></Headers>
       {/* {console.log(bytephotoOffsetX)} */}
-      <Navigationtop></Navigationtop>
+      <Navigationtop />
       <main className={styles.container}>
-        <div className={styles.authorIntroduction}>
-          <div className={styles.title}>作者介绍</div>
-          <div className={styles.introduction}>
-            <Introduction />
-          </div>
-        </div>
-
-        <Divider />
-        <div className={styles.memorabilia}>
-          <div className={styles.title}>历史记录</div>
-          <div className={styles.timelineBox} ref={timelineBox}>
-            <Chrono
-              items={memorables}
-              hideControls
-              scrollable="false"
-              mode="VERTICAL_ALTERNATING"
-            />
-          </div>
-        </div>
+        <Personal />
       </main>
       <Footer></Footer>
     </>
