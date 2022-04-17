@@ -11,11 +11,7 @@ html,
 body {
   scroll-behavior: smooth;
 }
-@media screen and (max-width: 1000px) {
-  * {
-    font-size: 12px;
-  }
-}
+
 
 /* 这是针对缺省样式 (必须的) */
 ::-webkit-scrollbar {

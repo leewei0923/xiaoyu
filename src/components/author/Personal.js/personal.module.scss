@@ -6,22 +6,24 @@
   border-radius: 20px;
   position: relative;
   display: flex;
-  .leftOptions {
-    display: flex;
-    position: relative;
-    .optionName {
-      margin: 5px;
-      position: relative;
-      top: 40px;
-      left: 15%;
-      font-size: 12px;
-      font-weight: 600;
-    }
-  }
+  flex-direction: column;
 
+  // 顶部导航和头像展示
   .topContent {
-    width: inherit;
+    width: 100%;
     position: inherit;
+
+    .leftOptions {
+      display: flex;
+      position: relative;
+
+      .optionName {
+        margin: 5px;
+        position: relative;
+        font-size: 12px;
+        font-weight: 600;
+      }
+    }
 
     .avator {
       width: 100%;
@@ -33,12 +35,234 @@
         border-radius: 50%;
       }
     }
+    .rightSocial {
+      display: flex;
+    }
+  }
+
+  .introduction {
+    position: relative;
+    text-align: center;
+
+    .desc {
+      line-height: 30px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .motto {
+      color: #aaaaaa;
+    }
+  }
+
+  // 项目展示
+  .project {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20px 0;
+    align-items: center;
+
+    .projectBox {
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+      margin: 20px 0;
+
+      .projection {
+        display: flex;
+        flex-direction: column;
+        margin: 10px 20px;
+        width: 200px;
+        align-items: center;
+        cursor: pointer;
+
+        .iconBg {
+          background-color: #c6ecf0;
+          width: 80px;
+          height: 80px;
+          font-size: 40px;
+          line-height: 80px;
+          text-align: center;
+          border-radius: 30px;
+        }
+
+        .name {
+          font-size: 18px;
+          font-weight: 500;
+          margin: 10px;
+          line-height: 18px;
+          text-align: center;
+        }
+
+        .simDesc {
+          font-size: 15px;
+          overflow: hidden;
+          margin: 10px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  // 个人技能展示
+
+  .mySkills {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .skills {
+      width: 100%;
+      display: flex;
+      position: relative;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .skill {
+        width: 30%;
+        min-width: 120px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        position: relative;
+        margin: 20px 30px;
+        height: 25px;
+        border-radius: 20px;
+        z-index: 5;
+
+        &::after {
+          content: "";
+          display: block;
+          background-color: #eeeeee;
+          width: 100%;
+          height: 25px;
+          position: absolute;
+          z-index: 2;
+          border-radius: 20px;
+        }
+
+        .progressBar {
+          z-index: 5;
+          position: absolute;
+          top: 0;
+          height: 25px;
+          left: 0;
+          border-radius: 20px;
+        }
+        .name {
+          color: white;
+        }
+        .name,
+        .progress {
+          z-index: 5;
+          margin: 0 10px;
+        }
+      }
+    }
   }
 }
 
-@media screen and (min-width: 1000px) {
+// PC(大屏幕)
+
+@media screen and (min-width: 800px) {
+  .container {
+    .topContent {
+      display: flex;
+      flex-direction: row;
+      .leftOptions {
+        position: absolute;
+        left: 15%;
+        width: 30%;
+        top: 35px;
+
+        .optionName {
+          font-size: 16px;
+          cursor: pointer;
+          &:hover {
+            color: darkorange;
+          }
+        }
+      }
+
+      .rightSocial {
+        position: absolute;
+        right: 10%;
+        top: 30px;
+        .icon {
+          margin: 0 5px;
+          font-size: 25px;
+          cursor: pointer;
+
+          &:hover {
+            color: darkorange;
+          }
+        }
+      }
+    }
+
+    .introduction {
+      margin: auto;
+      transform: translateY(-55px);
+      .name {
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 30px;
+        text-align: center;
+      }
+
+      .motto {
+        display: block;
+      }
+    }
+  }
 }
 
-// 适配小屏幕
-@media screen and (max-width: 1000px) {
+// 中等及以下
+
+@media only screen and (max-width: 800px) {
+  .container {
+    .topContent {
+      display: flex;
+      flex-direction: column;
+      .leftOptions {
+        justify-content: center;
+        top: -30px;
+      }
+
+      .rightSocial {
+        display: flex;
+        justify-content: center;
+        background-color: #aaaaaa;
+        .icon {
+          margin: 0 10px;
+          width: 20px;
+          font-size: 22px;
+          color: white;
+        }
+      }
+    }
+
+    .introduction {
+      .name {
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .desc {
+        font-weight: 600;
+      }
+    }
+
+    .project {
+      flex-direction: column;
+      margin: 20px 0;
+
+      .projectBox {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  }
 }
