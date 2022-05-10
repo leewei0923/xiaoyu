@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import classnames from "classnames";
 import styles from "./postCard.module.scss";
-import { useEffect } from "react";
 import bg from "../../../../public/images/header-bg.jpg";
 import { timeFormatte } from "~/src/utils/timeFormatte";
 

@@ -6,7 +6,14 @@ authors: leewei
 
 ## 类型声明
 
+### 常用基础类型概述
 
+- 原始类型: number, string, boolean, null, undefined, symbol
+- 对象类型: Object(数组, 对象, 函数)，枚举，void，any等
+
+### TS新增类型
+
+- 联合类型: 自定义类型(类型别名) ,接口, 
 
 | 类型    | 例子         | 描述                         |
 | ------- | ------------ | ---------------------------- |
@@ -28,9 +35,11 @@ authors: leewei
 ```typescript
 let a:number[];
 let g:Array<number>
+let numbers:number[] = [1,2,3,4]
+let strings: Array<string> = ['1','f','f'] 
 ```
 
-元组
+### 元组
 
 ```typescript
 语法:
@@ -38,7 +47,20 @@ let g:Array<number>
 let t:[string, string] = ['a', 'a'];
 ```
 
-枚举
+**既有number又有string类型**
+
+联合类型
+
+```js
+let strings: (number|string)[] = ['1','f',4]
+let strings: (number | string | boolean)[] = ["1", "f", 4, true];
+
+// 不添加括号，既是某个类型又是另个类型
+```
+
+
+
+### 枚举
 
 ```typescript
 enum Gender {
@@ -59,6 +81,206 @@ type myType = string;
 let k: 1 | 2 | 3;
 let m: myType;
 ```
+
+
+
+### 类型别名—— type
+
+当一个类型比较复杂的情况下，可以使用类型别名
+
+```js
+type CustomArray = (number | string)[];
+
+let arr:CustomArray = [1,2,3,'4']
+```
+
+
+
+### 函数类型
+
+给参数和返回值添加类型
+
+```js
+function add(n1: number, n2: number): number {
+  return n1 + n2;
+}
+
+console.log(add(5, 6));
+```
+
+
+
+### void 类型
+
+```js
+function add(n1: number, n2: number):void {
+  console.log(n1 + n2);
+}
+```
+
+### 函数可选参数
+
+**可选参数只能放在参数的最后**
+
+```js
+// 可选参数只能放在参数的最后
+function add(n1: number, n2: number, n3?: number): void {
+  console.log(n1 + n2 + (n3 || 0));
+}
+
+add(1, 2, 3); // 6
+
+add(1,2); // 3
+```
+
+### 对象类型
+
+```js
+let person = {
+  name: "小米",
+  age: 10,
+};
+// 多行可以用封号，也可以什么都不加
+
+let prson2: {
+  name: string;
+  sayHi(str: string): void;
+  print: () => string;
+} = {
+  name: "小米",
+  sayHi(str) {},
+  print() {
+    return "";
+  },
+};
+
+```
+
+
+
+### 接口——interface
+
+1. 使用`interface`关键字来声明接口
+2. 接口名称可以是任意合法的变量名称
+3. 声明接口后，直接使用接口名称作为变量的类型
+4. 因为每一行只有一个属性类型，因此，属性类型后没有；(分号)
+
+```js
+interface IPerson {
+  name: string;
+  age: number;
+  sayHi(): void;
+}
+
+let person: IPerson = {
+  name: "jack",
+  age: 9,
+  sayHi() {},
+};
+
+```
+
+### 接口和类型别名的对比
+
+- 相同点
+  - 都可以给对象指定类型
+- 不同点
+  - 接口只能给对象指定类型
+  - 类型别名，不仅可以给对象指定类型，实际上也可以为任意类型指定别名
+
+有两个接口之间有相同的属性或方法，可以将公共的属性或方法抽离出来，通过继承来实现复用。
+
+两个接口都有想x，y两个属性，重复写两次，可以，但很繁琐。
+
+```js
+// bad
+interface Point2D {x: number, y:number}
+interface Point3D {x:number, y:number; z:number}
+
+// good
+interface Point2D {x:number,; y:number}
+interface Point3D extends Point2D {z:number}
+```
+
+1. 使用extends（继承）关键字实现了接口Point2D的继承
+
+2. 继承后，Ponit3D就有了Ponit2D的所有属性和方法（此时，Point3D同时有想，x，y，z三个属性）
+
+   
+
+### 高级类型
+
+- class类
+- 类型兼容性
+- 交叉类型
+- 泛型和keyof
+- 索引签名类型和索引查询类型
+- 映射类型
+
+### class
+
+- readonly
+
+  除了可见修饰符外，还有一个常见的修饰符就是：readonly（制度修饰符）
+
+  readonly：表示只读，用来防止在构造函数之外对属性进行赋值
+
+  必须要指定类型
+  
+  接口或者{}表示的对象类型，也可以使用readonly
+
+- 类型继承
+  - 通过implements关键字让class实现接口
+  - Person类实现接口Singable意味着，Personal类中必须提供Singable接口中指定的所有方法和属性
+
+```js
+interface Singale {
+  sing():void
+}
+
+class Person implements Singale {
+  sing(): void {
+    
+  }
+}
+```
+
+
+
+### 交叉类型
+
+**交叉类型（&）**：功能类似于接口继承（extends），用于组合多个类型为一个类型（常用与对象类型）
+
+使用交叉类型后，新的类型PersonDetail就同时具备了Person和contact的所有属性类型
+
+
+
+### 泛型
+
+调用泛型
+
+```js
+function id<Type>(value: Type): Type {
+  return value;
+}
+
+const num = id<number>(10);
+1. 语法: 在函数名称的后面添加<>(尖括号),尖括号中指定具体的类型，比如，此处number。
+2. 当传入类型number后，这个类型就会被函数声明时指定的类型变量Type捕获到
+3. 此时，Type的类型就是number，所以，函数id参数和返回值的类型也都是number
+```
+
+同样，如果传入类型string，函数id参数和返回值的类型就都是string
+
+这样，通过泛型做到了让id函数与多种不同的类型一起工作，实现了复用的同时保证了类型安全
+
+- 泛型约束
+
+​	**泛型约束**：默认情况下，泛型函数的类型变量Type可以代表多个类型，这个导致无法访问任何属性，比如，id（‘a') 调用函数时获取参数的长度。
+
+
+
+Type可以代表任意类型，无法保证一定存在length属性，number类型中就没用length。此时就需要为泛型添加约束，收缩类型。
 
 
 

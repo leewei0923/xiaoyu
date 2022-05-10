@@ -2,21 +2,15 @@ import Footer from "~/src/components/Footer/Footer";
 import Headers from "~/src/components/Header/Header";
 import Navigationtop from "~/src/components/NavigationTop/NavTop";
 import styles from "~/styles/author.module.scss";
-import { useEffect, useRef, useState } from "react";
-import classnames from "classnames";
-import { Chrono } from "react-chrono";
+import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { pageTitleChange, changeBgImg } from "~/src/store/action";
-import { Divider } from "antd";
-import Introduction from "~/src/components/Introduction"
-import { memorables } from "~/src/utils/history";
 import Personal from "~/src/components/author/Personal.js/Personal";
 
 export default function Author() {
-const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
-const timelineBox = useRef(null);
-
+  const timelineBox = useRef(null);
 
   useEffect(() => {
     // redux

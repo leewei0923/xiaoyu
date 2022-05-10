@@ -629,3 +629,35 @@ SharedPreferences sp = getSharedPreferences("电话号码", Context.MODE_PRIVATE
         Toast.makeText(this, "" +values, Toast.LENGTH_SHORT).show(); // 提示
 ```
 
+
+
+## Fragment
+
+
+
+### 点击事件
+
+```java
+@Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.home_fragment, container, false);
+        return view;
+    }
+```
+
+
+
+```java
+@Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        deviceListBtn = (TextView) getActivity().findViewById(R.id.devicesListBtn);
+        deviceListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // startActivity(new Intent(getActivity(), DevicesActivity.class));
+            }
+        });
+    }
+```
+
