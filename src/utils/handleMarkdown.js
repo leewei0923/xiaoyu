@@ -7,12 +7,11 @@ const handleMarkdown = (content) => {
 const handleContent = (content) => {
   // const titleTagPattern = new RegExp(/.*(?=<\/h\d)/g);
   // 匹配
-  const titleTagReg = new RegExp(/.*(<\/h\d)/g);
+  const titleTagReg = new RegExp(/.*(<\/h(1|2|3|4))/g);
   //匹配id属性正则
-  const idReg = /id.*=[\'|\"].*[\'|\"]/g;
+  const idReg = /<[a-zA-Z0-9][^>]+?id=[^>]+?>.*?/g;
   const titles = content.match(titleTagReg);
   const ids = content.match(idReg);
-
   const res = [];
 
   if (titleTagReg.test(content) && idReg.test(content)) {
@@ -22,7 +21,7 @@ const handleContent = (content) => {
 
       res.push({
         type: type,
-        text: text,
+        text: link,
         link: link,
       });
     }
@@ -44,8 +43,9 @@ function getText(str, type) {
       return { type: tag, text: tagText };
     case "id":
       // 获取id属性的值
-      let idText = str.replace(/id.*=/, "");
+      let idText = str.match(/\".+\"/g)[0];
       idText = idText.replace(/[\'|\"]/g, "");
+      // console.log(idText)
       return { link: idText };
   }
 }
